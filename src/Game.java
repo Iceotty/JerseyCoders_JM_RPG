@@ -6,7 +6,6 @@ import java.util.Scanner;
  */
 public class Game {
     String currentNode;
-    String nextNode;
     HashMap<String,Node> nodes;
     Scanner scanner;
     boolean running = false;
@@ -39,15 +38,19 @@ public class Game {
         return nodes.get(node);
     }
     public void processNode(Node node){
+        String nextNode=null;
         if (node!=null) {
             node.print();
-            currentNode=node.decide(read());
         }
-        if (currentNode!=null) {
-            nodes.get(currentNode).print();
-        }if (node!=null&&node.decide(read())==null){
-            System.out.println("Type in a proper response");
+        String input;
+        while (nextNode==null){
+            input=read();
+            nextNode=node.decide(input);
+            if (nextNode==null){
+                System.out.println("Type in a proper response");
+            }
         }
+        currentNode=nextNode;
     }
     public String read(){
         return scanner.nextLine();
@@ -60,4 +63,9 @@ public class Game {
     public Node getCurrentNode(){
         return getNode(currentNode);
     }
+
+    private void makeNode(String nodeName, String reference, String nodeText){
+        nodes.put(nodeName,new Node(nodeName,nodeText));
+    }
 }
+
