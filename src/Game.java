@@ -15,16 +15,13 @@ public class Game {
         Node firstNode = new Node("node.firstNode","Eat, Sleep or Die (no caps pls)");
         nodes.put(firstNode.name,firstNode);
 
-        Node eatNode = new Node("node.eatNode","Nom nom nom");
-        nodes.put(eatNode.name,eatNode);
+        makeNode("node.eatNode","Nom Nom");
         firstNode.addPath("eat","node.eatNode");
 
-        Node sleepNode = new Node("node.sleepNode","ZzzzzZzzz");
-        nodes.put(sleepNode.name,sleepNode);
+        makeNode("node.sleepNode","ZzzZzzz");
         firstNode.addPath("sleep","node.sleepNode");
 
-        Node deadNode = new Node("node.deadNode","You Died");
-        nodes.put(deadNode.name,deadNode);
+        makeNode("node.deadNode","Yu ded");
         firstNode.addPath("die","node.deadNode");
 
         scanner=new Scanner(System.in);
@@ -64,7 +61,7 @@ public class Game {
         return getNode(currentNode);
     }
 
-    private void makeNode(String nodeName, String reference, String nodeText){
+    private void makeNode(String nodeName, String nodeText){
         nodes.put(nodeName,new Node(nodeName,nodeText));
     }
 }
