@@ -12,7 +12,6 @@ public class Game {
     public Game(){
         running = true;
         nodes=new HashMap<>();
-        //1,2,3,4,5,6
         makeRoom("room.firstRoom","The dankest of dank rooms").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
         makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls").west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
         makeRoom("room.thirdRoom","No dank memes in this one :(").northEast("room.firstRoom");
@@ -20,6 +19,11 @@ public class Game {
         makeRoom("room.fifthRoom","Not very dank tbh").southWest("room.seventhRoom").south("room.ninthRoom").north("room.secondRoom");
         makeRoom("room.sixthRoom","Dank. Really really dank.").northWest("room.secondRoom");
         makeRoom("room.seventhRoom","Has a warm pit of lava").northEast("room.fifthRoom").northWest("room.fourthRoom");
+        makeRoom("room.eighthRoom","Has octarine sparkles on the floor.").north("room.fourthRoom").southWest("room.eleventhRoom");
+        makeRoom("room.ninthRoom","Infested with demons").north("room.fifthRoom").west("room.eighthRoom").south("room.tenthRoom");
+        makeRoom("room.tenthRoom","Has some cool loot in it").north("room.ninthRoom").south("room.twelfthRoom");
+        makeRoom("room.eleventhRoom","Dead end, filled with monsters").northEast("room.eighthRoom");
+        makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!").north("room.tenthRoom");
 
 //        Node firstNode = new Node("node.firstNode","Eat, Sleep or Die (no caps pls)");
 //        nodes.put(firstNode.name,firstNode);
