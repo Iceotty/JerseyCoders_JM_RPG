@@ -2,6 +2,8 @@
  * Created by Joseph on 20/04/2016.
  */
 public class Room extends Node {
+    boolean isEndRoom=false;
+    boolean isDeathRoom=false;
     public Room(String name, String text) {
         super(name, text);
     }
