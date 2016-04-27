@@ -5,7 +5,7 @@ import java.util.Scanner;
  * Created by Joseph on 09/03/2016.
  */
 public class Game {
-    String currentNode;
+    String currentRoom;
     HashMap<String,Room> nodes;
     Scanner scanner;
     boolean running = false;
@@ -24,20 +24,9 @@ public class Game {
         makeRoom("room.tenthRoom","Has some cool loot in it").north("room.ninthRoom").south("room.twelfthRoom");
         makeRoom("room.eleventhRoom","Dead end, filled with monsters").northEast("room.eighthRoom");
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!").north("room.tenthRoom");
-
-//        Node firstNode = new Node("node.firstNode","Eat, Sleep or Die (no caps pls)");
-//        nodes.put(firstNode.name,firstNode);
-//
-//        makeNode("node.eatNode","Nom Nom");
-//        firstNode.addPath("eat","node.eatNode");
-//
-//        makeNode("node.sleepNode","ZzzZzzz");
-//        firstNode.addPath("sleep","node.sleepNode");
-//
-//        makeNode("node.deadNode","Yu ded");
-//        firstNode.addPath("die","node.deadNode");
+        currentRoom = nodes.get("room.firstRoom").name;
 //        nodes.get("node.eatNode").addPath("die","node.deadNode");
-//        scanner=new Scanner(System.in);
+        scanner=new Scanner(System.in);
 //        currentNode=firstNode.name;
 
     }
@@ -45,37 +34,37 @@ public class Game {
         Game game = new Game();
         game.gameLoop();
     }
-    public Node getNode(String node){
-        return nodes.get(node);
+    public Room getRoom(String room){
+        return nodes.get(room);
     }
-    public void processNode(Node node){
-        String nextNode=null;
-        if (node!=null) {
-            node.print();
+    public void processRoom(Room room){
+        String nextRoom=null;
+        if (room!=null) {
+            room.print();
         }
         String input;
-        while (nextNode==null&&running){
+        while (nextRoom==null&&running){
             input=read();
-            nextNode=node.decide(input);
-            if (nextNode==null){
+            nextRoom=room.decide(input);
+            if (nextRoom==null){
                 System.out.println("Type in a proper response");
             }
         }
-        currentNode=nextNode;
+        currentRoom=nextRoom;
     }
     public String read(){
         return scanner.nextLine();
     }
     public void gameLoop(){
         while (running){
-            if (nodes.get(currentNode).paths.isEmpty()){
+            if (nodes.get(currentRoom).paths.isEmpty()){
                 running=false;
             }
-            processNode(getCurrentNode());
+            processRoom(getCurrentRoom());
         }
     }
-    public Node getCurrentNode(){
-        return getNode(currentNode);
+    public Room getCurrentRoom(){
+        return getRoom(currentRoom);
     }
 
     private Room makeRoom(String roomName, String nodeText){
