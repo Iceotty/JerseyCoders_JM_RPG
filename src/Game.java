@@ -5,6 +5,7 @@ import java.util.Scanner;
  * Created by Joseph on 09/03/2016.
  */
 public class Game {
+    PlayerCharacter pc =  new PlayerCharacter();
     String currentRoom;
     HashMap<String,Room> nodes;
     Scanner scanner;
@@ -15,25 +16,25 @@ public class Game {
         nodes=new HashMap<>();
         makeRoom("room.firstRoom","The dankest of dank rooms").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
         makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls").west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
-        makeRoom("room.thirdRoom","No dank memes in this one").northEast("room.firstRoom").isDeathRoom=true;
+        makeRoom("room.thirdRoom","You get sliced in half by a chainsaw blade").northEast("room.firstRoom").isDeathRoom=true;
         makeRoom("room.fourthRoom","Its okay I guess").north("room.firstRoom").east("room.fifthRoom").southEast("room.seventhRoom").south("room.eighthRoom");
         makeRoom("room.fifthRoom","An arrow trap shoots you in the balls").southWest("room.seventhRoom").south("room.ninthRoom").north("room.secondRoom").isDeathRoom=true;
         makeRoom("room.sixthRoom","Dank. Really really dank.").northWest("room.secondRoom").isDeathRoom=true;
         makeRoom("room.seventhRoom","Has a warm pit of lava").northEast("room.fifthRoom").northWest("room.fourthRoom");
-        makeRoom("room.eighthRoom","Has octarine sparkles on the floor.").north("room.fourthRoom").southWest("room.eleventhRoom");
+        makeRoom("room.eighthRoom","Has octarine sparkles on the floor.").north("room.fourthRoom").southWest("room.eleventhRoom").east("room.ninthRoom");
         makeRoom("room.ninthRoom","Infested with demons").north("room.fifthRoom").west("room.eighthRoom").south("room.tenthRoom");
         makeRoom("room.tenthRoom","Has some cool loot in it").north("room.ninthRoom").south("room.twelfthRoom");
         makeRoom("room.eleventhRoom","Dead end, filled with monsters").northEast("room.eighthRoom");
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!").north("room.tenthRoom").isEndRoom=true;
+        makeItem("item.key","you got a rusty key","room.sixthRoom");
         currentRoom = nodes.get("room.firstRoom").name;
-//        nodes.get("node.eatNode").addPath("die","node.deadNode");
         scanner=new Scanner(System.in);
-//        currentNode=firstNode.name;
 
     }
     public static void main(String ...args){
         Game game = new Game();
         game.gameLoop();
+
     }
     public Room getRoom(String room){
         return nodes.get(room);
@@ -60,8 +61,10 @@ public class Game {
         String input;
         while (running){
             processRoom(getCurrentRoom());
+
             if (nodes.get(currentRoom).isDeathRoom){
                 isDead=true;
+                getCurrentRoom().print();
                 System.out.println("YOU ARE DEAD");
                 System.out.println("type restart to begin again, or end to stop playing.");
             }
@@ -92,6 +95,10 @@ public class Game {
     private Room makeRoom(String roomName, String nodeText){
         nodes.put(roomName,new Room(roomName,nodeText));
         return nodes.get(roomName);
+    }
+    private Item makeItem(String name, String text, String room){
+        pc.inventory.put(name,new Item(name, text, room));
+        return pc.inventory.get(name);
     }
 }
 

@@ -4,8 +4,10 @@
 public class Item {
     String name;
     String text;
-    public Item(String name, String text){
+    String room;
+    public Item(String name, String text, String room){
         this.name = name;
         this.text = text;
+        this.room = room;
     }
 }
