@@ -10,7 +10,6 @@ public class Game {
     String currentRoom;
     Random random;
     HashMap<String,Room> nodes;
-    HashMap<String,Item> items;
     Scanner scanner;
     boolean running = false;
     boolean isDead=false;
@@ -43,7 +42,7 @@ public class Game {
 
     }
     public Room getRoom(String room){
-        return nodes.get(room);
+        return nodes.get(room); 
     }
     public void processRoom(Room room){
         String nextRoom=null;
