@@ -12,6 +12,8 @@ public class PlayerCharacter {
     int magic;
     HashMap<String, Item> inventory;
     public PlayerCharacter(){
+        agility = 14;
+        health = 10;
         inventory = new HashMap<>();
     }
 

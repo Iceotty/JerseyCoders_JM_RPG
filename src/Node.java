@@ -5,17 +5,20 @@ import java.util.HashMap;
 public class Node {
     String name;
     String text;
+    String trapText;
     HashMap<String, String> paths;
 
-    public Node(String name, String text) {
+    public Node(String name, String text, String trapText) {
         paths = new HashMap<>();
         this.text = text;
         this.name = name;
+        this.trapText = trapText;
     }
 
     public void print() {
         System.out.println(text);
     }
+    public void printTrap(){System.out.println(trapText);}
     /*Decides the next node based on the input*/
     public String decide(String input) {
         String nextNode;
