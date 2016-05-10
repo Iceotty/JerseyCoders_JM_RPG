@@ -4,8 +4,11 @@
 public class Room extends Node {
     boolean isEndRoom=false;
     boolean isDeathRoom=false;
-    public Room(String name, String text) {
+    boolean isLocked=false;
+    Item item;
+    public Room(String name, String text,Item item) {
         super(name, text);
+        this.item = item;
     }
     public Room north(String room){
         addPath("north",room);
