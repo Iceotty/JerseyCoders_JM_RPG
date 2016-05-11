@@ -10,6 +10,7 @@ public class Game {
     String currentRoom;
     Random random;
     HashMap<String,Room> nodes;
+    HashMap<String, NPC> NPCs;
     Scanner scanner;
     boolean running = false;
     boolean isDead=false;
@@ -31,6 +32,7 @@ public class Game {
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!",null,null,null).north("room.tenthRoom").isEndRoom=true;
         makeItem("item.key","you got a rusty key","room.sixthRoom");
         makeItem("item.loot","You got some cool loot","room.tenthRoom");
+        makeNPC("npc.enemy","room.ninthRoom");
         currentRoom = nodes.get("room.firstRoom").name;
         scanner=new Scanner(System.in);
         pc  =  new PlayerCharacter();
@@ -42,7 +44,7 @@ public class Game {
 
     }
     public Room getRoom(String room){
-        return nodes.get(room); 
+        return nodes.get(room);
     }
     public void processRoom(Room room){
         String nextRoom=null;
@@ -84,6 +86,9 @@ public class Game {
             }else {
                 System.out.println("The door is locked");
             }
+        }
+        if (NPCs.get(currentRoom)!=null){
+            //not finished! wont work bc NPCs.get() takes the name of the NPC, rather than it's room
         }
     }
     public String read(){
@@ -127,6 +132,11 @@ public class Game {
     private Item makeItem(String name, String text, String room){
         nodes.get(room).item= new Item(name, text, room);
         return nodes.get(room).item;
+    }
+    private NPC makeNPC(String name,String room){
+        NPC npc = new NPC(nodes.get(room));
+        NPCs.put(name,npc);
+        return NPCs.get(name);
     }
     private boolean roll(int max, int min){
         random = new Random();
