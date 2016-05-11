@@ -5,9 +5,8 @@ public class Item {
     String name;
     String text;
     String room;
-    public Item(String name, String text, String room){
+    public Item(String name, String text){
         this.name = name;
         this.text = text;
-        this.room = room;
     }
 }
