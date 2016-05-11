@@ -12,6 +12,7 @@ public class Game {
     HashMap<String,Room> nodes;
     HashMap<String, NPC> NPCs;
     HashMap<String,Item> items;
+    HashMap<String,Trap> traps;
     Scanner scanner;
     boolean running = false;
     boolean isDead=false;
@@ -19,20 +20,24 @@ public class Game {
     public Game(){
         running = true;
         nodes=new HashMap<>();
-        makeRoom("room.firstRoom","The dankest of dank rooms",null,null).east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
-        makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls",null,null).west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
-        makeRoom("room.thirdRoom","Barry levels of Dank","You get sliced in half by a chainsaw blade","A chainsaw blade swings towards you from a wall").northWest("room.firstRoom").isDeathRoom=true;
-        makeRoom("room.fourthRoom","Its okay I guess",null,null).north("room.firstRoom").east("room.fifthRoom").southEast("room.seventhRoom").south("room.eighthRoom");
-        makeRoom("room.fifthRoom","A plain, empty room with absolutely nothing in it","An arrow trap shoots you in the balls","An arrow trap fires at you").southWest("room.seventhRoom").south("room.ninthRoom").north("room.secondRoom").isDeathRoom=true;
-        makeRoom("room.sixthRoom","Dank. Really really dank.",null,null).northWest("room.secondRoom");
-        makeRoom("room.seventhRoom","Has a warm pit of lava",null,null).northEast("room.fifthRoom").northWest("room.fourthRoom");
-        makeRoom("room.eighthRoom","Has octarine sparkles on the floor.",null,null).north("room.fourthRoom").southWest("room.eleventhRoom").east("room.ninthRoom");
-        makeRoom("room.ninthRoom","Infested with demons",null,null).north("room.fifthRoom").west("room.eighthRoom").south("room.tenthRoom");
-        makeRoom("room.tenthRoom","Has some cool loot in it",null,null).north("room.ninthRoom").south("room.twelfthRoom").isLocked=true;
-        makeRoom("room.eleventhRoom","Dead end, filled with monsters",null,null).northEast("room.eighthRoom");
-        makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!",null,null).north("room.tenthRoom").isEndRoom=true;
+        makeRoom("room.firstRoom","The dankest of dank rooms").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
+        makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls").west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
+        makeRoom("room.thirdRoom","Barry levels of Dank").northWest("room.firstRoom").isDeathRoom=true;
+        makeRoom("room.fourthRoom","Its okay I guess").north("room.firstRoom").east("room.fifthRoom").southEast("room.seventhRoom").south("room.eighthRoom");
+        makeRoom("room.fifthRoom","A plain, empty room with absolutely nothing in it").southWest("room.seventhRoom").south("room.ninthRoom").north("room.secondRoom").isDeathRoom=true;
+        makeRoom("room.sixthRoom","Dank. Really really dank.").northWest("room.secondRoom");
+        makeRoom("room.seventhRoom","Has a warm pit of lava").northEast("room.fifthRoom").northWest("room.fourthRoom");
+        makeRoom("room.eighthRoom","Has octarine sparkles on the floor.").north("room.fourthRoom").southWest("room.eleventhRoom").east("room.ninthRoom");
+        makeRoom("room.ninthRoom","Infested with demons").north("room.fifthRoom").west("room.eighthRoom").south("room.tenthRoom");
+        makeRoom("room.tenthRoom","Has some cool loot in it").north("room.ninthRoom").south("room.twelfthRoom").isLocked=true;
+        makeRoom("room.eleventhRoom","Dead end, filled with monsters").northEast("room.eighthRoom");
+        makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!").north("room.tenthRoom").isEndRoom=true;
         makeItem("item.key","you got a rusty key");
         addItem("item.key","room.sixthRoom");
+        makeTrap("trap.arrowTrap","An arrow trap shoots you in the balls","An arrow trap fires at you");
+        makeTrap("trap.chainsawTrap","You get sliced in half by a chainsaw blade","A chainsaw blade swings towards you from a wall");
+        addTrap("trap.chainsawTrap","room.thirdRoom");
+        addTrap("trap.arrowTrap", "room.fifthRoom");
         makeNPC("npc.enemy","room.ninthRoom");
         currentRoom = nodes.get("room.firstRoom").name;
         scanner=new Scanner(System.in);
@@ -61,8 +66,8 @@ public class Game {
             }
 
         }
-        if (nodes.get(nextRoom).isDeathRoom){
-            nodes.get(nextRoom).printTrap();
+        if (nodes.get(nextRoom).trap!=null){
+            traps.get(nodes.get(nextRoom).trap).printTrap();
             System.out.println("type roll to roll the outcome");
             if (read().toLowerCase().equals("roll")){
                 roll=roll(20,pc.agility);
@@ -123,17 +128,23 @@ public class Game {
     }
     public Room getCurrentRoom(){return getRoom(currentRoom);}
 
-    private Room makeRoom(String roomName,String text,String killText,String trapText){
-        nodes.put(roomName,new Room(roomName,text,killText,trapText, null));
+    private Room makeRoom(String roomName,String text){
+        nodes.put(roomName,new Room(roomName,text,null,null,null));
         return nodes.get(roomName);
+    }
+    private void addTrap(String trap, String room){
+        nodes.get(room).trap = traps.get(trap);
+    }
+    private Trap makeTrap(String name, String text, String killText ){
+        traps.put(name,new Trap(text,killText));
+        return traps.get(name);
     }
     private Item makeItem(String name, String text){
         items.put(name,new Item(name,text));
         return items.get(name);
     }
     private NPC makeNPC(String name,String room){
-        NPC npc = new NPC(nodes.get(room));
-        NPCs.put(name,npc);
+        NPCs.put(name, new NPC(nodes.get(room)));
         return NPCs.get(name);
     }
     private void addItem(String item, String room){

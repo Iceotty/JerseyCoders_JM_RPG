@@ -5,12 +5,14 @@ public class Room extends Node {
     boolean isEndRoom=false;
     boolean isDeathRoom=false;
     boolean isLocked=false;
-    String killText;
+    Trap trap;
     Item item;
-    public Room(String name,String text, String killText,String trapText,Item item) {
-        super(name, text,trapText);
+    NPC npc;
+    public Room(String name,String text,Item item, Trap trap,NPC npc) {
+        super(name, text);
         this.item = item;
-        this.killText = killText;
+        this.npc = npc;
+        this.trap = trap;
     }
     public Room north(String room){
         addPath("north",room);
