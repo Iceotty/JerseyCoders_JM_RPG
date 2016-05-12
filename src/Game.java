@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class Game {
     PlayerCharacter pc;
     String currentRoom;
+    String previousRoom;
     Random random;
     HashMap<String,Room> nodes;
     HashMap<String, NPC> NPCs;
@@ -15,8 +16,8 @@ public class Game {
     HashMap<String,Trap> traps;
     Scanner scanner;
     boolean running = false;
-    boolean isDead=false;
     boolean roll;
+    boolean combat;
     public Game(){
         running = true;
         nodes=new HashMap<>();
@@ -41,7 +42,7 @@ public class Game {
         makeTrap("trap.chainsawTrap","You get sliced in half by a chainsaw blade","A chainsaw blade swings towards you from a wall");
         addTrap("trap.chainsawTrap","room.thirdRoom");
         addTrap("trap.arrowTrap", "room.fifthRoom");
-        makeNPC("npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe");
+        makeNPC("npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe");
         currentRoom = nodes.get("room.firstRoom").name;
         scanner=new Scanner(System.in);
         pc  =  new PlayerCharacter();
@@ -60,6 +61,7 @@ public class Game {
         if (room!=null) {
             room.print();
         }
+        previousRoom = currentRoom;
         String input;
         while (nextRoom==null&&running){
             input=read();
@@ -69,23 +71,25 @@ public class Game {
             }
 
         }
-        if (nodes.get(currentRoom).npc!=null){
+        if (nodes.get(currentRoom).npc!=null&&nodes.get(currentRoom).npc.isAggressive){
+            combat=true;
             nodes.get(currentRoom).npc.printText();
-            if(roll(20,14,"Pepe")){
+            if(rollBoolean(20,14,"Pepe")){
                 nodes.get(currentRoom).npc.printKillText();
-                isDead = true;
+                pc.isDead = true;
             }
+
         }
         if (nodes.get(nextRoom).trap!=null){
             traps.get(nodes.get(nextRoom).trap).printTrap();
-            System.out.println("type roll to roll the outcome");
+            System.out.println("Type roll to roll the outcome");
             if (read().toLowerCase().equals("roll")){
-                roll=roll(20,pc.agility,"You");
+                roll=rollBoolean(20,pc.agility,"You");
                 if (roll){
                     System.out.println("You successfully dodged the trap");
                     currentRoom=nextRoom;
                 }else {
-                    isDead = true;
+                    pc.isDead = true;
                     System.out.println("YOU ARE DEAD");
                     System.out.println("type restart to begin again, or end to stop playing.");
                 }
@@ -111,21 +115,48 @@ public class Game {
         String input;
         while (running){
             processRoom(getCurrentRoom());
+            if (combat){
+                System.out.println("Type roll to roll for initiative");
+                if (read().toLowerCase().equals("roll")){
+                    if (rollInt(20,0,"You")>rollInt(20,0,null)){
+                        pc.isTurn=true;
+                    }
+                    else {
+                        NPCs.get(nodes.get(currentRoom).npc).isTurn=true;
+                    }
+                }
+                if (pc.isTurn){
+                    System.out.println("It is your turn, type attack to attack, or run to flee");
+                    if (read().toLowerCase().equals("run")){
+                        System.out.println("You run to the previous room");
+                        currentRoom = previousRoom;
+                    }
+                    if (!pc.isDead&&read().toLowerCase().equals("attack")){
+                        System.out.println("You attack "+nodes.get(currentRoom).npc.name);
+                        if(rollBoolean(20,11,"You")){
+                            System.out.println("You killed "+nodes.get(currentRoom).npc.name);
+                        }else {
+                            System.out.println("You completely missed "+nodes.get(currentRoom).npc.name);
+                        }
+                    }
+                }
+
+            }
             if (getCurrentRoom().item!=null){
                 pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
                 System.out.println(getCurrentRoom().item.text);
             }
-            while (isDead&&running){
+            while (pc.isDead&&running){
                 input = read();
                 if (input.toLowerCase().equals("restart")){
-                    isDead=false;
+                    pc.isDead=false;
                     currentRoom="room.firstRoom";
 
                 }
                 if (input.toLowerCase().equals("end")) {
                     running = false;
                 }
-                if (isDead&&running) {
+                if (pc.isDead&&running) {
                     System.out.println("Type in a proper response");
                 }
             }
@@ -153,16 +184,16 @@ public class Game {
         items.put(name,new Item(name,text));
         return items.get(name);
     }
-    private NPC makeNPC(String name,String room, String text, String killText){
-        NPCs.put(name, new NPC(nodes.get(room),text,killText));
-        nodes.get(room).npc = NPCs.get(name);
-        return NPCs.get(name);
+    private NPC makeNPC(String key,String room, String text, String killText, String name){
+        NPCs.put(key, new NPC(nodes.get(room),text,killText, name));
+        nodes.get(room).npc = NPCs.get(key);
+        return NPCs.get(key);
 
     }
     private void addItem(String item, String room){
         nodes.get(room).item = items.get(item);
     }
-    private boolean roll(int max, int min,String roller){
+    private boolean rollBoolean(int max, int min,String roller){
         random = new Random();
         int randInt = random.nextInt(max)+1;
         System.out.println(roller+" rolled a "+randInt);
@@ -171,6 +202,15 @@ public class Game {
         }else{
             return false;
         }
+    }
+    private int rollInt(int max, int min, String roller){
+        random = new Random();
+        int randInt = random.nextInt(max)+1;
+        if(roller!=null){
+            System.out.println(roller+" rolled a "+randInt);
+        }
+        return randInt;
+
     }
 
 }

@@ -6,9 +6,11 @@ public class NPC extends Character{
     Room room;
     String text;
     String killText;
-    public NPC(Room room,String text,String killText){
+    String name;
+    public NPC(Room room,String text,String killText,String name){
         this.room = room;
         this.text = text;
+        this.name = name;
         this.killText = killText;
         isAggressive = true;
     }
