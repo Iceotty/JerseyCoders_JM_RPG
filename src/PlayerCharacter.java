@@ -8,6 +8,7 @@ public class PlayerCharacter extends Character {
     public PlayerCharacter(){
         agility = 14;
         health = 10;
+        armor=13;
         inventory = new HashMap<>();
     }
 

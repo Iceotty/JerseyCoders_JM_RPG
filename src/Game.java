@@ -74,10 +74,6 @@ public class Game {
         if (nodes.get(currentRoom).npc!=null&&nodes.get(currentRoom).npc.isAggressive){
             combat=true;
             nodes.get(currentRoom).npc.printText();
-            if(rollBoolean(20,14,"Pepe")){
-                nodes.get(currentRoom).npc.printKillText();
-                pc.isDead = true;
-            }
 
         }
         if (nodes.get(nextRoom).trap!=null){
@@ -90,8 +86,6 @@ public class Game {
                     currentRoom=nextRoom;
                 }else {
                     pc.isDead = true;
-                    System.out.println("YOU ARE DEAD");
-                    System.out.println("type restart to begin again, or end to stop playing.");
                 }
             }
         }
@@ -116,13 +110,16 @@ public class Game {
         while (running){
             processRoom(getCurrentRoom());
             if (combat){
+                if (nodes.get(currentRoom).npc==null||pc.isDead){
+                    combat=false;
+                }
                 System.out.println("Type roll to roll for initiative");
                 if (read().toLowerCase().equals("roll")){
                     if (rollInt(20,0,"You")>rollInt(20,0,null)){
                         pc.isTurn=true;
                     }
                     else {
-                        NPCs.get(nodes.get(currentRoom).npc).isTurn=true;
+                        nodes.get(currentRoom).npc.isTurn=true;
                     }
                 }
                 if (pc.isTurn){
@@ -135,9 +132,19 @@ public class Game {
                         System.out.println("You attack "+nodes.get(currentRoom).npc.name);
                         if(rollBoolean(20,11,"You")){
                             System.out.println("You killed "+nodes.get(currentRoom).npc.name);
+                            nodes.get(currentRoom).npc=null;
                         }else {
                             System.out.println("You completely missed "+nodes.get(currentRoom).npc.name);
                         }
+                    }
+                    pc.isTurn=false;
+                    nodes.get(currentRoom).npc.isTurn=true;
+                }
+                if (nodes.get(currentRoom).npc.isTurn=true){
+                    System.out.println(nodes.get(currentRoom).npc.name+" attacks you");
+                    if (rollBoolean(20,pc.armor,nodes.get(currentRoom).npc.name)){
+                        nodes.get(currentRoom).npc.printKillText();
+                        pc.isDead=true;
                     }
                 }
 
@@ -145,13 +152,15 @@ public class Game {
             if (getCurrentRoom().item!=null){
                 pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
                 System.out.println(getCurrentRoom().item.text);
+                getCurrentRoom().item=null;
             }
             while (pc.isDead&&running){
+                System.out.println("YOU ARE DEAD");
+                System.out.println("type restart to begin again, or end to stop playing.");
                 input = read();
                 if (input.toLowerCase().equals("restart")){
                     pc.isDead=false;
                     currentRoom="room.firstRoom";
-
                 }
                 if (input.toLowerCase().equals("end")) {
                     running = false;

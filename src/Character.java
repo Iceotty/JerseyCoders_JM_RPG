@@ -5,6 +5,7 @@ import java.util.HashMap;
  */
 public class Character {
     int health;
+    int armor;
     int initiative;
     int mana;
     int strength;
