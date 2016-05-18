@@ -1,6 +1,4 @@
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Created by Joseph on 09/03/2016.
@@ -42,7 +40,8 @@ public class Game {
         makeTrap("trap.chainsawTrap","You get sliced in half by a chainsaw blade","A chainsaw blade swings towards you from a wall");
         addTrap("trap.chainsawTrap","room.thirdRoom");
         addTrap("trap.arrowTrap", "room.fifthRoom");
-        makeNPC("npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe");
+        makeNPC(5,"npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe");
+        makeNPC(3,"npc.testEnemy","room.seventhRoom","A slime attacks you","The slime suffocated you","Slime");
         currentRoom = nodes.get("room.firstRoom").name;
         scanner=new Scanner(System.in);
         pc  =  new PlayerCharacter();
@@ -71,9 +70,9 @@ public class Game {
             }
 
         }
-        if (nodes.get(currentRoom).npc!=null&&nodes.get(currentRoom).npc.isAggressive){
-            combat=true;
-            nodes.get(currentRoom).npc.printText();
+        if (getCurrentRoom().npc!=null&&getCurrentRoom().npc.isAggressive){
+            getCurrentRoom().npc.printText();
+            combat(getCurrentRoom().npc);
 
         }
         if (nodes.get(nextRoom).trap!=null){
@@ -109,46 +108,6 @@ public class Game {
         String input;
         while (running){
             processRoom(getCurrentRoom());
-            if (combat){
-                if (nodes.get(currentRoom).npc==null||pc.isDead){
-                    combat=false;
-                }
-                System.out.println("Type roll to roll for initiative");
-                if (read().toLowerCase().equals("roll")){
-                    if (rollInt(20,0,"You")>rollInt(20,0,null)){
-                        pc.isTurn=true;
-                    }
-                    else {
-                        nodes.get(currentRoom).npc.isTurn=true;
-                    }
-                }
-                if (pc.isTurn){
-                    System.out.println("It is your turn, type attack to attack, or run to flee");
-                    if (read().toLowerCase().equals("run")){
-                        System.out.println("You run to the previous room");
-                        currentRoom = previousRoom;
-                    }
-                    if (!pc.isDead&&read().toLowerCase().equals("attack")){
-                        System.out.println("You attack "+nodes.get(currentRoom).npc.name);
-                        if(rollBoolean(20,11,"You")){
-                            System.out.println("You killed "+nodes.get(currentRoom).npc.name);
-                            nodes.get(currentRoom).npc=null;
-                        }else {
-                            System.out.println("You completely missed "+nodes.get(currentRoom).npc.name);
-                        }
-                    }
-                    pc.isTurn=false;
-                    nodes.get(currentRoom).npc.isTurn=true;
-                }
-                if (nodes.get(currentRoom).npc.isTurn=true){
-                    System.out.println(nodes.get(currentRoom).npc.name+" attacks you");
-                    if (rollBoolean(20,pc.armor,nodes.get(currentRoom).npc.name)){
-                        nodes.get(currentRoom).npc.printKillText();
-                        pc.isDead=true;
-                    }
-                }
-
-            }
             if (getCurrentRoom().item!=null){
                 pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
                 System.out.println(getCurrentRoom().item.text);
@@ -176,6 +135,60 @@ public class Game {
             }
         }
     }
+    private void combat(NPC npc){
+
+        List<Initiative> turnOrder = new ArrayList<>();
+        turnOrder.add(new Initiative(pc,rollInt(20,0,null)));
+        turnOrder.add(new Initiative(npc,rollInt(20,0,null)));
+        Collections.sort(turnOrder);
+        if (npc==null||npc.isDead||pc.isDead||getCurrentRoom().npc==null){
+            return;
+        }
+        while (combat){
+            Character character;
+            Initiative init = turnOrder.remove(0);
+
+            character = init.character;
+
+            turnOrder.add(init);
+        }
+        if (pc.isTurn){
+            System.out.println("It is your turn, type attack to attack, or run to flee");
+            if (read().toLowerCase().equals("run")){
+                System.out.println("You run to the previous room");
+                currentRoom = previousRoom;
+            }
+            if (!pc.isDead&&read().toLowerCase().equals("attack")){
+                System.out.println("You attack "+getCurrentRoom().npc.name);
+                System.out.println("Roll to hit");
+                if (read().toLowerCase().equals("roll")) {
+                    if (rollBoolean(20, 11, "You")) {
+                        System.out.println("Roll damage");
+                        if (read().toLowerCase().equals("roll")){
+                            getCurrentRoom().npc.health=getCurrentRoom().npc.health-rollInt(6,0,"You");
+                            if(getCurrentRoom().npc.health<=0){
+                                getCurrentRoom().npc.isDead=true;
+                                System.out.println("You killed "+getCurrentRoom().npc.name);
+                            }
+                        }
+                    } else {
+                        System.out.println("You completely missed " + getCurrentRoom().npc.name);
+                    }
+                }
+            }
+            pc.isTurn=false;
+            getCurrentRoom().npc.isTurn=true;
+        }
+        if (getCurrentRoom().npc.isTurn=true){
+            System.out.println(getCurrentRoom().npc.name+" attacks you");
+            if (rollBoolean(20,pc.armor,getCurrentRoom().npc.name)){
+                getCurrentRoom().npc.printKillText();
+                pc.isDead=true;
+            }
+        }
+
+    }
+
     public Room getCurrentRoom(){return getRoom(currentRoom);}
 
     private Room makeRoom(String roomName,String text){
@@ -193,8 +206,8 @@ public class Game {
         items.put(name,new Item(name,text));
         return items.get(name);
     }
-    private NPC makeNPC(String key,String room, String text, String killText, String name){
-        NPCs.put(key, new NPC(nodes.get(room),text,killText, name));
+    private NPC makeNPC(int health,String key,String room, String text, String killText, String name){
+        NPCs.put(key, new NPC(health,nodes.get(room),text,killText, name));
         nodes.get(room).npc = NPCs.get(key);
         return NPCs.get(key);
 
@@ -205,7 +218,9 @@ public class Game {
     private boolean rollBoolean(int max, int min,String roller){
         random = new Random();
         int randInt = random.nextInt(max)+1;
-        System.out.println(roller+" rolled a "+randInt);
+        if (roller!=null) {
+            System.out.println(roller + " rolled a " + randInt);
+        }
         if (randInt>=min){
             return true;
         }else{

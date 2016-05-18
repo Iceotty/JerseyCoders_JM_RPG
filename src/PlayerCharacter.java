@@ -12,4 +12,9 @@ public class PlayerCharacter extends Character {
         inventory = new HashMap<>();
     }
 
+    @Override
+    public void combat(CombatState combatState) {
+        System.out.println("It is your turn");
+        System.out.println("Do you want to attack "+combatState);
+    }
 }
