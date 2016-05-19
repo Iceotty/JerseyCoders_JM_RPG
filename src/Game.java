@@ -84,6 +84,7 @@ public class Game {
                     System.out.println("You successfully dodged the trap");
                     currentRoom=nextRoom;
                 }else {
+                    nodes.get(nextRoom).trap.printKillTrap();
                     pc.isDead = true;
                 }
             }
@@ -149,41 +150,40 @@ public class Game {
             Initiative init = turnOrder.remove(0);
 
             character = init.character;
-
             turnOrder.add(init);
-        }
-        if (pc.isTurn){
-            System.out.println("It is your turn, type attack to attack, or run to flee");
-            if (read().toLowerCase().equals("run")){
-                System.out.println("You run to the previous room");
-                currentRoom = previousRoom;
-            }
-            if (!pc.isDead&&read().toLowerCase().equals("attack")){
-                System.out.println("You attack "+getCurrentRoom().npc.name);
-                System.out.println("Roll to hit");
-                if (read().toLowerCase().equals("roll")) {
-                    if (rollBoolean(20, 11, "You")) {
-                        System.out.println("Roll damage");
-                        if (read().toLowerCase().equals("roll")){
-                            getCurrentRoom().npc.health=getCurrentRoom().npc.health-rollInt(6,0,"You");
-                            if(getCurrentRoom().npc.health<=0){
-                                getCurrentRoom().npc.isDead=true;
-                                System.out.println("You killed "+getCurrentRoom().npc.name);
+
+            if (character.equals(pc)){
+                System.out.println("It is your turn, type attack to attack, or run to flee");
+                if (read().toLowerCase().equals("run")){
+                    System.out.println("You run to the previous room");
+                    currentRoom = previousRoom;
+                }
+                if (!pc.isDead&&read().toLowerCase().equals("attack")){
+                    System.out.println("You attack "+getCurrentRoom().npc.name);
+                    System.out.println("Roll to hit");
+                    if (read().toLowerCase().equals("roll")) {
+                        if (rollBoolean(20, 11, "You")) {
+                            System.out.println("Roll damage");
+                            if (read().toLowerCase().equals("roll")){
+                                getCurrentRoom().npc.health=getCurrentRoom().npc.health-rollInt(6,0,"You");
+                                if(getCurrentRoom().npc.health<=0){
+                                    getCurrentRoom().npc.isDead=true;
+                                    System.out.println("You killed "+getCurrentRoom().npc.name);
+                                }
                             }
+                        } else {
+                            System.out.println("You completely missed " + getCurrentRoom().npc.name);
                         }
-                    } else {
-                        System.out.println("You completely missed " + getCurrentRoom().npc.name);
                     }
+
                 }
             }
-            pc.isTurn=false;
-            getCurrentRoom().npc.isTurn=true;
-        }
-        if (getCurrentRoom().npc.isTurn=true){
-            System.out.println(getCurrentRoom().npc.name+" attacks you");
-            if (rollBoolean(20,pc.armor,getCurrentRoom().npc.name)){
-                getCurrentRoom().npc.printKillText();
-                pc.isDead=true;
+            if (character.equals(npc)){
+                System.out.println(getCurrentRoom().npc.name+" attacks you");
+                if (rollBoolean(20,pc.armor,getCurrentRoom().npc.name)){
+                    getCurrentRoom().npc.printKillText();
+                    pc.isDead=true;
+                }
             }
         }
 

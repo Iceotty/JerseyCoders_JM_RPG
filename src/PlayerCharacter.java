@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Joseph on 09/03/2016.
@@ -14,7 +16,12 @@ public class PlayerCharacter extends Character {
 
     @Override
     public void combat(CombatState combatState) {
+        List<NPC> enemies;
         System.out.println("It is your turn");
-        System.out.println("Do you want to attack "+combatState);
+        System.out.println("Choose an enemy to attack");
+        enemies=combatState.getEnemies();
+        for (NPC npc : enemies){
+            System.out.println(npc.name);
+        }
     }
 }
