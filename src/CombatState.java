@@ -1,15 +1,18 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
  * Created by Joseph on 18/05/2016.
  */
 public class CombatState {
-    List<Character> characters;
+    Collection<NPC> characters;
     List<Initiative> turnOrder;
-    public CombatState(List<Character> characters, List<Initiative> turnOrder){
+    Room currentRoom;
+    public CombatState(Collection<NPC> characters, List<Initiative> turnOrder, Room currentRoom){
         this.characters = characters;
         this.turnOrder = turnOrder;
+        this.currentRoom = currentRoom;
     }
     public List getEnemies(){
         List<NPC> enemies = new ArrayList<>();

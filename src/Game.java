@@ -7,22 +7,23 @@ public class Game {
     PlayerCharacter pc;
     String currentRoom;
     String previousRoom;
-    Random random;
+    RandomNumberGenerator rng;
     HashMap<String,Room> nodes;
     HashMap<String, NPC> NPCs;
     HashMap<String,Item> items;
     HashMap<String,Trap> traps;
-    Scanner scanner;
     boolean running = false;
     boolean roll;
     boolean combat;
+    InputManager inputManager;
     public Game(){
         running = true;
         nodes=new HashMap<>();
         NPCs=new HashMap<>();
         items=new HashMap<>();
         traps=new HashMap<>();
-        makeRoom("room.firstRoom","The dankest of dank rooms").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
+        inputManager = new InputManager();
+        makeRoom("room.firstRoom","WELCOME TO THE DUNGEON OF THE MEME").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
         makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls").west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
         makeRoom("room.thirdRoom","Barry levels of Dank").northWest("room.firstRoom").isDeathRoom=true;
         makeRoom("room.fourthRoom","Its okay I guess").north("room.firstRoom").east("room.fifthRoom").southEast("room.seventhRoom").south("room.eighthRoom");
@@ -43,14 +44,13 @@ public class Game {
         makeNPC(5,"npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe");
         makeNPC(3,"npc.testEnemy","room.seventhRoom","A slime attacks you","The slime suffocated you","Slime");
         currentRoom = nodes.get("room.firstRoom").name;
-        scanner=new Scanner(System.in);
         pc  =  new PlayerCharacter();
+        rng = new RandomNumberGenerator();
 
     }
     public static void main(String ...args){
         Game game = new Game();
         game.gameLoop();
-
     }
     public Room getRoom(String room){
         return nodes.get(room);
@@ -62,24 +62,23 @@ public class Game {
         }
         previousRoom = currentRoom;
         String input;
+        if (getCurrentRoom().npc!=null&&getCurrentRoom().npc.isAggressive){
+            getCurrentRoom().npc.printText();
+            combat = true;
+            combat(getCurrentRoom().npc);
+        }
         while (nextRoom==null&&running){
-            input=read();
+            input=inputManager.read();
             nextRoom=room.decide(input);
             if (nextRoom==null){
                 System.out.println("Type in a proper response");
             }
-
         }
-        if (getCurrentRoom().npc!=null&&getCurrentRoom().npc.isAggressive){
-            getCurrentRoom().npc.printText();
-            combat(getCurrentRoom().npc);
-
-        }
-        if (nodes.get(nextRoom).trap!=null){
+        if (traps.get(nodes.get(nextRoom).trap)!=null){
             traps.get(nodes.get(nextRoom).trap).printTrap();
             System.out.println("Type roll to roll the outcome");
-            if (read().toLowerCase().equals("roll")){
-                roll=rollBoolean(20,pc.agility,"You");
+            if (inputManager.read().toLowerCase().equals("roll")){
+                roll=rng.rollBoolean(20,pc.agility,"You");
                 if (roll){
                     System.out.println("You successfully dodged the trap");
                     currentRoom=nextRoom;
@@ -102,9 +101,6 @@ public class Game {
             }
         }
     }
-    public String read(){
-        return scanner.nextLine();
-    }
     public void gameLoop(){
         String input;
         while (running){
@@ -117,7 +113,7 @@ public class Game {
             while (pc.isDead&&running){
                 System.out.println("YOU ARE DEAD");
                 System.out.println("type restart to begin again, or end to stop playing.");
-                input = read();
+                input = inputManager.read();
                 if (input.toLowerCase().equals("restart")){
                     pc.isDead=false;
                     currentRoom="room.firstRoom";
@@ -139,8 +135,8 @@ public class Game {
     private void combat(NPC npc){
 
         List<Initiative> turnOrder = new ArrayList<>();
-        turnOrder.add(new Initiative(pc,rollInt(20,0,null)));
-        turnOrder.add(new Initiative(npc,rollInt(20,0,null)));
+        turnOrder.add(new Initiative(pc,rng.rollInt(20,0,null)));
+        turnOrder.add(new Initiative(npc,rng.rollInt(20,0,null)));
         Collections.sort(turnOrder);
         if (npc==null||npc.isDead||pc.isDead||getCurrentRoom().npc==null){
             return;
@@ -151,21 +147,25 @@ public class Game {
 
             character = init.character;
             turnOrder.add(init);
+            if (npc.isDead||pc.isDead||getCurrentRoom().npc==null){
+                combat = false;
+            }
 
             if (character.equals(pc)){
                 System.out.println("It is your turn, type attack to attack, or run to flee");
-                if (read().toLowerCase().equals("run")){
+                character.combat(new CombatState(NPCs.values(),turnOrder,getCurrentRoom()));
+                if (inputManager.read().toLowerCase().equals("run")){
                     System.out.println("You run to the previous room");
                     currentRoom = previousRoom;
                 }
-                if (!pc.isDead&&read().toLowerCase().equals("attack")){
+                if (!pc.isDead&&inputManager.read().toLowerCase().equals("attack")){
                     System.out.println("You attack "+getCurrentRoom().npc.name);
                     System.out.println("Roll to hit");
-                    if (read().toLowerCase().equals("roll")) {
-                        if (rollBoolean(20, 11, "You")) {
+                    if (inputManager.read().toLowerCase().equals("roll")){
+                        if (rng.rollBoolean(20, 11, "You")) {
                             System.out.println("Roll damage");
-                            if (read().toLowerCase().equals("roll")){
-                                getCurrentRoom().npc.health=getCurrentRoom().npc.health-rollInt(6,0,"You");
+                            if (inputManager.read().toLowerCase().equals("roll")){
+                                getCurrentRoom().npc.health=getCurrentRoom().npc.health-rng.rollInt(6,0,"You");
                                 if(getCurrentRoom().npc.health<=0){
                                     getCurrentRoom().npc.isDead=true;
                                     System.out.println("You killed "+getCurrentRoom().npc.name);
@@ -180,7 +180,7 @@ public class Game {
             }
             if (character.equals(npc)){
                 System.out.println(getCurrentRoom().npc.name+" attacks you");
-                if (rollBoolean(20,pc.armor,getCurrentRoom().npc.name)){
+                if (rng.rollBoolean(20,pc.armor,getCurrentRoom().npc.name)){
                     getCurrentRoom().npc.printKillText();
                     pc.isDead=true;
                 }
@@ -214,27 +214,6 @@ public class Game {
     }
     private void addItem(String item, String room){
         nodes.get(room).item = items.get(item);
-    }
-    private boolean rollBoolean(int max, int min,String roller){
-        random = new Random();
-        int randInt = random.nextInt(max)+1;
-        if (roller!=null) {
-            System.out.println(roller + " rolled a " + randInt);
-        }
-        if (randInt>=min){
-            return true;
-        }else{
-            return false;
-        }
-    }
-    private int rollInt(int max, int min, String roller){
-        random = new Random();
-        int randInt = random.nextInt(max)+1;
-        if(roller!=null){
-            System.out.println(roller+" rolled a "+randInt);
-        }
-        return randInt;
-
     }
 
 }
