@@ -23,7 +23,9 @@ public class PlayerCharacter extends Character {
         System.out.println("Choose an enemy to attack");
         enemies=combatState.getEnemies();
         for (NPC npc : enemies){
-            System.out.println(npc.name);
+            if (npc==combatState.currentRoom.npc) {
+                System.out.println(npc.name);
+            }
         }
         if (rng.rollBoolean(20, 11, "You")) {
             System.out.println("You hit the " + combatState.currentRoom.name);
