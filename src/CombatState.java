@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -14,13 +15,22 @@ public class CombatState {
         this.turnOrder = turnOrder;
         this.currentRoom = currentRoom;
     }
-    public List getEnemies(){
-        List<NPC> enemies = new ArrayList<>();
+    public HashMap<String, NPC> getEnemiesHash(){
+        HashMap<String,NPC> enemyHash = new HashMap<>();
         for (Character character : characters){
             if (character instanceof NPC){
-                enemies.add((NPC) character);
+                enemyHash.put(((NPC) character).name,(NPC) character);
             }
         }
-        return enemies;
+        return enemyHash;
+    }
+    public List<NPC> getEnemiesList(){
+        List<NPC> enemyList = new ArrayList<>();
+        for (Character character : characters){
+            if (character instanceof NPC){
+                enemyList.add((NPC) character);
+            }
+        }
+        return enemyList;
     }
 }

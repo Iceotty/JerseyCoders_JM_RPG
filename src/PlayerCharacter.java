@@ -18,13 +18,27 @@ public class PlayerCharacter extends Character {
 
     @Override
     public void combat(CombatState combatState) {
-        List<NPC> enemies;
+        HashMap<String,NPC> enemyHash;
+        List<NPC> enemyList;
         System.out.println("It is your turn");
         System.out.println("Choose an enemy to attack");
-        enemies=combatState.getEnemies();
-        for (NPC npc : enemies){
+        NPC enemyToAttack=null;
+        String input;
+        enemyHash =combatState.getEnemiesHash();
+        enemyList = combatState.getEnemiesList();
+        for (NPC npc : enemyList){
             if (npc==combatState.currentRoom.npc) {
                 System.out.println(npc.name);
+            }
+            if (inputManager.read() == npc.name){
+                enemyToAttack = npc;
+            }
+        }
+        while(enemyToAttack==null){
+            input=inputManager.read();
+            enemyToAttack=enemyHash.get(input);
+            if (enemyToAttack==null){
+                System.out.println("Type in a proper response");
             }
         }
         if (rng.rollBoolean(20, 11, "You")) {
