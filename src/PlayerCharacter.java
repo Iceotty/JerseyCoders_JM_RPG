@@ -31,11 +31,10 @@ public class PlayerCharacter extends Character {
         }
         while(enemyToAttack==null){
             input=inputManager.read();
-            if (input!=null) {
+            if (input!=null&&isInteger(input)) {
                 enemyToAttack = enemyList.get(Integer.parseInt(input));
-                if (enemyToAttack == null) {
-                    System.out.println("Type in a proper response");
-                }
+            }else {
+                System.out.println("Type in a proper response");
             }
         }
         if (enemyToAttack!=null) {
@@ -51,5 +50,16 @@ public class PlayerCharacter extends Character {
             }
         }
 
+    }
+    public static boolean isInteger(String s) {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        } catch(NullPointerException e) {
+            return false;
+        }
+        // only got here if we didn't return false
+        return true;
     }
 }

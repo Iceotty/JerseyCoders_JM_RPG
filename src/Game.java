@@ -25,9 +25,9 @@ public class Game {
         inputManager = new InputManager();
         makeRoom("room.firstRoom","WELCOME TO THE DUNGEON OF THE MEME").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
         makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls").west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
-        makeRoom("room.thirdRoom","Barry levels of Dank").northWest("room.firstRoom").isDeathRoom=true;
+        makeRoom("room.thirdRoom","Barry levels of Dank").northWest("room.firstRoom");
         makeRoom("room.fourthRoom","Its okay I guess").north("room.firstRoom").east("room.fifthRoom").southEast("room.seventhRoom").south("room.eighthRoom");
-        makeRoom("room.fifthRoom","A plain, empty room with absolutely nothing in it").southWest("room.seventhRoom").south("room.ninthRoom").north("room.secondRoom").isDeathRoom=true;
+        makeRoom("room.fifthRoom","A plain, empty room with absolutely nothing in it").southWest("room.seventhRoom").south("room.ninthRoom").north("room.secondRoom");
         makeRoom("room.sixthRoom","Dank. Really really dank.").northWest("room.secondRoom");
         makeRoom("room.seventhRoom","Has a warm pit of lava").northEast("room.fifthRoom").northWest("room.fourthRoom");
         makeRoom("room.eighthRoom","Has octarine sparkles on the floor.").north("room.fourthRoom").southWest("room.eleventhRoom").east("room.ninthRoom");
@@ -37,10 +37,8 @@ public class Game {
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!").north("room.tenthRoom").isEndRoom=true;
         makeItem("item.key","you got a rusty key");
         addItem("item.key","room.sixthRoom");
-        makeTrap("trap.arrowTrap","An arrow trap shoots you in the balls","An arrow trap fires at you");
-        makeTrap("trap.chainsawTrap","You get sliced in half by a chainsaw blade","A chainsaw blade swings towards you from a wall");
-        addTrap("trap.chainsawTrap","room.thirdRoom");
-        addTrap("trap.arrowTrap", "room.fifthRoom");
+        makeTrap("trap.arrowTrap", "room.fifthRoom","An arrow trap shoots you in the balls","An arrow trap fires at you");
+        makeTrap("trap.chainsawTrap","room.thirdRoom","You get sliced in half by a chainsaw blade","A chainsaw blade swings towards you from a wall");
         makeNPC(5,"npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe");
         makeNPC(3,"npc.testEnemy","room.seventhRoom","A slime attacks you","The slime suffocated you","Slime");
         currentRoom = nodes.get("room.firstRoom").name;
@@ -66,6 +64,10 @@ public class Game {
             getCurrentRoom().npc.printText();
             combat = true;
             combat(getCurrentRoom().npc);
+        }
+        if (pc.isDead){
+            pcIsDead();
+            return;
         }
         while (nextRoom==null&&running){
             input=inputManager.read();
@@ -102,28 +104,12 @@ public class Game {
         }
     }
     public void gameLoop(){
-        String input;
         while (running){
             processRoom(getCurrentRoom());
             if (getCurrentRoom().item!=null){
                 pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
                 System.out.println(getCurrentRoom().item.text);
                 getCurrentRoom().item=null;
-            }
-            while (pc.isDead&&running){
-                System.out.println("YOU ARE DEAD");
-                System.out.println("type restart to begin again, or end to stop playing.");
-                input = inputManager.read();
-                if (input.toLowerCase().equals("restart")){
-                    pc.isDead=false;
-                    currentRoom="room.firstRoom";
-                }
-                if (input.toLowerCase().equals("end")) {
-                    running = false;
-                }
-                if (pc.isDead&&running) {
-                    System.out.println("Type in a proper response");
-                }
             }
             if (nodes.get(currentRoom).isEndRoom==true){
                 running=false;
@@ -132,59 +118,37 @@ public class Game {
             }
         }
     }
-    private void combat(NPC npc){
+    private void combat(NPC npc) {
 
         List<Initiative> turnOrder = new ArrayList<>();
-        turnOrder.add(new Initiative(pc,rng.rollInt(20,0,null)));
-        turnOrder.add(new Initiative(npc,rng.rollInt(20,0,null)));
+        turnOrder.add(new Initiative(pc, rng.rollInt(20, 0, null)));
+        turnOrder.add(new Initiative(npc, rng.rollInt(20, 0, null)));
         Collections.sort(turnOrder);
-        if (npc==null||npc.isDead||pc.isDead||getCurrentRoom().npc==null){
+        if (npc == null || npc.isDead || pc.isDead || getCurrentRoom().npc == null) {
             return;
         }
-        while (combat){
+        CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
+        System.out.println("Combat Starts!");
+        while (combat) {
             Character character;
             Initiative init = turnOrder.remove(0);
             character = init.character;
             turnOrder.add(init);
-            if (npc.isDead||pc.isDead||getCurrentRoom().npc==null){
-                combat = false;
+            if (character.equals(pc)) {
+                character.combat(combatState);
             }
-
-            if (character.equals(pc)){
-                character.combat(new CombatState(NPCs.values(),turnOrder,getCurrentRoom()));
-                if (inputManager.read().toLowerCase().equals("run")){
-                    System.out.println("You run to the previous room");
-                    currentRoom = previousRoom;
-                }
-                if (!pc.isDead&&inputManager.read().toLowerCase().equals("attack")){
-                    System.out.println("You attack "+getCurrentRoom().npc.name);
-                    System.out.println("Roll to hit");
-                    if (inputManager.read().toLowerCase().equals("roll")){
-                        if (rng.rollBoolean(20, 11, "You")) {
-                            System.out.println("Roll damage");
-                            if (inputManager.read().toLowerCase().equals("roll")){
-                                getCurrentRoom().npc.health=getCurrentRoom().npc.health-rng.rollInt(6,0,"You");
-                                if(getCurrentRoom().npc.health<=0){
-                                    getCurrentRoom().npc.isDead=true;
-                                    System.out.println("You killed "+getCurrentRoom().npc.name);
-                                }
-                            }
-                        } else {
-                            System.out.println("You completely missed " + getCurrentRoom().npc.name);
-                        }
-                    }
-
-                }
-            }
-            if (character.equals(npc)){
-                System.out.println(getCurrentRoom().npc.name+" attacks you");
-                if (rng.rollBoolean(20,pc.armor,getCurrentRoom().npc.name)){
+            if (character.equals(npc)) {
+                System.out.println(getCurrentRoom().npc.name + " attacks you");
+                if (rng.rollBoolean(20, pc.armor, getCurrentRoom().npc.name)) {
                     getCurrentRoom().npc.printKillText();
-                    pc.isDead=true;
+                    pc.isDead = true;
                 }
+            }
+            if (npc.isDead || pc.isDead || getCurrentRoom().npc == null) {
+                combat = false;
+                System.out.println("Combat Ends");
             }
         }
-
     }
 
     public Room getCurrentRoom(){return getRoom(currentRoom);}
@@ -193,12 +157,9 @@ public class Game {
         nodes.put(roomName,new Room(roomName,text,null,null,null));
         return nodes.get(roomName);
     }
-    private void addTrap(String trap, String room){
-        nodes.get(room).trap = traps.get(trap);
-    }
-    private Trap makeTrap(String name, String text, String killText ){
+    private void makeTrap(String name,String room, String text, String killText){
         traps.put(name,new Trap(text,killText));
-        return traps.get(name);
+        nodes.get(room).trap = traps.get(name);
     }
     private Item makeItem(String name, String text){
         items.put(name,new Item(name,text));
@@ -212,6 +173,25 @@ public class Game {
     }
     private void addItem(String item, String room){
         nodes.get(room).item = items.get(item);
+    }
+    private void pcIsDead(){
+        String input;
+        while (pc.isDead&&running){
+            System.out.println("YOU ARE DEAD");
+            System.out.println("type restart to begin again, or end to stop playing.");
+            input = inputManager.read();
+            if (input.toLowerCase().equals("restart")){
+                pc.isDead=false;
+                currentRoom="room.firstRoom";
+            }
+            if (input.toLowerCase().equals("end")) {
+                running = false;
+            }
+            if (pc.isDead&&running) {
+                System.out.println("Type in a proper response");
+            }
+        }
+
     }
 
 }
