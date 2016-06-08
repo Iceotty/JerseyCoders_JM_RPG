@@ -3,7 +3,6 @@
  */
 public class Room extends Node {
     boolean isEndRoom=false;
-    boolean isDeathRoom=false;
     boolean isLocked=false;
     Trap trap;
     Item item;
