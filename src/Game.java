@@ -35,10 +35,9 @@ public class Game {
         makeRoom("room.tenthRoom","Has some cool loot in it").north("room.ninthRoom").south("room.twelfthRoom").isLocked=true;
         makeRoom("room.eleventhRoom","Dead end, filled with monsters").northEast("room.eighthRoom");
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!").north("room.tenthRoom").isEndRoom=true;
-        makeItem("item.key","you got a rusty key");
-        addItem("item.key","room.sixthRoom");
+        makeItem("item.key","room.sixthRoom","you got a rusty key");
         makeTrap("trap.arrowTrap", "room.fifthRoom","An arrow trap shoots you in the balls","An arrow trap fires at you");
-        makeTrap("trap.chainsawTrap","room.thirdRoom","You get sliced in half by a chainsaw blade","A chainsaw blade swings towards you from a wall");
+        makeTrap("trap.chainsawTrap","room.thirdRoom","A chainsaw blade swings towards you from a wall","You get sliced in half by a chainsaw blade");
         makeNPC(5,"npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe");
         makeNPC(3,"npc.testEnemy","room.seventhRoom","A slime attacks you","The slime suffocated you","Slime");
         currentRoom = nodes.get("room.firstRoom").name;
@@ -76,8 +75,8 @@ public class Game {
                 System.out.println("Type in a proper response");
             }
         }
-        if (traps.get(nodes.get(nextRoom).trap)!=null){
-            traps.get(nodes.get(nextRoom).trap).printTrap();
+        if (nextRoom != null && nodes.get(nextRoom).trap!=null){
+            nodes.get(nextRoom).trap.printTrap();
             System.out.println("Type roll to roll the outcome");
             if (inputManager.read().toLowerCase().equals("roll")){
                 roll=rng.rollBoolean(20,pc.agility,"You");
@@ -89,6 +88,10 @@ public class Game {
                     pc.isDead = true;
                 }
             }
+        }
+        if (pc.isDead){
+            pcIsDead();
+            return;
         }
         if (!nodes.get(nextRoom).isLocked){
             currentRoom=nextRoom;
@@ -160,19 +163,16 @@ public class Game {
     private void makeTrap(String name,String room, String text, String killText){
         traps.put(name,new Trap(text,killText));
         nodes.get(room).trap = traps.get(name);
+        nodes.get(room).hasTrap = true;
     }
-    private Item makeItem(String name, String text){
+    private void makeItem(String name,String room, String text){
         items.put(name,new Item(name,text));
-        return items.get(name);
+        nodes.get(room).item = items.get(name);
     }
     private NPC makeNPC(int health,String key,String room, String text, String killText, String name){
         NPCs.put(key, new NPC(health,nodes.get(room),text,killText, name));
         nodes.get(room).npc = NPCs.get(key);
         return NPCs.get(key);
-
-    }
-    private void addItem(String item, String room){
-        nodes.get(room).item = items.get(item);
     }
     private void pcIsDead(){
         String input;
@@ -191,8 +191,6 @@ public class Game {
                 System.out.println("Type in a proper response");
             }
         }
-
     }
-
 }
 

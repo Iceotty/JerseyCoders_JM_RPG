@@ -4,6 +4,7 @@
 public class Room extends Node {
     boolean isEndRoom=false;
     boolean isLocked=false;
+    boolean hasTrap = false;
     Trap trap;
     Item item;
     NPC npc;
