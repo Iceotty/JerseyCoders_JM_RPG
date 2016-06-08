@@ -15,15 +15,6 @@ public class CombatState {
         this.turnOrder = turnOrder;
         this.currentRoom = currentRoom;
     }
-    public HashMap<String, NPC> getEnemiesHash(){
-        HashMap<String,NPC> enemyHash = new HashMap<>();
-        for (Character character : characters){
-            if (character instanceof NPC){
-                enemyHash.put(((NPC) character).name,(NPC) character);
-            }
-        }
-        return enemyHash;
-    }
     public List<NPC> getEnemiesList(){
         List<NPC> enemyList = new ArrayList<>();
         for (Character character : characters){

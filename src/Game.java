@@ -144,7 +144,6 @@ public class Game {
         while (combat){
             Character character;
             Initiative init = turnOrder.remove(0);
-
             character = init.character;
             turnOrder.add(init);
             if (npc.isDead||pc.isDead||getCurrentRoom().npc==null){
@@ -152,7 +151,6 @@ public class Game {
             }
 
             if (character.equals(pc)){
-                System.out.println("It is your turn, type attack to attack, or run to flee");
                 character.combat(new CombatState(NPCs.values(),turnOrder,getCurrentRoom()));
                 if (inputManager.read().toLowerCase().equals("run")){
                     System.out.println("You run to the previous room");

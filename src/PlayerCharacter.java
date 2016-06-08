@@ -7,7 +7,7 @@ import java.util.List;
 public class PlayerCharacter extends Character {
     int level;
     RandomNumberGenerator rng;
-    InputManager inputManager;
+    InputManager inputManager=new InputManager();
     public PlayerCharacter(){
         agility = 14;
         health = 10;
@@ -18,38 +18,37 @@ public class PlayerCharacter extends Character {
 
     @Override
     public void combat(CombatState combatState) {
-        HashMap<String,NPC> enemyHash;
         List<NPC> enemyList;
         System.out.println("It is your turn");
-        System.out.println("Choose an enemy to attack");
+        System.out.println("Type in the number of the enemy you want to attack");
         NPC enemyToAttack=null;
         String input;
-        enemyHash =combatState.getEnemiesHash();
         enemyList = combatState.getEnemiesList();
         for (NPC npc : enemyList){
             if (npc==combatState.currentRoom.npc) {
-                System.out.println(npc.name);
-            }
-            if (inputManager.read() == npc.name){
-                enemyToAttack = npc;
+                System.out.println(enemyList.indexOf(npc)+". "+npc.name);
             }
         }
         while(enemyToAttack==null){
             input=inputManager.read();
-            enemyToAttack=enemyHash.get(input);
-            if (enemyToAttack==null){
-                System.out.println("Type in a proper response");
+            if (input!=null) {
+                enemyToAttack = enemyList.get(Integer.parseInt(input));
+                if (enemyToAttack == null) {
+                    System.out.println("Type in a proper response");
+                }
             }
         }
-        if (rng.rollBoolean(20, 11, "You")) {
-            System.out.println("You hit the " + combatState.currentRoom.name);
-            combatState.currentRoom.npc.health=combatState.currentRoom.npc.health-rng.rollInt(6,0,"You");
-            if(combatState.currentRoom.npc.health<=0){
-                combatState.currentRoom.npc.isDead=true;
-                System.out.println("You killed "+combatState.currentRoom.npc.name);
+        if (enemyToAttack!=null) {
+            if (rng.rollBoolean(20, 11, "You")) {
+                System.out.println("You hit the " + enemyToAttack.name);
+                enemyToAttack.health = enemyToAttack.health - rng.rollInt(6, 0, "You");
+                if (enemyToAttack.health <= 0) {
+                    enemyToAttack.isDead = true;
+                    System.out.println("You killed " + enemyToAttack.name);
+                }
+            } else {
+                System.out.println("You completely missed " + enemyToAttack.name);
             }
-        } else {
-            System.out.println("You completely missed " + combatState.currentRoom.npc.name);
         }
 
     }
