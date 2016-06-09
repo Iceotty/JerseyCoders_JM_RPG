@@ -4,6 +4,7 @@
 public class Trap {
     String trapText;
     String killText;
+    boolean hasSprung=false;
     public Trap(String trapText, String killText){
         this.trapText = trapText;
         this.killText = killText;

@@ -31,19 +31,19 @@ public class Room extends Node {
         return this;
     }
     public Room northEast(String room){
-        addPath("northEast",room);
+        addPath("northeast",room);
         return this;
     }
     public Room northWest(String room){
-        addPath("northWest",room);
+        addPath("northwest",room);
         return this;
     }
     public Room southEast(String room){
-        addPath("southEast",room);
+        addPath("southeast",room);
         return this;
     }
     public Room southWest(String room){
-        addPath("southWest",room);
+        addPath("southwest",room);
         return this;
     }
 }

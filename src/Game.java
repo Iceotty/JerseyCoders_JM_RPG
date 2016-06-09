@@ -96,6 +96,10 @@ public class Game {
         if (!nodes.get(nextRoom).isLocked){
             currentRoom=nextRoom;
         }
+        if (getCurrentRoom().hasTrap && !getCurrentRoom().trap.hasSprung){
+            currentRoom=previousRoom;
+            System.out.println("You can't dodge the trap that easily m8");
+        }
         if (nodes.get(nextRoom).isLocked){
             if (pc.inventory.containsKey("item.key")){
                 System.out.println("You unlock the door");

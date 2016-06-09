@@ -19,7 +19,7 @@ public class Node {
     /*Decides the next node based on the input*/
     public String decide(String input) {
         String nextNode;
-        nextNode = paths.get(input);
+        nextNode = paths.get(input.toLowerCase());
         return nextNode;
     }
 
