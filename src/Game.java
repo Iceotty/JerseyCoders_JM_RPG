@@ -7,6 +7,7 @@ public class Game {
     PlayerCharacter pc;
     String currentRoom;
     String previousRoom;
+    List<NPC> deadNPCs;
     RandomNumberGenerator rng;
     HashMap<String,Room> nodes;
     HashMap<String, NPC> NPCs;
@@ -22,6 +23,7 @@ public class Game {
         NPCs=new HashMap<>();
         items=new HashMap<>();
         traps=new HashMap<>();
+        deadNPCs = new ArrayList<>();
         inputManager = new InputManager();
         makeRoom("room.firstRoom","WELCOME TO THE DUNGEON OF THE MEME").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
         makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls").west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
@@ -36,10 +38,11 @@ public class Game {
         makeRoom("room.eleventhRoom","Dead end, filled with monsters").northEast("room.eighthRoom");
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!").north("room.tenthRoom").isEndRoom=true;
         makeItem("item.key","room.sixthRoom","you got a rusty key");
-        makeTrap("trap.arrowTrap", "room.fifthRoom","An arrow trap shoots you in the balls","An arrow trap fires at you");
+        makeTrap("trap.arrowTrap", "room.fifthRoom","An arrow trap fires at you","An arrow trap shoots you in the balls");
         makeTrap("trap.chainsawTrap","room.thirdRoom","A chainsaw blade swings towards you from a wall","You get sliced in half by a chainsaw blade");
         makeNPC(5,"npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe");
         makeNPC(3,"npc.testEnemy","room.seventhRoom","A slime attacks you","The slime suffocated you","Slime");
+        makeNPC(3,"npc.slimeEnemy","room.seventhRoom","A pink slime flops towards you","You were absorbed by the slime","Pink Slime");
         currentRoom = nodes.get("room.firstRoom").name;
         pc  =  new PlayerCharacter();
         rng = new RandomNumberGenerator();
@@ -54,15 +57,17 @@ public class Game {
     }
     public void processRoom(Room room){
         String nextRoom=null;
-        if (room!=null) {
+        if (room!=null&&room.allowPrint) {
             room.print();
         }
         previousRoom = currentRoom;
         String input;
-        if (getCurrentRoom().npc!=null&&getCurrentRoom().npc.isAggressive){
-            getCurrentRoom().npc.printText();
+        if (!getCurrentRoom().npcs.isEmpty()){
+            for (NPC npc : getCurrentRoom().npcs){
+                npc.printText();
+            }
             combat = true;
-            combat(getCurrentRoom().npc);
+            combat(getCurrentRoom().npcs);
         }
         if (pc.isDead){
             pcIsDead();
@@ -83,6 +88,7 @@ public class Game {
                 if (roll){
                     System.out.println("You successfully dodged the trap");
                     currentRoom=nextRoom;
+                    getCurrentRoom().trap.hasSprung=true;
                 }else {
                     nodes.get(nextRoom).trap.printKillTrap();
                     pc.isDead = true;
@@ -98,7 +104,8 @@ public class Game {
         }
         if (getCurrentRoom().hasTrap && !getCurrentRoom().trap.hasSprung){
             currentRoom=previousRoom;
-            System.out.println("You can't dodge the trap that easily m8");
+            getCurrentRoom().allowPrint=false;
+            System.out.println("Type in a proper response");
         }
         if (nodes.get(nextRoom).isLocked){
             if (pc.inventory.containsKey("item.key")){
@@ -125,13 +132,18 @@ public class Game {
             }
         }
     }
-    private void combat(NPC npc) {
+    private void combat(List<NPC> npcs) {
 
         List<Initiative> turnOrder = new ArrayList<>();
         turnOrder.add(new Initiative(pc, rng.rollInt(20, 0, null)));
-        turnOrder.add(new Initiative(npc, rng.rollInt(20, 0, null)));
+        for (NPC npc : npcs){
+            turnOrder.add(new Initiative(npc, rng.rollInt(20, 0, null)));
+            if (npc == null || npc.isDead){
+                return;
+            }
+        }
         Collections.sort(turnOrder);
-        if (npc == null || npc.isDead || pc.isDead || getCurrentRoom().npc == null) {
+        if (pc.isDead || getCurrentRoom().npcs == null || getCurrentRoom().npcs.isEmpty()) {
             return;
         }
         CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
@@ -144,24 +156,32 @@ public class Game {
             if (character.equals(pc)) {
                 character.combat(combatState);
             }
-            if (character.equals(npc)) {
-                System.out.println(getCurrentRoom().npc.name + " attacks you");
-                if (rng.rollBoolean(20, pc.armor, getCurrentRoom().npc.name)) {
-                    getCurrentRoom().npc.printKillText();
-                    pc.isDead = true;
+            for (NPC npc:npcs) {
+                if (npc.isDead){
+                    deadNPCs.add(npc);
+                }else {
+                    if (character.equals(npc)) {
+                        System.out.println(npc.name + " attacks you");
+                        if (rng.rollBoolean(20, pc.armor, npc.name)) {
+                            npc.printKillText();
+                            pc.isDead = true;
+                        }
+                    }
                 }
             }
-            if (npc.isDead || pc.isDead || getCurrentRoom().npc == null) {
+            npcs.removeAll(deadNPCs);
+            if (npcs.isEmpty()) {
                 combat = false;
                 System.out.println("Combat Ends");
             }
+
         }
     }
 
     public Room getCurrentRoom(){return getRoom(currentRoom);}
 
     private Room makeRoom(String roomName,String text){
-        nodes.put(roomName,new Room(roomName,text,null,null,null));
+        nodes.put(roomName,new Room(roomName,text,null,null));
         return nodes.get(roomName);
     }
     private void makeTrap(String name,String room, String text, String killText){
@@ -175,7 +195,7 @@ public class Game {
     }
     private NPC makeNPC(int health,String key,String room, String text, String killText, String name){
         NPCs.put(key, new NPC(health,nodes.get(room),text,killText, name));
-        nodes.get(room).npc = NPCs.get(key);
+        nodes.get(room).npcs.add(NPCs.get(key));
         return NPCs.get(key);
     }
     private void pcIsDead(){

@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Joseph on 20/04/2016.
  */
@@ -7,12 +10,12 @@ public class Room extends Node {
     boolean hasTrap = false;
     Trap trap;
     Item item;
-    NPC npc;
-    public Room(String name,String text,Item item, Trap trap,NPC npc) {
+    List<NPC> npcs;
+    public Room(String name,String text,Item item, Trap trap) {
         super(name, text);
         this.item = item;
-        this.npc = npc;
         this.trap = trap;
+        npcs = new ArrayList<>();
     }
     public Room north(String room){
         addPath("north",room);

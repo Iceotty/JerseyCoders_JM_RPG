@@ -6,11 +6,13 @@ public class Node {
     String name;
     String text;
     HashMap<String, String> paths;
+    boolean allowPrint;
 
     public Node(String name, String text) {
         paths = new HashMap<>();
         this.text = text;
         this.name = name;
+        allowPrint = true;
     }
 
     public void print() {

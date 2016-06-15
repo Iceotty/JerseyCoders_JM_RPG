@@ -24,10 +24,8 @@ public class PlayerCharacter extends Character {
         NPC enemyToAttack=null;
         String input;
         enemyList = combatState.getEnemiesList();
-        for (NPC npc : enemyList){
-            if (npc==combatState.currentRoom.npc) {
+        for (NPC npc : combatState.currentRoom.npcs){
                 System.out.println(enemyList.indexOf(npc)+". "+npc.name);
-            }
         }
         while(enemyToAttack==null){
             input=inputManager.read();
