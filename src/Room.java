@@ -10,12 +10,14 @@ public class Room extends Node {
     boolean hasTrap = false;
     Trap trap;
     Item item;
-    List<NPC> npcs;
+    List<NPC> enemies;
+    List<NPC> friendlies;
     public Room(String name,String text,Item item, Trap trap) {
         super(name, text);
         this.item = item;
         this.trap = trap;
-        npcs = new ArrayList<>();
+        enemies = new ArrayList<>();
+        friendlies = new ArrayList<>();
     }
     public Room north(String room){
         addPath("north",room);

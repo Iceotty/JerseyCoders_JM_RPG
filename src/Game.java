@@ -40,9 +40,10 @@ public class Game {
         makeItem("item.key","room.sixthRoom","you got a rusty key");
         makeTrap("trap.arrowTrap", "room.fifthRoom","An arrow trap fires at you","An arrow trap shoots you in the balls");
         makeTrap("trap.chainsawTrap","room.thirdRoom","A chainsaw blade swings towards you from a wall","You get sliced in half by a chainsaw blade");
-        makeNPC(5,"npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe");
-        makeNPC(3,"npc.testEnemy","room.seventhRoom","A slime attacks you","The slime suffocated you","Slime");
-        makeNPC(3,"npc.slimeEnemy","room.seventhRoom","A pink slime flops towards you","You were absorbed by the slime","Pink Slime");
+        makeNPC(5,"npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe").isAggressive=true;
+        makeNPC(3,"npc.testEnemy","room.seventhRoom","A slime attacks you","The slime suffocated you","Slime").isAggressive=true;
+        makeNPC(3,"npc.slimeEnemy","room.seventhRoom","A pink slime flops towards you","You were absorbed by the slime","Pink Slime").isAggressive=true;
+//        makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way")
         currentRoom = nodes.get("room.firstRoom").name;
         pc  =  new PlayerCharacter();
         rng = new RandomNumberGenerator();
@@ -62,12 +63,12 @@ public class Game {
         }
         previousRoom = currentRoom;
         String input;
-        if (!getCurrentRoom().npcs.isEmpty()){
-            for (NPC npc : getCurrentRoom().npcs){
+        if (!getCurrentRoom().enemies.isEmpty()){
+            for (NPC npc : getCurrentRoom().enemies){
                 npc.printText();
             }
             combat = true;
-            combat(getCurrentRoom().npcs);
+            combat(getCurrentRoom().enemies);
         }
         if (pc.isDead){
             pcIsDead();
@@ -114,6 +115,22 @@ public class Game {
                 currentRoom=nextRoom;
             }else {
                 System.out.println("The door is locked");
+                if (inputManager.read().toLowerCase().equals("punch")||equals("break")){
+                    System.out.println("You punch the door");
+                    if (rng.rollBoolean(20,13,"You")){
+                        System.out.println("You broke down the door");
+                        nodes.get(nextRoom).isLocked = false;
+                        currentRoom = nextRoom;
+                    }else{
+                        System.out.println("You failed to punch down the door with your tiny baby arms, you now have splinters in your hands");
+                        pc.health= pc.health- 1;
+                    }
+                    if (pc.isDead){
+                        pcIsDead();
+                        System.out.println("You punched a door so many times you died. GG WP.");
+                        return;
+                    }
+                }
             }
         }
     }
@@ -143,7 +160,7 @@ public class Game {
             }
         }
         Collections.sort(turnOrder);
-        if (pc.isDead || getCurrentRoom().npcs == null || getCurrentRoom().npcs.isEmpty()) {
+        if (pc.isDead || getCurrentRoom().enemies == null || getCurrentRoom().enemies.isEmpty()) {
             return;
         }
         CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
@@ -163,11 +180,20 @@ public class Game {
                     if (character.equals(npc)) {
                         System.out.println(npc.name + " attacks you");
                         if (rng.rollBoolean(20, pc.armor, npc.name)) {
-                            npc.printKillText();
-                            pc.isDead = true;
+                            pc.health=pc.health- rng.rollInt(20,0,npc.name);
+                            if (pc.health<=0) {
+                                npc.printKillText();
+                                pc.isDead = true;
+                            }
                         }
                     }
                 }
+            }
+            if (pc.isDead){
+                combat = false;
+                System.out.println("Combat Ends");
+                pcIsDead();
+                return;
             }
             npcs.removeAll(deadNPCs);
             if (npcs.isEmpty()) {
@@ -195,7 +221,7 @@ public class Game {
     }
     private NPC makeNPC(int health,String key,String room, String text, String killText, String name){
         NPCs.put(key, new NPC(health,nodes.get(room),text,killText, name));
-        nodes.get(room).npcs.add(NPCs.get(key));
+        nodes.get(room).enemies.add(NPCs.get(key));
         return NPCs.get(key);
     }
     private void pcIsDead(){
@@ -206,6 +232,7 @@ public class Game {
             input = inputManager.read();
             if (input.toLowerCase().equals("restart")){
                 pc.isDead=false;
+                pc.health=10;
                 currentRoom="room.firstRoom";
             }
             if (input.toLowerCase().equals("end")) {

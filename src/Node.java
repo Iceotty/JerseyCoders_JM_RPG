@@ -17,7 +17,7 @@ public class Node {
 
     public void print() {
         System.out.println(text);
-    }
+        }
     /*Decides the next node based on the input*/
     public String decide(String input) {
         String nextNode;
