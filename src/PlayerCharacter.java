@@ -30,7 +30,11 @@ public class PlayerCharacter extends Character {
         while(enemyToAttack==null){
             input=inputManager.read();
             if (input!=null&&isInteger(input)) {
-                enemyToAttack = enemyList.get(Integer.parseInt(input));
+                if (Integer.parseInt(input)>=combatState.currentRoom.enemies.size()){
+                    System.out.println("Type in a proper response");
+                }else {
+                    enemyToAttack = combatState.currentRoom.enemies.get(Integer.parseInt(input));
+                }
             }else {
                 System.out.println("Type in a proper response");
             }

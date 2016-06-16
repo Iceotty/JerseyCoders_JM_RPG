@@ -16,6 +16,7 @@ public class Game {
     boolean running = false;
     boolean roll;
     boolean combat;
+    boolean aBoolean = false;
     InputManager inputManager;
     public Game(){
         running = true;
@@ -72,6 +73,10 @@ public class Game {
         }
         if (pc.isDead){
             pcIsDead();
+            return;
+        }
+        if (aBoolean){
+            aBoolean = false;
             return;
         }
         while (nextRoom==null&&running){
@@ -191,6 +196,7 @@ public class Game {
             }
             if (pc.isDead){
                 combat = false;
+                aBoolean = true;
                 System.out.println("Combat Ends");
                 pcIsDead();
                 return;
