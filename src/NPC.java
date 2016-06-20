@@ -2,7 +2,6 @@
  * Created by Joseph on 11/05/2016.
  */
 public class NPC extends Character{
-    boolean isAggressive;
     Room room;
     String text;
     String killText;
@@ -13,7 +12,6 @@ public class NPC extends Character{
         this.name = name;
         this.killText = killText;
         this.health = health;
-        isAggressive = true;
     }
     public void printText(){System.out.println(text);}
     public void printKillText(){System.out.println(killText);}
