@@ -72,6 +72,9 @@ public class Game {
             input = inputManager.read();
             if (input=="attack"){
                 getCurrentRoom().enemies = getCurrentRoom().friendlies;
+                getCurrentRoom().friendlies=null;
+                combat = true;
+                combat(getCurrentRoom().enemies);
             }
         }
         if (!getCurrentRoom().enemies.isEmpty()){
