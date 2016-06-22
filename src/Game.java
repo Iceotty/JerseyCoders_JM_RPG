@@ -4,10 +4,12 @@ import java.util.*;
  * Created by Joseph on 09/03/2016.
  */
 public class Game {
+    Window window;
     PlayerCharacter pc;
     String currentRoom;
     String previousRoom;
     List<NPC> deadNPCs;
+    String[] args = new String[0];
     RandomNumberGenerator rng;
     HashMap<String,Room> nodes;
     HashMap<String, NPC> NPCs;
@@ -20,6 +22,7 @@ public class Game {
     InputManager inputManager;
     public Game(){
         running = true;
+        window = new Window();
         nodes=new HashMap<>();
         NPCs=new HashMap<>();
         items=new HashMap<>();
@@ -159,6 +162,7 @@ public class Game {
     }
     public void gameLoop(){
         while (running){
+            window.main(args);
             processRoom(getCurrentRoom());
             if (getCurrentRoom().item!=null){
                 pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
