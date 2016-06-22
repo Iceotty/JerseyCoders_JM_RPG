@@ -39,14 +39,16 @@ public class Game {
         makeRoom("room.eleventhRoom","Dead end, filled with monsters").northEast("room.eighthRoom");
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!").north("room.tenthRoom").isEndRoom=true;
         makeItem("item.key","room.sixthRoom","you got a rusty key");
+        makeItem("item.battleAxe",null,"You received a Shiny Battleaxe with which to smite your foes");
         makeTrap("trap.arrowTrap", "room.fifthRoom","An arrow trap fires at you","An arrow trap shoots you in the balls");
         makeTrap("trap.chainsawTrap","room.thirdRoom","A chainsaw blade swings towards you from a wall","You get sliced in half by a chainsaw blade");
-        makeNPC(5,"npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe",true);
-        makeNPC(3,"npc.testEnemy","room.seventhRoom","A slime attacks you","The slime suffocated you","Slime",true);
-        makeNPC(3,"npc.slimeEnemy","room.seventhRoom","A pink slime flops towards you","You were absorbed by the slime","Pink Slime",true);
-        makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way","A friendly man killed you","Nice guy",false);
+        makeNPC(5,"npc.enemy","room.ninthRoom","You have awakened a slumbering pepe, it attacks you!","You got dank'd by pepe","Pepe",null,true);
+        makeNPC(3,"npc.testEnemy","room.seventhRoom","A slime attacks you","The slime suffocated you","Slime",null,true);
+        makeNPC(3,"npc.slimeEnemy","room.seventhRoom","A pink slime flops towards you","You were absorbed by the slime","Pink Slime",null,true);
+        makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way","A friendly man killed you","Nice guy",null,false);
+        makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
         currentRoom = nodes.get("room.firstRoom").name;
-        pc  =  new PlayerCharacter();
+        pc = new PlayerCharacter();
         rng = new RandomNumberGenerator();
 
     }
@@ -67,10 +69,13 @@ public class Game {
         if (!getCurrentRoom().friendlies.isEmpty()){
             for (NPC npc:getCurrentRoom().friendlies){
                 npc.printText();
+                if (npc.item!=null){
+                    pc.inventory.put(npc.item.name,npc.item);
+                }
             }
 
             input = inputManager.read();
-            if (input=="attack"){
+            if (input=="attack"){//Doesn't do anything IS BROKEN HALP
                 getCurrentRoom().enemies = getCurrentRoom().friendlies;
                 getCurrentRoom().friendlies=null;
                 combat = true;
@@ -235,11 +240,17 @@ public class Game {
         nodes.get(room).hasTrap = true;
     }
     private void makeItem(String name,String room, String text){
-        items.put(name,new Item(name,text));
-        nodes.get(room).item = items.get(name);
+        if (room!=null) {
+            nodes.get(room).item = items.get(name);
+        }
+        items.put(name, new Item(name, text));
     }
-    private void makeNPC(int health,String key,String room, String text, String killText, String name,boolean isAgressive){
-        NPCs.put(key, new NPC(health,nodes.get(room),text,killText, name));
+    private void makeNPC(int health,String key,String room, String text, String killText, String name,String itemKey,boolean isAgressive){
+        if (itemKey!=null) {
+            NPCs.put(key, new NPC(health, nodes.get(room), text, killText, name, items.get(itemKey)));
+        }else{
+            NPCs.put(key, new NPC(health, nodes.get(room), text, killText, name,null));
+        }
         if (isAgressive) {
             nodes.get(room).enemies.add(NPCs.get(key));
         }
