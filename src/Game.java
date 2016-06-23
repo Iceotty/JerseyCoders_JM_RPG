@@ -8,6 +8,7 @@ public class Game {
     PlayerCharacter pc;
     String currentRoom;
     String previousRoom;
+    String currentScene;
     List<NPC> deadNPCs;
     String[] args = new String[0];
     RandomNumberGenerator rng;
@@ -50,6 +51,12 @@ public class Game {
         makeNPC(3,"npc.slimeEnemy","room.seventhRoom","A pink slime flops towards you","You were absorbed by the slime","Pink Slime",null,true);
         makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way","A friendly man killed you","Nice guy",null,false);
         makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
+        window.makeScene("First Room Text","scene.firstScene");
+        window.makeButton("north","button.north");
+        window.makeButton("east","button.east");
+        window.makeButton("south","button.south");
+        window.makeButton("west","button.west");
+        currentScene = "scene.firstScene";
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
         rng = new RandomNumberGenerator();
@@ -69,6 +76,17 @@ public class Game {
         }
         previousRoom = currentRoom;
         String input;
+        while (nextRoom==null&&running){
+            input=inputManager.read();
+//            if (room.paths.get("north")!=null){
+//                window.buttons.get("buttton.north");
+//                window.vBoxLayouts.get(currentScene).getChildren().add(window.buttons.get("buttton.north"));
+//            }
+            nextRoom=room.decide(input);
+            if (nextRoom==null){
+                System.out.println("Type in a proper response");
+            }
+        }
         if (!getCurrentRoom().friendlies.isEmpty()){
             for (NPC npc:getCurrentRoom().friendlies){
                 npc.printText();
@@ -99,13 +117,6 @@ public class Game {
         if (aBoolean){
             aBoolean = false;
             return;
-        }
-        while (nextRoom==null&&running){
-            input=inputManager.read();
-            nextRoom=room.decide(input);
-            if (nextRoom==null){
-                System.out.println("Type in a proper response");
-            }
         }
         if (nextRoom != null && nodes.get(nextRoom).trap!=null){
             nodes.get(nextRoom).trap.printTrap();
