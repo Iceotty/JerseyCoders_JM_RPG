@@ -4,12 +4,12 @@ import java.util.*;
  * Created by Joseph on 09/03/2016.
  */
 public class Game {
-    Window window;
     PlayerCharacter pc;
     String currentRoom;
     String previousRoom;
     String currentScene;
     List<NPC> deadNPCs;
+    GameWindow gameWindow;
     String[] args = new String[0];
     RandomNumberGenerator rng;
     HashMap<String,Room> nodes;
@@ -23,7 +23,7 @@ public class Game {
     InputManager inputManager;
     public Game(){
         running = true;
-        window = new Window();
+        gameWindow = new GameWindow();
         nodes=new HashMap<>();
         NPCs=new HashMap<>();
         items=new HashMap<>();
@@ -51,11 +51,6 @@ public class Game {
         makeNPC(3,"npc.slimeEnemy","room.seventhRoom","A pink slime flops towards you","You were absorbed by the slime","Pink Slime",null,true);
         makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way","A friendly man killed you","Nice guy",null,false);
         makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
-        window.makeScene("First Room Text","scene.firstScene");
-        window.makeButton("north","button.north");
-        window.makeButton("east","button.east");
-        window.makeButton("south","button.south");
-        window.makeButton("west","button.west");
         currentScene = "scene.firstScene";
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
@@ -63,8 +58,6 @@ public class Game {
 
     }
     public static void main(String ...args){
-        Game game = new Game();
-        game.gameLoop();
     }
     public Room getRoom(String room){
         return nodes.get(room);
@@ -78,10 +71,6 @@ public class Game {
         String input;
         while (nextRoom==null&&running){
             input=inputManager.read();
-//            if (room.paths.get("north")!=null){
-//                window.buttons.get("buttton.north");
-//                window.vBoxLayouts.get(currentScene).getChildren().add(window.buttons.get("buttton.north"));
-//            }
             nextRoom=room.decide(input);
             if (nextRoom==null){
                 System.out.println("Type in a proper response");
@@ -173,7 +162,6 @@ public class Game {
     }
     public void gameLoop(){
         while (running){
-            window.main(args);
             processRoom(getCurrentRoom());
             if (getCurrentRoom().item!=null){
                 pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
