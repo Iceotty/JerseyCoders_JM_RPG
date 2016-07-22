@@ -11,7 +11,8 @@ public class GameWindow {
     HashMap<String,Button> buttons;
     VBox layout;
     Scene scene;
-    Game game;
+    Room currentRoom;
+    boolean roomHasChanged;
     Window window;
     //when a new room is entered in game, add/remove buttons accordingly
     //create layout for room buttons, add layout to scene.
@@ -28,6 +29,15 @@ public class GameWindow {
         window = new Window();
         scene = new Scene(layout);
     }
+    /*public void addButtons(){//doesn't work because HashMaps don't work with foreach loops, just done it so ik what im doing later
+        for (String direction:currentRoom.paths){
+            for (Button button :buttons){
+                if (thebuttonsname == direction){
+                    layout.getChildren().add(button);
+                }
+            }
+        }
+    }*/
     public void makeButton(String text, String name){
         Button button = new Button(text);
         buttons.put(name,button);

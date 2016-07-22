@@ -159,6 +159,10 @@ public class Game {
                 }
             }
         }
+        gameWindow.currentRoom = getCurrentRoom();
+        if (currentRoom!=previousRoom){
+            gameWindow.roomHasChanged=true;
+        }
     }
     public void gameLoop(){
         while (running){
