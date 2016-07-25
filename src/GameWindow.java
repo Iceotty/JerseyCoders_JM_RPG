@@ -29,15 +29,16 @@ public class GameWindow {
         window = new Window();
         scene = new Scene(layout);
     }
-    /*public void addButtons(){//doesn't work because HashMaps don't work with foreach loops, just done it so ik what im doing later
-        for (String direction:currentRoom.paths){
-            for (Button button :buttons){
-                if (thebuttonsname == direction){
-                    layout.getChildren().add(button);
+    public void addButtons(){
+        for (HashMap.Entry<String, String> path:currentRoom.paths.entrySet()) {
+            for (HashMap.Entry<String, Button> entry : buttons.entrySet()) {
+                if (entry.getKey() == path.getKey()){
+                    layout.getChildren().add((javafx.scene.Node) entry);
                 }
             }
         }
-    }*/
+        
+    }
     public void makeButton(String text, String name){
         Button button = new Button(text);
         buttons.put(name,button);
