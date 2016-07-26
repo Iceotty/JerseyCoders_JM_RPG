@@ -161,7 +161,7 @@ public class Game {
         }
         gameWindow.currentRoom = getCurrentRoom();
         if (currentRoom!=previousRoom){
-            gameWindow.roomHasChanged=true;
+            gameWindow.newRoom();
         }
     }
     public void gameLoop(){

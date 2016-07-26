@@ -1,20 +1,15 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.HashMap;
 
 /**
  * Created by Joseph on 15/06/2016.
  */
 public class Window extends Application {
-    HashMap<String,VBox> vBoxLayouts;
     Stage window;
-    Scene currentScene;
+    Scene scene;
     public VBox layout;
-
     public Window(){
     }
 
@@ -26,9 +21,7 @@ public class Window extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-//        currentScene = scenes.get("scene.firstScene");
         window = primaryStage;
-        applyScene(currentScene);
     }
     public void applyScene(Scene scene){
         window.setScene(scene);
