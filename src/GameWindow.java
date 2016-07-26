@@ -10,13 +10,12 @@ import java.util.HashMap;
 public class GameWindow {
     HashMap<String,Button> buttons;
     VBox layout;
-    Scene scene;
     Room currentRoom;
-    boolean roomHasChanged;
     Window window;
     //when a new room is entered in game, add/remove buttons accordingly
     //create layout for room buttons, add layout to scene.
     public GameWindow(){
+        buttons=new HashMap<>();
         makeButton("north","button.north");
         makeButton("south","button.south");
         makeButton("east","button.east");
@@ -27,17 +26,23 @@ public class GameWindow {
         makeButton("southEast","button.southEast");
 
         window = new Window();
-        scene = new Scene(layout);
+    }
+    public void newRoom(){
+        addButtons();
+        window.layout = layout;
+        window.scene = new Scene(layout);
+        window.applyScene(window.scene);
     }
     public void addButtons(){
+        layout.getChildren().removeAll();
         for (HashMap.Entry<String, String> path:currentRoom.paths.entrySet()) {
-            for (HashMap.Entry<String, Button> entry : buttons.entrySet()) {
-                if (entry.getKey() == path.getKey()){
-                    layout.getChildren().add((javafx.scene.Node) entry);
+            for (HashMap.Entry<String, Button> button : buttons.entrySet()) {
+                if (button.getKey() == path.getKey()){
+                    layout.getChildren().add((javafx.scene.Node) button);
                 }
             }
         }
-        
+
     }
     public void makeButton(String text, String name){
         Button button = new Button(text);
