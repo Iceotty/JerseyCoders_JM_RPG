@@ -1,3 +1,6 @@
+package frontend;
+
+import backend.Room;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -49,3 +52,4 @@ public class GameWindow {
         buttons.put(name,button);
     }
 }
+

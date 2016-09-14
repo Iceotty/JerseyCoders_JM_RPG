@@ -1,3 +1,6 @@
+package backend;
+
+import java.lang.*;
 import java.util.*;
 
 /**
@@ -55,27 +58,19 @@ public class Game {
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
         rng = new RandomNumberGenerator();
-
     }
     public static void main(String ...args){
+        Game game = new Game();
+        game.gameLoop();
     }
     public Room getRoom(String room){
         return nodes.get(room);
     }
-    public void processRoom(Room room){
-        String nextRoom=null;
-        if (room!=null&&room.allowPrint) {
-            room.print();
-        }
-        previousRoom = currentRoom;
-        String input;
-        while (nextRoom==null&&running){
-            input=inputManager.read();
-            nextRoom=room.decide(input);
-            if (nextRoom==null){
-                System.out.println("Type in a proper response");
-            }
-        }
+    public void processRoom(){
+//        if (room!=null&&room.allowPrint) {
+//            room.print();
+//        }
+
         if (!getCurrentRoom().friendlies.isEmpty()){
             for (NPC npc:getCurrentRoom().friendlies){
                 npc.printText();
@@ -159,10 +154,30 @@ public class Game {
                 }
             }
         }
-        gameWindow.currentRoom = getCurrentRoom();
-        if (currentRoom!=previousRoom){
-            gameWindow.newRoom();
+
+//        gameWindow.currentRoom = getCurrentRoom();
+//        if (currentRoom!=previousRoom){
+//            gameWindow.newRoom();
+//        }
+    }
+    public Outcome move(String direction){
+        Room room;
+        String nextRoom=null;
+        Outcome outcome = new Outcome();
+        previousRoom = currentRoom;
+        room = getCurrentRoom();
+        if (nextRoom==null){
+            nextRoom=room.decide(direction);
+            if (nextRoom==null){
+                outcome.successful = false;
+                outcome.message = "Type in a proper response";
+//                System.out.println("Type in a proper response");
+            }else{
+                outcome.successful = true;
+                outcome.message = room.text;
+            }
         }
+        return outcome;
     }
     public void gameLoop(){
         while (running){

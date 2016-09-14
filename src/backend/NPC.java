@@ -1,7 +1,11 @@
+package backend;
+
+import java.lang.*;
+
 /**
  * Created by Joseph on 11/05/2016.
  */
-public class NPC extends Character{
+public class NPC extends Character {
     Room room;
     String text;
     String killText;
