@@ -23,16 +23,13 @@ public class Game {
     boolean roll;
     boolean combat;
     boolean aBoolean = false;
-    InputManager inputManager;
     public Game(){
         running = true;
-        gameWindow = new GameWindow();
         nodes=new HashMap<>();
         NPCs=new HashMap<>();
         items=new HashMap<>();
         traps=new HashMap<>();
         deadNPCs = new ArrayList<>();
-        inputManager = new InputManager();
         makeRoom("room.firstRoom","WELCOME TO THE DUNGEON OF THE MEME").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
         makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls").west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
         makeRoom("room.thirdRoom","Barry levels of Dank").northWest("room.firstRoom");
@@ -66,99 +63,114 @@ public class Game {
     public Room getRoom(String room){
         return nodes.get(room);
     }
-    public void processRoom(){
+    public void processRoom() {
 //        if (room!=null&&room.allowPrint) {
 //            room.print();
 //        }
 
-        if (!getCurrentRoom().friendlies.isEmpty()){
-            for (NPC npc:getCurrentRoom().friendlies){
+        if (!getCurrentRoom().friendlies.isEmpty()) {
+            for (NPC npc : getCurrentRoom().friendlies) {
                 npc.printText();
-                if (npc.item!=null){
-                    pc.inventory.put(npc.item.name,npc.item);
+                if (npc.item != null) {
+                    pc.inventory.put(npc.item.name, npc.item);
                 }
             }
 
             input = inputManager.read();
-            if (input=="attack"){//Doesn't do anything IS BROKEN HALP
+            if (input == "attack") {//Doesn't do anything IS BROKEN HALP
                 getCurrentRoom().enemies = getCurrentRoom().friendlies;
-                getCurrentRoom().friendlies=null;
+                getCurrentRoom().friendlies = null;
                 combat = true;
                 combat(getCurrentRoom().enemies);
             }
         }
-        if (!getCurrentRoom().enemies.isEmpty()){
-            for (NPC npc : getCurrentRoom().enemies){
+        if (!getCurrentRoom().enemies.isEmpty()) {
+            for (NPC npc : getCurrentRoom().enemies) {
                 npc.printText();
             }
             combat = true;
             combat(getCurrentRoom().enemies);
         }
-        if (pc.isDead){
+        if (pc.isDead) {
             pcIsDead();
             return;
         }
-        if (aBoolean){
+        if (aBoolean) {
             aBoolean = false;
             return;
         }
-        if (nextRoom != null && nodes.get(nextRoom).trap!=null){
-            nodes.get(nextRoom).trap.printTrap();
-            System.out.println("Type roll to roll the outcome");
-            if (inputManager.read().toLowerCase().equals("roll")){
-                roll=rng.rollBoolean(20,pc.agility,"You");
-                if (roll){
-                    System.out.println("You successfully dodged the trap");
-                    currentRoom=nextRoom;
-                    getCurrentRoom().trap.hasSprung=true;
-                }else {
-                    nodes.get(nextRoom).trap.printKillTrap();
-                    pc.isDead = true;
-                }
-            }
-        }
-        if (pc.isDead){
+
+        if (pc.isDead) {
             pcIsDead();
             return;
         }
-        if (!nodes.get(nextRoom).isLocked){
-            currentRoom=nextRoom;
-        }
-        if (getCurrentRoom().hasTrap && !getCurrentRoom().trap.hasSprung){
-            currentRoom=previousRoom;
-            getCurrentRoom().allowPrint=false;
-            System.out.println("Type in a proper response");
-        }
-        if (nodes.get(nextRoom).isLocked){
-            if (pc.inventory.containsKey("item.key")){
-                System.out.println("You unlock the door");
-                nodes.get(nextRoom).isLocked=false;
-                currentRoom=nextRoom;
-            }else {
-                System.out.println("The door is locked");
-                if (inputManager.read().toLowerCase().equals("punch")||equals("break")){
-                    System.out.println("You punch the door");
-                    if (rng.rollBoolean(20,13,"You")){
-                        System.out.println("You broke down the door");
-                        nodes.get(nextRoom).isLocked = false;
-                        currentRoom = nextRoom;
-                    }else{
-                        System.out.println("You failed to punch down the door with your tiny baby arms, you now have splinters in your hands");
-                        pc.health= pc.health- 1;
-                    }
-                    if (pc.isDead){
-                        pcIsDead();
-                        System.out.println("You punched a door so many times you died. GG WP.");
-                        return;
-                    }
-                }
-            }
-        }
+
+
 
 //        gameWindow.currentRoom = getCurrentRoom();
 //        if (currentRoom!=previousRoom){
 //            gameWindow.newRoom();
 //        }
+        if (getCurrentRoom().hasTrap && !getCurrentRoom().trap.hasSprung) {
+            currentRoom = previousRoom;
+            getCurrentRoom().allowPrint = false;
+            outcome.message = "Type in a proper response";
+        }
+    }
+
+    public Outcome lockedRoom(Room room){
+        Outcome outcome = new Outcome();
+        if (room.isLocked) {
+//            System.out.println("The door is locked");
+            if (pc.inventory.containsKey("item.key")) {
+                outcome.message = "You unlock the door";
+                outcome.successful = true;
+                room.isLocked = false;
+//                currentRoom = nextRoom;
+            } else {
+                if (inputManager.read().toLowerCase().equals("punch") || equals("break")) {
+                    System.out.println("You punch the door");
+                    if (rng.rollBoolean(20, 13, "You")) {
+                        outcome.message = "You broke down the door";
+                        outcome.successful = true;
+                        room.isLocked = false;
+//                        currentRoom = nextRoom;
+                    } else {
+                        outcome.message = "You failed to punch down the door with your tiny baby arms, you now have splinters in your hands";
+                        outcome.successful = false;
+                        pc.health = pc.health - 1;
+                    }
+                    if (pc.isDead) {
+                        pcIsDead();
+                        System.out.println("You punched a door so many times you died. GG WP.");
+                    }
+                }
+            }
+        }
+        return outcome;
+    }
+    public Outcome doTrap(Trap trap){
+        String nextRoom=null;
+        Outcome outcome = new Outcome();
+        if (nextRoom != null){
+//        trap.printTrap();
+//        System.out.println("Type roll to roll the outcome");
+            if (inputManager.read().toLowerCase().equals("roll")){
+                roll=rng.rollBoolean(20,pc.agility,"You");
+                if (roll){
+                    currentRoom=nextRoom;
+                    trap.hasSprung=true;
+                    outcome.successful = true;
+                    outcome.message = "You successfully dodged the trap";
+                }else {
+    //                trap.printKillTrap();
+                    pc.isDead = true;
+                    outcome.successful = false;
+                    outcome.message = trap.killText;
+                }
+            }
+        }
+        return outcome;
     }
     public Outcome move(String direction){
         Room room;
@@ -173,15 +185,19 @@ public class Game {
                 outcome.message = "Type in a proper response";
 //                System.out.println("Type in a proper response");
             }else{
+                if (!nodes.get(nextRoom).isLocked){
+                    currentRoom=nextRoom;
+                }
                 outcome.successful = true;
                 outcome.message = room.text;
             }
+
         }
         return outcome;
     }
     public void gameLoop(){
         while (running){
-            processRoom(getCurrentRoom());
+            processRoom();
             if (getCurrentRoom().item!=null){
                 pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
                 System.out.println(getCurrentRoom().item.text);
