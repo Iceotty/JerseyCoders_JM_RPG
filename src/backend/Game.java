@@ -1,7 +1,12 @@
 package backend;
 
-import java.lang.*;
-import java.util.*;
+import frontend.GameWindow;
+import frontend.InputManager;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Joseph on 09/03/2016.
@@ -56,10 +61,7 @@ public class Game {
         pc = new PlayerCharacter();
         rng = new RandomNumberGenerator();
     }
-    public static void main(String ...args){
-        Game game = new Game();
-        game.gameLoop();
-    }
+
     public Room getRoom(String room){
         return nodes.get(room);
     }
@@ -67,30 +69,6 @@ public class Game {
 //        if (room!=null&&room.allowPrint) {
 //            room.print();
 //        }
-
-        if (!getCurrentRoom().friendlies.isEmpty()) {
-            for (NPC npc : getCurrentRoom().friendlies) {
-                npc.printText();
-                if (npc.item != null) {
-                    pc.inventory.put(npc.item.name, npc.item);
-                }
-            }
-
-            input = inputManager.read();
-            if (input == "attack") {//Doesn't do anything IS BROKEN HALP
-                getCurrentRoom().enemies = getCurrentRoom().friendlies;
-                getCurrentRoom().friendlies = null;
-                combat = true;
-                combat(getCurrentRoom().enemies);
-            }
-        }
-        if (!getCurrentRoom().enemies.isEmpty()) {
-            for (NPC npc : getCurrentRoom().enemies) {
-                npc.printText();
-            }
-            combat = true;
-            combat(getCurrentRoom().enemies);
-        }
         if (pc.isDead) {
             pcIsDead();
             return;
@@ -104,9 +82,6 @@ public class Game {
             pcIsDead();
             return;
         }
-
-
-
 //        gameWindow.currentRoom = getCurrentRoom();
 //        if (currentRoom!=previousRoom){
 //            gameWindow.newRoom();
@@ -118,6 +93,30 @@ public class Game {
         }
     }
 
+    public void npcInteraction(ArrayList<NPC> npcs,boolean friendly){
+        if (friendly) {
+            for (NPC npc : npcs) {
+//                npc.printText();
+                if (npc.item != null) {
+                    pc.inventory.put(npc.item.name, npc.item);
+                }
+            }
+//            input = inputManager.read();
+            if (input == "attack") {//Doesn't do anything IS BROKEN HALP
+//                getCurrentRoom().enemies = getCurrentRoom().friendlies;
+//                getCurrentRoom().friendlies = null;
+                combat = true;
+                combat(npcs);
+            }
+        }
+        if (!friendly) {
+            for (NPC npc : npcs) {
+//                npc.printText();
+            }
+            combat = true;
+            combat(npcs);
+        }
+    }
     public Outcome lockedRoom(Room room){
         Outcome outcome = new Outcome();
         if (room.isLocked) {
@@ -169,29 +168,6 @@ public class Game {
                     outcome.message = trap.killText;
                 }
             }
-        }
-        return outcome;
-    }
-    public Outcome move(String direction){
-        Room room;
-        String nextRoom=null;
-        Outcome outcome = new Outcome();
-        previousRoom = currentRoom;
-        room = getCurrentRoom();
-        if (nextRoom==null){
-            nextRoom=room.decide(direction);
-            if (nextRoom==null){
-                outcome.successful = false;
-                outcome.message = "Type in a proper response";
-//                System.out.println("Type in a proper response");
-            }else{
-                if (!nodes.get(nextRoom).isLocked){
-                    currentRoom=nextRoom;
-                }
-                outcome.successful = true;
-                outcome.message = room.text;
-            }
-
         }
         return outcome;
     }
