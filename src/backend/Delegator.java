@@ -10,7 +10,12 @@ import java.util.Map;
  */
 public class Delegator {
     Map<String,ActionHandler> actionHandlers = new HashMap<>();
-     public void delegate(Action action){
+    public Delegator(){
+        actionHandlers.put("north",MoveAction);
+        actionHandlers.put("northEast",MoveAction);
+    }
+
+    public void delegate(Action action){
          if (actionHandlers.containsKey(action)){
              actionHandlers.get(action.getAction()).execute(action);
          }

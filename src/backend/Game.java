@@ -12,6 +12,7 @@ import java.util.List;
  * Created by Joseph on 09/03/2016.
  */
 public class Game {
+     delegator;
     PlayerCharacter pc;
     String currentRoom;
     String previousRoom;
@@ -28,7 +29,8 @@ public class Game {
     boolean roll;
     boolean combat;
     boolean aBoolean = false;
-    public Game(){
+    public Game(Delegator delegator){
+        this.delegator = delegator;
         running = true;
         nodes=new HashMap<>();
         NPCs=new HashMap<>();
@@ -176,13 +178,13 @@ public class Game {
             processRoom();
             if (getCurrentRoom().item!=null){
                 pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
-                System.out.println(getCurrentRoom().item.text);
+//                System.out.println(getCurrentRoom().item.text);
                 getCurrentRoom().item=null;
             }
             if (nodes.get(currentRoom).isEndRoom==true){
                 running=false;
-                getCurrentRoom().print();
-                System.out.println("YOU WON ;_;");
+//                getCurrentRoom().print();
+//                System.out.println("YOU WON ;_;");
             }
         }
     }
