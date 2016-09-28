@@ -8,6 +8,10 @@ import java.util.List;
 public class Action {
     private String action;
     private List<String> parameters;
+     public Action(String action, List<String> parameters){
+         this.action = action;
+         this.parameters = parameters;
+     }
 
 
     public String getAction() {

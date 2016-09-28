@@ -11,13 +11,13 @@ import java.util.Map;
 public class Delegator {
     Map<String,ActionHandler> actionHandlers = new HashMap<>();
     public Delegator(){
-        actionHandlers.put("north",MoveAction);
-        actionHandlers.put("northEast",MoveAction);
+        actionHandlers.put("move", new MoveAction());
     }
 
-    public void delegate(Action action){
-         if (actionHandlers.containsKey(action)){
-             actionHandlers.get(action.getAction()).execute(action);
+    public Outcome delegate(Action action){
+         if (actionHandlers.containsKey(action.getAction())){
+             return actionHandlers.get(action.getAction()).execute(action);
          }
+        return null;
      }
 }

@@ -9,7 +9,7 @@ public class MoveAction extends ActionHandler {
     @Override
     public Outcome execute(Action action) {
         // takes in (String direction)
-        String direction = action.getParameters().get(1);
+        String direction = action.getParameters().get(0);
         Room room;
         String nextRoom;
         Outcome outcome = new Outcome();

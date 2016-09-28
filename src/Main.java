@@ -1,3 +1,4 @@
+import backend.Delegator;
 import backend.Game;
 import frontend.Display;
 
@@ -6,8 +7,12 @@ import frontend.Display;
  */
 public class Main {
     public static void main(String ...args){
-        Display display = new Display();
+        Delegator delegator = new Delegator();
+        Display display = new Display(delegator);
         Game game = new Game(display.getDelegator());
-        game.gameLoop();
+//        game.gameLoop();
+        while (true){
+            display.read();
+        }
     }
 }

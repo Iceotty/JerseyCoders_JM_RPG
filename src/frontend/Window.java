@@ -1,6 +1,5 @@
 package frontend;
 
-import backend.Game;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -18,8 +17,8 @@ public class Window extends Application {
 
     public static void main(String[] args){
         launch(args);
-        Game game = new Game();
-        game.gameLoop();
+//        Game game = new Game();
+//        game.gameLoop();
     }
 
     @Override

@@ -31,22 +31,22 @@ public class GameWindow {
         window = new Window();
     }
     public void newRoom(){
-        addButtons();
+//        addButtons();
         window.layout = layout;
         window.scene = new Scene(layout);
         window.applyScene(window.scene);
     }
-    public void addButtons(){
-        layout.getChildren().removeAll();
-        for (HashMap.Entry<String, String> path:currentRoom.paths.entrySet()) {
-            for (HashMap.Entry<String, Button> button : buttons.entrySet()) {
-                if (button.getKey() == path.getKey()){
-                    layout.getChildren().add((javafx.scene.Node) button);
-                }
-            }
-        }
-
-    }
+//    public void addButtons(){
+//        layout.getChildren().removeAll();
+//        for (HashMap.Entry<String, String> path:currentRoom.paths.entrySet()) {
+//            for (HashMap.Entry<String, Button> button : buttons.entrySet()) {
+//                if (button.getKey() == path.getKey()){
+//                    layout.getChildren().add((javafx.scene.Node) button);
+//                }
+//            }
+//        }
+//
+//    }
     public void makeButton(String text, String name){
         Button button = new Button(text);
         buttons.put(name,button);

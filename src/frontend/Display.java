@@ -1,6 +1,10 @@
 package frontend;
 
 import backend.Delegator;
+import backend.Outcome;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Joseph on 14/09/2016.
@@ -9,6 +13,10 @@ public class Display {
     private Delegator delegator;
     private InputManager inputManager = new InputManager();
 
+    public Display(Delegator delegator){
+        this.delegator = delegator;
+    }
+
     public void display(String input){
         System.out.println(input);
     }
@@ -16,7 +24,13 @@ public class Display {
     public String read(){
         String input;
         input = getInputManager().read();
+        String [] words = input.split(" ");
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(words));
+        String action  = list.remove(0);
+        Action action1 = new Action(action, list);
 
+        Outcome outcome = delegator.delegate(action1);
+        System.out.println(outcome.message);
         return input;
     }
 

@@ -1,10 +1,8 @@
 package backend;
 
 import frontend.GameWindow;
-import frontend.InputManager;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -12,8 +10,8 @@ import java.util.List;
  * Created by Joseph on 09/03/2016.
  */
 public class Game {
-     delegator;
-    PlayerCharacter pc;
+    Delegator delegator;
+//    PlayerCharacter pc;
     String currentRoom;
     String previousRoom;
     String currentScene;
@@ -60,7 +58,7 @@ public class Game {
         makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
         currentScene = "scene.firstScene";
         currentRoom = nodes.get("room.firstRoom").name;
-        pc = new PlayerCharacter();
+//        pc = new PlayerCharacter();
         rng = new RandomNumberGenerator();
     }
 
@@ -71,113 +69,115 @@ public class Game {
 //        if (room!=null&&room.allowPrint) {
 //            room.print();
 //        }
-        if (pc.isDead) {
-            pcIsDead();
-            return;
-        }
-        if (aBoolean) {
-            aBoolean = false;
-            return;
-        }
-
-        if (pc.isDead) {
-            pcIsDead();
-            return;
-        }
-//        gameWindow.currentRoom = getCurrentRoom();
-//        if (currentRoom!=previousRoom){
-//            gameWindow.newRoom();
+//        if (pc.isDead) {
+//            pcIsDead();
+//            return;
 //        }
-        if (getCurrentRoom().hasTrap && !getCurrentRoom().trap.hasSprung) {
-            currentRoom = previousRoom;
-            getCurrentRoom().allowPrint = false;
-            outcome.message = "Type in a proper response";
-        }
+//        if (aBoolean) {
+//            aBoolean = false;
+//            return;
+//        }
+//
+//        if (pc.isDead) {
+//            pcIsDead();
+//            return;
+//        }
+////        gameWindow.currentRoom = getCurrentRoom();
+////        if (currentRoom!=previousRoom){
+////            gameWindow.newRoom();
+////        }
+//        if (getCurrentRoom().hasTrap && !getCurrentRoom().trap.hasSprung) {
+//            currentRoom = previousRoom;
+//            getCurrentRoom().allowPrint = false;
+//            outcome.message = "Type in a proper response";
+//        }
     }
 
-    public void npcInteraction(ArrayList<NPC> npcs,boolean friendly){
-        if (friendly) {
-            for (NPC npc : npcs) {
-//                npc.printText();
-                if (npc.item != null) {
-                    pc.inventory.put(npc.item.name, npc.item);
-                }
-            }
-//            input = inputManager.read();
-            if (input == "attack") {//Doesn't do anything IS BROKEN HALP
-//                getCurrentRoom().enemies = getCurrentRoom().friendlies;
-//                getCurrentRoom().friendlies = null;
-                combat = true;
-                combat(npcs);
-            }
-        }
-        if (!friendly) {
-            for (NPC npc : npcs) {
-//                npc.printText();
-            }
-            combat = true;
-            combat(npcs);
-        }
-    }
-    public Outcome lockedRoom(Room room){
-        Outcome outcome = new Outcome();
-        if (room.isLocked) {
-//            System.out.println("The door is locked");
-            if (pc.inventory.containsKey("item.key")) {
-                outcome.message = "You unlock the door";
-                outcome.successful = true;
-                room.isLocked = false;
-//                currentRoom = nextRoom;
-            } else {
-                if (inputManager.read().toLowerCase().equals("punch") || equals("break")) {
-                    System.out.println("You punch the door");
-                    if (rng.rollBoolean(20, 13, "You")) {
-                        outcome.message = "You broke down the door";
-                        outcome.successful = true;
-                        room.isLocked = false;
-//                        currentRoom = nextRoom;
-                    } else {
-                        outcome.message = "You failed to punch down the door with your tiny baby arms, you now have splinters in your hands";
-                        outcome.successful = false;
-                        pc.health = pc.health - 1;
-                    }
-                    if (pc.isDead) {
-                        pcIsDead();
-                        System.out.println("You punched a door so many times you died. GG WP.");
-                    }
-                }
-            }
-        }
-        return outcome;
-    }
-    public Outcome doTrap(Trap trap){
-        String nextRoom=null;
-        Outcome outcome = new Outcome();
-        if (nextRoom != null){
-//        trap.printTrap();
-//        System.out.println("Type roll to roll the outcome");
-            if (inputManager.read().toLowerCase().equals("roll")){
-                roll=rng.rollBoolean(20,pc.agility,"You");
-                if (roll){
-                    currentRoom=nextRoom;
-                    trap.hasSprung=true;
-                    outcome.successful = true;
-                    outcome.message = "You successfully dodged the trap";
-                }else {
-    //                trap.printKillTrap();
-                    pc.isDead = true;
-                    outcome.successful = false;
-                    outcome.message = trap.killText;
-                }
-            }
-        }
-        return outcome;
-    }
+//    public void npcInteraction(ArrayList<NPC> npcs,boolean friendly){
+//        if (friendly) {
+//            for (NPC npc : npcs) {
+////                npc.printText();
+//                if (npc.item != null) {
+//                    pc.inventory.put(npc.item.name, npc.item);
+//                }
+//            }
+////            input = inputManager.read();
+//            if (input == "attack") {//Doesn't do anything IS BROKEN HALP
+////                getCurrentRoom().enemies = getCurrentRoom().friendlies;
+////                getCurrentRoom().friendlies = null;
+//                combat = true;
+//                combat(npcs);
+//            }
+//        }
+//        if (!friendly) {
+//            for (NPC npc : npcs) {
+////                npc.printText();
+//            }
+//            combat = true;
+//            combat(npcs);
+//        }
+//    }
+
+//    public Outcome lockedRoom(Room room){
+//        Outcome outcome = new Outcome();
+//        if (room.isLocked) {
+////            System.out.println("The door is locked");
+//            if (pc.inventory.containsKey("item.key")) {
+//                outcome.message = "You unlock the door";
+//                outcome.successful = true;
+//                room.isLocked = false;
+////                currentRoom = nextRoom;
+//            } else {
+//                if (inputManager.read().toLowerCase().equals("punch") || equals("break")) {
+//                    System.out.println("You punch the door");
+//                    if (rng.rollBoolean(20, 13, "You")) {
+//                        outcome.message = "You broke down the door";
+//                        outcome.successful = true;
+//                        room.isLocked = false;
+////                        currentRoom = nextRoom;
+//                    } else {
+//                        outcome.message = "You failed to punch down the door with your tiny baby arms, you now have splinters in your hands";
+//                        outcome.successful = false;
+//                        pc.health = pc.health - 1;
+//                    }
+//                    if (pc.isDead) {
+//                        pcIsDead();
+//                        System.out.println("You punched a door so many times you died. GG WP.");
+//                    }
+//                }
+//            }
+//        }
+//        return outcome;
+//    }
+
+//    public Outcome doTrap(Trap trap){
+//        String nextRoom=null;
+//        Outcome outcome = new Outcome();
+//        if (nextRoom != null){
+////        trap.printTrap();
+////        System.out.println("Type roll to roll the outcome");
+//            if (inputManager.read().toLowerCase().equals("roll")){
+//                roll=rng.rollBoolean(20,pc.agility,"You");
+//                if (roll){
+//                    currentRoom=nextRoom;
+//                    trap.hasSprung=true;
+//                    outcome.successful = true;
+//                    outcome.message = "You successfully dodged the trap";
+//                }else {
+//    //                trap.printKillTrap();
+//                    pc.isDead = true;
+//                    outcome.successful = false;
+//                    outcome.message = trap.killText;
+//                }
+//            }
+//        }
+//        return outcome;
+//    }
     public void gameLoop(){
         while (running){
             processRoom();
             if (getCurrentRoom().item!=null){
-                pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
+//                pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
 //                System.out.println(getCurrentRoom().item.text);
                 getCurrentRoom().item=null;
             }
@@ -188,61 +188,61 @@ public class Game {
             }
         }
     }
-    private void combat(List<NPC> npcs) {
-
-        List<Initiative> turnOrder = new ArrayList<>();
-        turnOrder.add(new Initiative(pc, rng.rollInt(20, 0, null)));
-        for (NPC npc : npcs){
-            turnOrder.add(new Initiative(npc, rng.rollInt(20, 0, null)));
-            if (npc == null || npc.isDead){
-                return;
-            }
-        }
-        Collections.sort(turnOrder);
-        if (pc.isDead || getCurrentRoom().enemies == null || getCurrentRoom().enemies.isEmpty()) {
-            return;
-        }
-        CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
-        System.out.println("Combat Starts!");
-        while (combat) {
-            Character character;
-            Initiative init = turnOrder.remove(0);
-            character = init.character;
-            turnOrder.add(init);
-            if (character.equals(pc)) {
-                character.combat(combatState);
-            }
-            for (NPC npc:npcs) {
-                if (npc.isDead){
-                    deadNPCs.add(npc);
-                }else {
-                    if (character.equals(npc)) {
-                        System.out.println(npc.name + " attacks you");
-                        if (rng.rollBoolean(20, pc.armor, npc.name)) {
-                            pc.health=pc.health- rng.rollInt(20,0,npc.name);
-                            if (pc.health<=0) {
-                                npc.printKillText();
-                                pc.isDead = true;
-                            }
-                        }
-                    }
-                }
-            }
-            if (pc.isDead){
-                combat = false;
-                aBoolean = true;
-                System.out.println("Combat Ends");
-                pcIsDead();
-                return;
-            }
-            npcs.removeAll(deadNPCs);
-            if (npcs.isEmpty()) {
-                combat = false;
-                System.out.println("Combat Ends");
-            }
-
-        }
-    }
+//    private void combat(List<NPC> npcs) {
+//
+//        List<Initiative> turnOrder = new ArrayList<>();
+//        turnOrder.add(new Initiative(pc, rng.rollInt(20, 0, null)));
+//        for (NPC npc : npcs){
+//            turnOrder.add(new Initiative(npc, rng.rollInt(20, 0, null)));
+//            if (npc == null || npc.isDead){
+//                return;
+//            }
+//        }
+//        Collections.sort(turnOrder);
+//        if (pc.isDead || getCurrentRoom().enemies == null || getCurrentRoom().enemies.isEmpty()) {
+//            return;
+//        }
+//        CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
+//        System.out.println("Combat Starts!");
+//        while (combat) {
+//            Character character;
+//            Initiative init = turnOrder.remove(0);
+//            character = init.character;
+//            turnOrder.add(init);
+//            if (character.equals(pc)) {
+//                character.combat(combatState);
+//            }
+//            for (NPC npc:npcs) {
+//                if (npc.isDead){
+//                    deadNPCs.add(npc);
+//                }else {
+//                    if (character.equals(npc)) {
+//                        System.out.println(npc.name + " attacks you");
+//                        if (rng.rollBoolean(20, pc.armor, npc.name)) {
+//                            pc.health=pc.health- rng.rollInt(20,0,npc.name);
+//                            if (pc.health<=0) {
+//                                npc.printKillText();
+//                                pc.isDead = true;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            if (pc.isDead){
+//                combat = false;
+//                aBoolean = true;
+//                System.out.println("Combat Ends");
+//                pcIsDead();
+//                return;
+//            }
+//            npcs.removeAll(deadNPCs);
+//            if (npcs.isEmpty()) {
+//                combat = false;
+//                System.out.println("Combat Ends");
+//            }
+//
+//        }
+//    }
 
     public Room getCurrentRoom(){return getRoom(currentRoom);}
 
@@ -274,24 +274,24 @@ public class Game {
             nodes.get(room).friendlies.add(NPCs.get(key));
         }
     }
-    private void pcIsDead(){
-        String input;
-        while (pc.isDead&&running){
-            System.out.println("YOU ARE DEAD");
-            System.out.println("type restart to begin again, or end to stop playing.");
-            input = inputManager.read();
-            if (input.toLowerCase().equals("restart")){
-                pc.isDead=false;
-                pc.health=10;
-                currentRoom="room.firstRoom";
-            }
-            if (input.toLowerCase().equals("end")) {
-                running = false;
-            }
-            if (pc.isDead&&running) {
-                System.out.println("Type in a proper response");
-            }
-        }
-    }
+//    private void pcIsDead(){
+//        String input;
+//        while (pc.isDead&&running){
+//            System.out.println("YOU ARE DEAD");
+//            System.out.println("type restart to begin again, or end to stop playing.");
+//            input = inputManager.read();
+//            if (input.toLowerCase().equals("restart")){
+//                pc.isDead=false;
+//                pc.health=10;
+//                currentRoom="room.firstRoom";
+//            }
+//            if (input.toLowerCase().equals("end")) {
+//                running = false;
+//            }
+//            if (pc.isDead&&running) {
+//                System.out.println("Type in a proper response");
+//            }
+//        }
+//    }
 }
 
