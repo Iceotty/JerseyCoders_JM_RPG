@@ -6,7 +6,11 @@ import frontend.Action;
  * Created by Joseph on 21/09/2016.
  */
 public class MoveAction extends ActionHandler {
+    public MoveAction(Game game){
+        this.game = game;
+    }
     @Override
+
     public Outcome execute(Action action) {
         // takes in (String direction)
         String direction = action.getParameters().get(0);
