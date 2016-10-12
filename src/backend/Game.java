@@ -37,7 +37,7 @@ public class Game {
         deadNPCs = new ArrayList<>();
         makeRoom("room.firstRoom","WELCOME TO THE DUNGEON OF THE MEME").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
         makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls").west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
-        makeRoom("room.thirdRoom","Barry levels of Dank").northWest("room.firstRoom");
+        makeRoom("room.thirdRoom","rlly dank").northWest("room.firstRoom");
         makeRoom("room.fourthRoom","Its okay I guess").north("room.firstRoom").east("room.fifthRoom").southEast("room.seventhRoom").south("room.eighthRoom");
         makeRoom("room.fifthRoom","A plain, empty room with absolutely nothing in it").southWest("room.seventhRoom").south("room.ninthRoom").north("room.secondRoom");
         makeRoom("room.sixthRoom","Dank. Really really dank.").northWest("room.secondRoom");
@@ -274,6 +274,10 @@ public class Game {
             nodes.get(room).friendlies.add(NPCs.get(key));
         }
     }
+    public ActionHandler makeMoveAction(){
+        return new MoveAction(this);
+    }
+
 //    private void pcIsDead(){
 //        String input;
 //        while (pc.isDead&&running){
