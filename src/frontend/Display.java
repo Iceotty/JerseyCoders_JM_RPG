@@ -13,9 +13,7 @@ public class Display {
     private Delegator delegator;
     private InputManager inputManager = new InputManager();
 
-    public Display(Delegator delegator){
-        setDelegator(delegator);
-    }
+    public Display(Delegator delegator){setDelegator(delegator);}
 
     public void display(String input){
         System.out.println(input);

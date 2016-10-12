@@ -11,7 +11,7 @@ import java.util.Map;
 public class Delegator {
     Game game;
     Map<String,ActionHandler> actionHandlers = new HashMap<>();
-    public Delegator(){addActionhandler("move", game.makeMoveAction());
+    public Delegator(){
     }
 
     public Outcome delegate(Action action){
