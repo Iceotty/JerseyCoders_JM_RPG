@@ -56,6 +56,7 @@ public class Game {
         makeNPC(3,"npc.slimeEnemy","room.seventhRoom","A pink slime flops towards you","You were absorbed by the slime","Pink Slime",null,true);
         makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way","A friendly man killed you","Nice guy",null,false);
         makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
+        delegator.addActionhandler("move", makeMoveAction());
         currentScene = "scene.firstScene";
         currentRoom = nodes.get("room.firstRoom").name;
 //        pc = new PlayerCharacter();

@@ -10,7 +10,6 @@ public class Main {
         Delegator delegator = new Delegator();
         Display display = new Display(delegator);
         Game game = new Game(display.getDelegator());
-//        delegator.addActionhandler("move", game.makeMoveAction());
 //        game.gameLoop();
         while (true){
             display.read();

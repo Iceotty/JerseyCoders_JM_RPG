@@ -22,13 +22,18 @@ public class Display {
     public String read(){
         String input;
         input = getInputManager().read();
-        String [] words = input.split(" ");
-        ArrayList<String> list = new ArrayList<>(Arrays.asList(words));
-        String action  = list.remove(0);
-        Action action1 = new Action(action, list);
 
-        Outcome outcome = delegator.delegate(action1);
-        System.out.println(outcome.message);
+            String[] words = input.split(" ");
+            ArrayList<String> list = new ArrayList<>(Arrays.asList(words));
+            String action = list.remove(0);
+            Action action1 = new Action(action, list);
+
+
+
+            Outcome outcome = delegator.delegate(action1);
+            System.out.println(outcome.message);
+
+
         return input;
     }
 
