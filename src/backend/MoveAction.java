@@ -24,13 +24,16 @@ public class MoveAction extends ActionHandler {
             nextRoom = room.decide(direction);
             if (nextRoom == null) {
                 outcome.successful = false;
-                outcome.message = "Type in a proper response";
+                outcome.message = "You can't go that way";
             } else {
                 if (!game.nodes.get(nextRoom).isLocked) {
                     game.currentRoom = nextRoom;
+                    outcome.successful = true;
+                    outcome.message = game.nodes.get(nextRoom).text + ". You can go " + game.nodes.get(nextRoom).paths.values();
+                }else {
+                    outcome.message = "The door is locked.";
                 }
-                outcome.successful = true;
-                outcome.message = room.text;
+
             }
             return outcome;
 

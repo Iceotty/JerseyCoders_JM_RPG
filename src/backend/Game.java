@@ -1,7 +1,5 @@
 package backend;
 
-import frontend.GameWindow;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +12,7 @@ public class Game {
 //    PlayerCharacter pc;
     String currentRoom;
     String previousRoom;
-    String currentScene;
     List<NPC> deadNPCs;
-    GameWindow gameWindow;
     String[] args = new String[0];
     RandomNumberGenerator rng;
     HashMap<String,Room> nodes;
@@ -35,7 +31,7 @@ public class Game {
         items=new HashMap<>();
         traps=new HashMap<>();
         deadNPCs = new ArrayList<>();
-        makeRoom("room.firstRoom","WELCOME TO THE DUNGEON OF THE MEME").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
+        makeRoom("room.firstRoom","You're stuck in a really awful dungeon").east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
         makeRoom("room.secondRoom","Somewhat dank. Has rare pepes on the walls").west("room.firstRoom").south("room.fifthRoom").southEast("room.sixthRoom");
         makeRoom("room.thirdRoom","rlly dank").northWest("room.firstRoom");
         makeRoom("room.fourthRoom","Its okay I guess").north("room.firstRoom").east("room.fifthRoom").southEast("room.seventhRoom").south("room.eighthRoom");
@@ -57,10 +53,10 @@ public class Game {
         makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way","A friendly man killed you","Nice guy",null,false);
         makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
         delegator.addActionhandler("move", makeMoveAction());
-        currentScene = "scene.firstScene";
         currentRoom = nodes.get("room.firstRoom").name;
 //        pc = new PlayerCharacter();
         rng = new RandomNumberGenerator();
+        System.out.println(getCurrentRoom().text);
     }
 
     public Room getRoom(String room){
