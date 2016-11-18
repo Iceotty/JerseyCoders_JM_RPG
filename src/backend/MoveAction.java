@@ -29,7 +29,11 @@ public class MoveAction extends ActionHandler {
                 if (!game.nodes.get(nextRoom).isLocked) {
                     game.currentRoom = nextRoom;
                     outcome.successful = true;
-                    outcome.message = game.nodes.get(nextRoom).text + ". You can go " + game.nodes.get(nextRoom).paths.values();
+                    String formattedString = game.nodes.get(nextRoom).paths.keySet().toString()
+                            .replace("[", "")  //remove the right bracket
+                            .replace("]", "")  //remove the left bracket
+                            .trim();
+                    outcome.message = game.nodes.get(nextRoom).text + ". You can go: " + formattedString + ".";
                 }else {
                     outcome.message = "The door is locked.";
                 }
