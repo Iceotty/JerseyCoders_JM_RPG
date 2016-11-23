@@ -21,6 +21,12 @@ public class Room extends Node {
         enemies = new ArrayList<>();
         friendlies = new ArrayList<>();
     }
+    public void whenEntered(){
+        if (hasTrap){
+            trap.trigger();
+            System.out.println("Coalscuttle");
+        }
+    }
     public Room north(String room){
         addPath("north",room);
         return this;

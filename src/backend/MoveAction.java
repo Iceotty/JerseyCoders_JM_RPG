@@ -29,11 +29,12 @@ public class MoveAction extends ActionHandler {
             } else {
 
                 if (!game.nodes.get(nextRoom).isLocked) {
+                    game.nodes.get(nextRoom).whenEntered();
                     game.currentRoom = nextRoom;
                     outcome.successful = true;
                     String formattedString = game.nodes.get(nextRoom).paths.keySet().toString()
                             .replace("[", "")  //remove the right bracket
-                            .replace("]", "")  //remove the left bracket
+                            .replace("]", "")  //remove the left bracket3
                             .trim();
                     outcome.message = game.nodes.get(nextRoom).text + ". You can go: " + formattedString + ".";
                 }else {
@@ -45,4 +46,5 @@ public class MoveAction extends ActionHandler {
 
 
     }
+
 }
