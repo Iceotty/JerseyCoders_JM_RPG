@@ -9,12 +9,11 @@ import java.util.List;
  */
 public class Game {
     Delegator delegator;
-//    PlayerCharacter pc;
+    PlayerCharacter pc;
     String currentRoom;
     String previousRoom;
     List<NPC> deadNPCs;
     String[] args = new String[0];
-    RandomNumberGenerator rng;
     HashMap<String,Room> nodes;
     HashMap<String, NPC> NPCs;
     HashMap<String,Item> items;
@@ -53,9 +52,10 @@ public class Game {
         makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way","A friendly man killed you","Nice guy",null,false);
         makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
         delegator.addActionhandler("move", makeMoveAction());
+//        delegator.addActionhandler("trap",makeTrapAction());
+
         currentRoom = nodes.get("room.firstRoom").name;
-//        pc = new PlayerCharacter();
-        rng = new RandomNumberGenerator();
+        pc = new PlayerCharacter();
         System.out.println(getCurrentRoom().text);
     }
 
@@ -148,7 +148,6 @@ public class Game {
 //    }
 
 //    public Outcome doTrap(Trap trap){
-//        String nextRoom=null;
 //        Outcome outcome = new Outcome();
 //        if (nextRoom != null){
 ////        trap.printTrap();
@@ -170,6 +169,7 @@ public class Game {
 //        }
 //        return outcome;
 //    }
+
     public void gameLoop(){
         while (running){
             processRoom();
@@ -274,6 +274,7 @@ public class Game {
     public ActionHandler makeMoveAction(){
         return new MoveAction(this);
     }
+    public ActionHandler makeTrapAction(String trapKey){return new TrapAction(this);}
 
 //    private void pcIsDead(){
 //        String input;

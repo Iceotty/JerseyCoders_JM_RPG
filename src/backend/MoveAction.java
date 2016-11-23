@@ -13,6 +13,7 @@ public class MoveAction extends ActionHandler {
 
     public Outcome execute(Action action) {
         Outcome outcome = new Outcome();
+        outcome.message = "where?";
         if (action.getParameters().size() == 0) {
             return outcome;
         }
@@ -26,6 +27,7 @@ public class MoveAction extends ActionHandler {
                 outcome.successful = false;
                 outcome.message = "You can't go that way";
             } else {
+
                 if (!game.nodes.get(nextRoom).isLocked) {
                     game.currentRoom = nextRoom;
                     outcome.successful = true;
