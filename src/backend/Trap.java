@@ -17,13 +17,13 @@ public class Trap {
     }
     public Outcome trigger(){
         Outcome outcome = new Outcome();
-//        trap.printTrap();
+        this.printTrap();
 //        System.out.println("Type roll to roll the outcome");
 //            if (inputManager.read().toLowerCase().equals("roll")){
-                roll=rng.rollBoolean(20,10,"You");
+                roll = rng.rollBoolean(20,10,"You");
                 if (roll){
 //                    currentRoom=nextRoom;
-                    this.hasSprung=true;
+                    this.hasSprung = true;
                     outcome.successful = true;
                     outcome.message = "You successfully dodged the trap";
                 }else {
@@ -34,7 +34,7 @@ public class Trap {
                 }
 //            }
 
-        return outcome;
+            return outcome;
     }
     public void printTrap(){System.out.println(trapText);}
     public void printKillTrap(){System.out.println(killText);}
