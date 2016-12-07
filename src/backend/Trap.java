@@ -22,12 +22,10 @@ public class Trap {
 //            if (inputManager.read().toLowerCase().equals("roll")){
                 roll = rng.rollBoolean(20,10,"You");
                 if (roll){
-//                    currentRoom=nextRoom;
                     this.hasSprung = true;
                     outcome.successful = true;
                     outcome.message = "You successfully dodged the trap";
                 }else {
-                    //                trap.printKillTrap();
 //                    pc.isDead = true;
                     outcome.successful = false;
                     outcome.message = this.killText;

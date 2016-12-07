@@ -23,6 +23,7 @@ public class Room extends Node {
     }
     public Outcome whenEntered(){
         if (hasTrap){
+
             return trap.trigger();
         }
         return null;

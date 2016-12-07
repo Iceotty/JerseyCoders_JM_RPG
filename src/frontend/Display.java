@@ -28,8 +28,10 @@ public class Display {
             String action = list.remove(0);
             Action action1 = new Action(action, list);
 
-            Outcome outcome = delegator.delegate(action1);
-            System.out.println(outcome.message);
+            ArrayList<Outcome> outcomes = delegator.delegate(action1);
+            for (Outcome outcome : outcomes) {
+                System.out.println(outcome.message);
+            }
 
         return input;
     }

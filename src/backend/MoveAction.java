@@ -2,6 +2,8 @@ package backend;
 
 import frontend.Action;
 
+import java.util.ArrayList;
+
 /**
  * Created by Joseph on 21/09/2016.
  */
@@ -11,11 +13,14 @@ public class MoveAction extends ActionHandler {
     }
     @Override
 
-    public Outcome execute(Action action) {
+    public ArrayList<Outcome> execute(Action action) {
+        ArrayList<Outcome> outcomes = new ArrayList<>();
+
         Outcome outcome = new Outcome();
         outcome.message = "where?";
         if (action.getParameters().size() == 0) {
-            return outcome;
+            outcomes.add(outcome);
+            return outcomes;
         }
             String direction = action.getParameters().get(0);
             Room room;
@@ -29,7 +34,7 @@ public class MoveAction extends ActionHandler {
             } else {
 
                 if (!game.nodes.get(nextRoom).isLocked) {
-                    game.nodes.get(nextRoom).whenEntered();
+                    outcomes.add(game.nodes.get(nextRoom).whenEntered());
                     game.currentRoom = nextRoom;
                     outcome.successful = true;
                     String formattedString = game.nodes.get(nextRoom).paths.keySet().toString()
@@ -42,7 +47,7 @@ public class MoveAction extends ActionHandler {
                 }
 
             }
-            return outcome;
+            return outcomes;
 
 
     }
