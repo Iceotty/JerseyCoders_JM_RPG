@@ -37,3 +37,5 @@ public class Trap {
     public void printTrap(){System.out.println(trapText);}
     public void printKillTrap(){System.out.println(killText);}
 }
+
+
