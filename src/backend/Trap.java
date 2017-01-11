@@ -35,7 +35,8 @@ public class Trap {
             return outcome;
     }
     public void printTrap(){System.out.println(trapText);}
-    public void printKillTrap(){System.out.println(killText);}
+    public String getKillText(){return killText;}
+    public boolean getHasSprung(){ return hasSprung;}
 }
 
 

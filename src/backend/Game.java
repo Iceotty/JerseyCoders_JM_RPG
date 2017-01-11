@@ -17,7 +17,8 @@ public class Game {
     HashMap<String,Room> nodes;
     HashMap<String, NPC> NPCs;
     HashMap<String,Item> items;
-    HashMap<String,Trap> traps;
+    HashMap<String,Trap> trapsMap;
+    ArrayList<Trap> traps;
     boolean running = false;
     boolean roll;
     boolean combat;
@@ -28,7 +29,7 @@ public class Game {
         nodes=new HashMap<>();
         NPCs=new HashMap<>();
         items=new HashMap<>();
-        traps=new HashMap<>();
+        trapsMap=new HashMap<>();
         deadNPCs = new ArrayList<>();
 
         makeRoom("room.firstRoom","You're stuck in a really awful dungeon",null).east("room.secondRoom").southEast("room.thirdRoom").south("room.fourthRoom");
@@ -55,6 +56,7 @@ public class Game {
         makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way","A friendly man killed you","Nice guy",null,false);
         makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
         delegator.addActionhandler("move", makeMoveAction());
+//        delegator.addActionhandler("roll",makeRollAction());
 
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
@@ -225,12 +227,13 @@ public class Game {
     public Room getCurrentRoom(){return getRoom(currentRoom);}
 
     private Room makeRoom(String roomName,String text,String trapKey){
-        nodes.put(roomName,new Room(roomName,text,null,traps.get(trapKey)));
+        nodes.put(roomName,new Room(roomName,text,null,trapsMap.get(trapKey)));
         return nodes.get(roomName);
     }
     private void makeTrap(String name,String room, String text, String killText){
-        traps.put(name,new Trap(text,killText));
-        nodes.get(room).trap = traps.get(name);
+        trapsMap.put(name,new Trap(text,killText));
+        traps.add(trapsMap.get(name));
+        nodes.get(room).trap = trapsMap.get(name);
         nodes.get(room).hasTrap = true;
     }
     private void makeItem(String name,String room, String text){
@@ -255,6 +258,7 @@ public class Game {
     public ActionHandler makeMoveAction(){
         return new MoveAction(this);
     }
+    public ArrayList<Trap> getTraps(){return traps;}
 
 //    private void pcIsDead(){
 //        String input;
