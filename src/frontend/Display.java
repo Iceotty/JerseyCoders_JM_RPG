@@ -29,11 +29,6 @@ public class Display {
         if(input.toLowerCase().equals("roll")){
             Action action2 = new Action("roll",null);
             outcomes.addAll(delegator.delegate(action2));
-//            for (Trap trap : traps){
-//                if (trap.getHasSprung()){
-//                    outcomes.add(delegator.delegate(new RollAction(10,20,"You","You successfully dodged the trap",trap.getKillText())));
-//                }
-//            }
         }
 
         String[] words = input.split(" ");

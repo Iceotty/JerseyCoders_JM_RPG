@@ -56,7 +56,7 @@ public class Game {
         makeNPC(10,"npc.niceGuy","room.secondRoom","A friendly man greets you in a friendly way","A friendly man killed you","Nice guy",null,false);
         makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
         delegator.addActionhandler("move", makeMoveAction());
-//        delegator.addActionhandler("roll",makeRollAction());
+        delegator.addActionhandler("roll",makeRollAction());
 
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
@@ -258,8 +258,18 @@ public class Game {
     public ActionHandler makeMoveAction(){
         return new MoveAction(this);
     }
-    public ArrayList<Trap> getTraps(){return traps;}
-
+    public ActionHandler makeRollAction(){
+        RollAction rollAction = new RollAction();
+        for (Trap trap : traps){
+            if (trap.getHasSprung()){
+                rollAction.failureText = trap.killText;
+                rollAction.successText = "You successfully dodged the trap";
+            }
+        }
+        //This doesn't work. The idea was to check which trap you a rolling away from, but this method is used when Game is initialised, so that doesn't work.
+        //Instead, I need to just use the one set of success/failure text things for each type of roll, and have the user type in why they're rolling
+        return rollAction;
+    }
 //    private void pcIsDead(){
 //        String input;
 //        while (pc.isDead&&running){

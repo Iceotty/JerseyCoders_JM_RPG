@@ -18,11 +18,11 @@ public class RollAction extends ActionHandler {
     String failureText;
     RandomNumberGenerator rng;
 
-    public RollAction(int min,int max,String roller,String successText,String failureText){
+    public RollAction(){
         rng = new RandomNumberGenerator();
-        this.min = min;
-        this.max = max;
-        this.roller = roller;
+        min=10;
+        max = 20;
+        roller = "You";
     }
     @Override
     public ArrayList<Outcome> execute(Action action) {
@@ -38,7 +38,9 @@ public class RollAction extends ActionHandler {
         roll = rng.rollBoolean(max, min, roller);
         outcome.successful = roll;
         if (roll){
-
+            outcome.message = successText;
+        }else{
+            outcome.message = failureText;
         }
 
         return outcomes;
