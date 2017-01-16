@@ -23,17 +23,14 @@ public class RollAction extends ActionHandler {
         min=10;
         max = 20;
         roller = "You";
+        successText = "You successfully rolled";
+        failureText = "You Are Dead";
     }
     @Override
     public ArrayList<Outcome> execute(Action action) {
         ArrayList<Outcome> outcomes = new ArrayList<>();
         Outcome outcome = new Outcome();
         outcome.message = "rollAction input failure";
-
-        if (action.getParameters().size() == 0) {
-            outcomes.add(outcome);
-            return outcomes;
-        }
 
         roll = rng.rollBoolean(max, min, roller);
         outcome.successful = roll;

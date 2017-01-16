@@ -24,6 +24,7 @@ public class RandomNumberGenerator {
         int randInt = random.nextInt(max)+1;
         if(roller!=null){
             System.out.println(roller+" rolled a "+randInt);
+            //Needs to be sent to Display to be printed in future
         }
         return randInt;
     }

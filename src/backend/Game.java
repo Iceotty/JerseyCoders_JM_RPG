@@ -232,7 +232,6 @@ public class Game {
     }
     private void makeTrap(String name,String room, String text, String killText){
         trapsMap.put(name,new Trap(text,killText));
-        traps.add(trapsMap.get(name));
         nodes.get(room).trap = trapsMap.get(name);
         nodes.get(room).hasTrap = true;
     }
@@ -260,14 +259,6 @@ public class Game {
     }
     public ActionHandler makeRollAction(){
         RollAction rollAction = new RollAction();
-        for (Trap trap : traps){
-            if (trap.getHasSprung()){
-                rollAction.failureText = trap.killText;
-                rollAction.successText = "You successfully dodged the trap";
-            }
-        }
-        //This doesn't work. The idea was to check which trap you a rolling away from, but this method is used when Game is initialised, so that doesn't work.
-        //Instead, I need to just use the one set of success/failure text things for each type of roll, and have the user type in why they're rolling
         return rollAction;
     }
 //    private void pcIsDead(){

@@ -34,7 +34,7 @@ public class MoveAction extends ActionHandler {
             } else {
 
                 if (!game.nodes.get(nextRoom).isLocked) {
-                    outcomes.add(game.nodes.get(nextRoom).whenEntered());
+                    outcomes.addAll(game.nodes.get(nextRoom).whenEntered());
                     game.currentRoom = nextRoom;
                     outcome.successful = true;
                     String formattedString = game.nodes.get(nextRoom).paths.keySet().toString()

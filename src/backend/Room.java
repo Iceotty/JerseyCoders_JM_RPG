@@ -21,7 +21,7 @@ public class Room extends Node {
         enemies = new ArrayList<>();
         friendlies = new ArrayList<>();
     }
-    public Outcome whenEntered(){
+    public  ArrayList<Outcome> whenEntered(){
         if (hasTrap){
 
             return trap.trigger();

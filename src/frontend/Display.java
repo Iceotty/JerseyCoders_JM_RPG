@@ -2,7 +2,6 @@ package frontend;
 
 import backend.Delegator;
 import backend.Outcome;
-import backend.Trap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,14 +12,12 @@ import java.util.Arrays;
 public class Display {
     private Delegator delegator;
     private InputManager inputManager = new InputManager();
-    ArrayList<Trap> traps = new ArrayList<>();
 
     public Display(Delegator delegator){setDelegator(delegator);}
 
     public void display(String input){
         System.out.println(input);
     }
-    public void recieveTraps(ArrayList<Trap> traps){this.traps = traps;}
 
     public String read(){
         String input;
