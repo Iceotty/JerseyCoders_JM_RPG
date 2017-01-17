@@ -26,6 +26,10 @@ public class Display {
         if(input.toLowerCase().equals("roll")){
             Action action2 = new Action("roll",null);
             outcomes.addAll(delegator.delegate(action2));
+            for (Outcome outcome : outcomes){
+                display(outcome.message);
+            }
+            return input;
         }
 
         String[] words = input.split(" ");
@@ -34,8 +38,8 @@ public class Display {
             Action action1 = new Action(action, list);
 
             outcomes = delegator.delegate(action1);
-            for (Outcome outcome : outcomes) {
-                System.out.println(outcome.message);
+            for (Outcome outcome : outcomes){
+                display(outcome.message);
             }
         return input;
     }

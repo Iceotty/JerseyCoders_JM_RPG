@@ -33,13 +33,14 @@ public class RollAction extends ActionHandler {
         outcome.message = "rollAction input failure";
 
         roll = rng.rollBoolean(max, min, roller);
+        //For some reason, it rolls twice. It is only called once.
         outcome.successful = roll;
         if (roll){
             outcome.message = successText;
         }else{
             outcome.message = failureText;
         }
-
+        outcomes.add(outcome);
         return outcomes;
     }
 }
