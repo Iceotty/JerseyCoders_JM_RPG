@@ -12,8 +12,8 @@ public class Trap {
     public Trap(String trapText, String killText){
         this.trapText = trapText;
         this.killText = killText;
-
     }
+
     public ArrayList<Outcome> trigger(){
         Outcome outcome = new Outcome();
         ArrayList<Outcome>outcomes = new ArrayList<>();
@@ -21,6 +21,7 @@ public class Trap {
         outcomes.add(outcome);
         return outcomes;
     }
+    /**
+     * need to make it so that you can only
+     */
 }
-
-

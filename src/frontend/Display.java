@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class Display {
     private Delegator delegator;
     private InputManager inputManager = new InputManager();
+    public boolean areDead;
 
     public Display(Delegator delegator){setDelegator(delegator);}
 
@@ -28,6 +29,7 @@ public class Display {
             outcomes.addAll(delegator.delegate(action2));
             for (Outcome outcome : outcomes){
                 display(outcome.message);
+                areDead = true;
             }
             return input;
         }

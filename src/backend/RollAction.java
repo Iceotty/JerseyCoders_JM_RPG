@@ -24,7 +24,7 @@ public class RollAction extends ActionHandler {
         max = 20;
         roller = "You";
         successText = "You successfully rolled";
-        failureText = "You Are Dead";
+        failureText = "You failed";
     }
     @Override
     public ArrayList<Outcome> execute(Action action) {
@@ -39,6 +39,7 @@ public class RollAction extends ActionHandler {
             outcome.message = successText;
         }else{
             outcome.message = failureText;
+            //Need to kill the player somehow
         }
         outcomes.add(outcome);
         return outcomes;

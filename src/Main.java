@@ -13,6 +13,10 @@ public class Main {
 //        game.gameLoop();
         while (true){
             display.read();
+            if(display.areDead){
+                display.display("You're Ded");
+                return;
+            }
         }
     }
 }
