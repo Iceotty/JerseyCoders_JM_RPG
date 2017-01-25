@@ -22,8 +22,7 @@ public class Room extends Node {
         friendlies = new ArrayList<>();
     }
     public  ArrayList<Outcome> whenEntered(){
-        if (hasTrap){
-
+        if (hasTrap&&!trap.hasSprung){
             return trap.trigger();
         }
         return null;

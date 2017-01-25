@@ -28,23 +28,34 @@ public class MoveAction extends ActionHandler {
             game.previousRoom = game.currentRoom;
             room = game.getCurrentRoom();
             nextRoom = room.decide(direction);
-            if (nextRoom == null) {
+            Room roomRoom = game.nodes.get(nextRoom);
+
+        if (nextRoom == null) {
                 outcome.successful = false;
                 outcome.message = "You can't go that way";
             } else {
 
-                if (!game.nodes.get(nextRoom).isLocked) {
-                    if (game.nodes.get(nextRoom).whenEntered() != null) {
-                        outcomes.addAll(game.nodes.get(nextRoom).whenEntered());
+                if (!roomRoom.isLocked) {
+                    if (game.getCurrentRoom().hasTrap) {
+                        if (!game.getCurrentRoom().trap.hasSprung) {
+                            outcome.message = "you can't leave the room before the trap is resolved";
+                            outcomes.add(outcome);
+                            return outcomes;
+                            //prevents the player from leaving the room before the trap has been resolved/sprung
+                        }
                     }
                     game.currentRoom = nextRoom;
                     outcome.successful = true;
                     String formattedString = game.nodes.get(nextRoom).paths.keySet().toString()
                             .replace("[", "")  //remove the right bracket
-                            .replace("]", "")  //remove the left bracket3
+                            .replace("]", "")  //remove the left bracket
                             .trim();
                     outcome.message = game.nodes.get(nextRoom).text + ". You can go: " + formattedString + ".";
-                }else {
+                    if (roomRoom.whenEntered() != null) {
+                        outcomes.addAll(roomRoom.whenEntered());
+                    }
+
+                }else{
                     outcome.message = "The door is locked.";
                 }
             outcomes.add(outcome);

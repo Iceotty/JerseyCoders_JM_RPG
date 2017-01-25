@@ -29,7 +29,9 @@ public class Display {
             outcomes.addAll(delegator.delegate(action2));
             for (Outcome outcome : outcomes){
                 display(outcome.message);
-                areDead = true;
+                if (!outcome.successful) {
+                    areDead = true;
+                }
             }
             return input;
         }
