@@ -22,7 +22,15 @@ public class Trap {
 //        hasSprung = true;
         return outcomes;
     }
+    public void makeHasSprungTrue(){
+        hasSprung = true;
+    }
     /**
-     * need to make it so that you can only roll if a trap has sprung, and that you have to roll if one is sprung. or at least make it so that you can't leave the room.
+     * need to make it so that hasSprung is made true at some point, otherwise it won't be possible to leave a room with a trap in it
+     * WHICH I CAN'T DO WITHOUT THE TRAP
+     * WHICH I ONLY HAVE IN MOVEACTION
+     * WHICH DOESN'T KNOW WHEN I'VE ROLLED
+     * make game-wide boolean which tells us whether the trap has sprung or not. but how do i tell which trap it is? rollaction still doesn't know!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     * i feel rlly dumb how do i do this
      */
 }

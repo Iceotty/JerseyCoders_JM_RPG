@@ -66,33 +66,7 @@ public class Game {
     public Room getRoom(String room){
         return nodes.get(room);
     }
-    public void processRoom() {
-//        if (room!=null&&room.allowPrint) {
-//            room.print();
-//        }
-//        if (pc.isDead) {
-//            pcIsDead();
-//            return;
-//        }
-//        if (aBoolean) {
-//            aBoolean = false;
-//            return;
-//        }
-//
-//        if (pc.isDead) {
-//            pcIsDead();
-//            return;
-//        }
-////        gameWindow.currentRoom = getCurrentRoom();
-////        if (currentRoom!=previousRoom){
-////            gameWindow.newRoom();
-////        }
-//        if (getCurrentRoom().hasTrap && !getCurrentRoom().trap.hasSprung) {
-//            currentRoom = previousRoom;
-//            getCurrentRoom().allowPrint = false;
-//            outcome.message = "Type in a proper response";
-//        }
-    }
+
 
 //    public void npcInteraction(ArrayList<NPC> npcs,boolean friendly){
 //        if (friendly) {
@@ -155,7 +129,6 @@ public class Game {
 
     public void gameLoop(){
         while (running){
-            processRoom();
             if (getCurrentRoom().item!=null){
 //                pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
 //                System.out.println(getCurrentRoom().item.text);
@@ -258,7 +231,7 @@ public class Game {
         return new MoveAction(this);
     }
     public ActionHandler makeRollAction(){
-        RollAction rollAction = new RollAction();
+        RollAction rollAction = new RollAction(this);
         return rollAction;
     }
 //    private void pcIsDead(){

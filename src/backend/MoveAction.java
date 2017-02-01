@@ -34,7 +34,6 @@ public class MoveAction extends ActionHandler {
                 outcome.successful = false;
                 outcome.message = "You can't go that way";
             } else {
-
                 if (!roomRoom.isLocked) {
                     if (game.getCurrentRoom().hasTrap) {
                         if (!game.getCurrentRoom().trap.hasSprung) {
@@ -54,7 +53,6 @@ public class MoveAction extends ActionHandler {
                     if (roomRoom.whenEntered() != null) {
                         outcomes.addAll(roomRoom.whenEntered());
                     }
-
                 }else{
                     outcome.message = "The door is locked.";
                 }

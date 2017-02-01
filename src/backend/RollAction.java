@@ -17,13 +17,15 @@ public class RollAction extends ActionHandler {
     String successText;
     String failureText;
     RandomNumberGenerator rng;
+    Game game;
 
-    public RollAction(){
+    public RollAction(Game game){
         rng = new RandomNumberGenerator();
         min=10;
         max = 20;
         roller = "You";
         successText = "You successfully rolled";
+        this.game = game;
         failureText = "You failed";
     }
     @Override
@@ -33,15 +35,14 @@ public class RollAction extends ActionHandler {
         outcome.message = "rollAction input failure";
 
         roll = rng.rollBoolean(max, min, roller);
-        //For some reason, it rolls twice. It is only called once.
         outcome.successful = roll;
         if (roll){
             outcome.message = successText;
         }else{
             outcome.message = failureText;
-            //Need to kill the player somehow
         }
         outcomes.add(outcome);
+        game.getCurrentRoom().trap.hasSprung = true;
         return outcomes;
     }
 }
