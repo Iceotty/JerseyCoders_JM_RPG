@@ -13,8 +13,12 @@ public class Display {
     private Delegator delegator;
     private InputManager inputManager = new InputManager();
     public boolean areDead;
+    public Window window;
 
-    public Display(Delegator delegator){setDelegator(delegator);}
+    public Display(Delegator delegator){
+        window = new Window();
+        setDelegator(delegator);
+    }
 
     public void display(String input){
         System.out.println(input);

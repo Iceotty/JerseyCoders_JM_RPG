@@ -25,7 +25,7 @@ public class Room extends Node {
         ArrayList<Outcome> outcomes = new ArrayList<>();
         if (item!=null){
             Outcome outcome1 = new Outcome();
-            outcome1.message = item.text;
+            outcome1.message = item.findText;
             outcomes.add(outcome1);
         }
         if (hasTrap&&!trap.hasSprung){

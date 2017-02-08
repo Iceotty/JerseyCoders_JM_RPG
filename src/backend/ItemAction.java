@@ -23,7 +23,7 @@ public class ItemAction extends ActionHandler {
             return outcomes;
         }
         pc.inventory.put(game.getCurrentRoom().item.name,game.getCurrentRoom().item);
-        outcome.message = game.getCurrentRoom().item.text;
+        outcome.message = game.getCurrentRoom().item.pickupText;
         outcomes.add(outcome);
         return outcomes;
     }
