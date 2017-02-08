@@ -45,8 +45,9 @@ public class Game {
         makeRoom("room.eleventhRoom","Dead end, filled with monsters",null).northEast("room.eighthRoom");
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!",null).north("room.tenthRoom").isEndRoom=true;
 
-        makeItem("item.key","room.sixthRoom","you got a rusty key");
-        makeItem("item.battleAxe",null,"You received a Shiny Battleaxe with which to smite your foes");
+        makeItem("item.key","room.sixthRoom","you got a rusty key","You found a key");
+        makeItem("item.battleAxe",null,"You received a Shiny Battleaxe with which to smite your foes","you found a battleaxe");
+        makeItem("item.gloop","room.firstRoom","you picked up some lovely gloop off the floor","there is some gloop on the floor");
 
         makeTrap("trap.arrowTrap", "room.fifthRoom","An arrow trap fires at you","An arrow trap shoots you in the balls");
         makeTrap("trap.chainsawTrap","room.thirdRoom","A chainsaw blade swings towards you from a wall","You get sliced in half by a chainsaw blade");
@@ -208,11 +209,11 @@ public class Game {
         nodes.get(room).trap = trapsMap.get(name);
         nodes.get(room).hasTrap = true;
     }
-    private void makeItem(String name,String room, String text){
+    private void makeItem(String name,String room, String pickupText,String findText){
+        items.put(name, new Item(name, pickupText,findText));
         if (room!=null) {
             nodes.get(room).item = items.get(name);
         }
-        items.put(name, new Item(name, text));
     }
     private void makeNPC(int health,String key,String room, String text, String killText, String name,String itemKey,boolean isAgressive){
         if (itemKey!=null) {

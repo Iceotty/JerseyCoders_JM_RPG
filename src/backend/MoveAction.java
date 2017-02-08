@@ -28,13 +28,13 @@ public class MoveAction extends ActionHandler {
             game.previousRoom = game.currentRoom;
             room = game.getCurrentRoom();
             nextRoom = room.decide(direction);
-            Room roomRoom = game.nodes.get(nextRoom);
+            Room nextRoomRoom = game.nodes.get(nextRoom);
 
         if (nextRoom == null) {
                 outcome.successful = false;
                 outcome.message = "You can't go that way";
             } else {
-                if (!roomRoom.isLocked) {
+                if (!nextRoomRoom.isLocked) {
                     if (game.getCurrentRoom().hasTrap) {
                         if (!game.getCurrentRoom().trap.hasSprung) {
                             outcome.message = "you can't leave the room before the trap is resolved";
@@ -50,8 +50,8 @@ public class MoveAction extends ActionHandler {
                             .replace("]", "")  //remove the left bracket
                             .trim();
                     outcome.message = game.nodes.get(nextRoom).text + ". You can go: " + formattedString + ".";
-                    if (roomRoom.whenEntered() != null) {
-                        outcomes.addAll(roomRoom.whenEntered());
+                    if (nextRoomRoom.whenEntered() != null) {
+                        outcomes.addAll(nextRoomRoom.whenEntered());
                     }
                 }else{
                     outcome.message = "The door is locked.";

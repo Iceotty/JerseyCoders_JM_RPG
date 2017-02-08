@@ -18,7 +18,7 @@ public class Delegator {
          if (actionHandlers.containsKey(action.getAction())){
              return actionHandlers.get(action.getAction()).execute(action);
          }
-         ArrayList<Outcome>outcomes = new ArrayList<>();
+        ArrayList<Outcome>outcomes = new ArrayList<>();
         Outcome outcome = new Outcome();
         outcome.message = "Harambe";
         outcomes.add(outcome);

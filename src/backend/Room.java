@@ -22,10 +22,16 @@ public class Room extends Node {
         friendlies = new ArrayList<>();
     }
     public  ArrayList<Outcome> whenEntered(){
-        if (hasTrap&&!trap.hasSprung){
-            return trap.trigger();
+        ArrayList<Outcome> outcomes = new ArrayList<>();
+        if (item!=null){
+            Outcome outcome1 = new Outcome();
+            outcome1.message = item.text;
+            outcomes.add(outcome1);
         }
-        return null;
+        if (hasTrap&&!trap.hasSprung){
+            outcomes.addAll(trap.trigger());
+        }
+        return outcomes;
     }
     public Room north(String room){
         addPath("north",room);

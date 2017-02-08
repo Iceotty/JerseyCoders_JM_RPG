@@ -5,10 +5,12 @@ package backend;
  */
 public class Item {
     String name;
-    String text;
+    String pickupText;
+    String findText;
     String room;
-    public Item(String name, String text){
+    public Item(String name, String pickupText,String findText){
         this.name = name;
-        this.text = text;
+        this.pickupText = pickupText;
+        this.findText = findText;
     }
 }
