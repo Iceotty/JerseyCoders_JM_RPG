@@ -21,6 +21,10 @@ public class PlayerCharacter extends Character {
 
     @Override
     public void combat(CombatState combatState) {
+        /**
+         * This is currently commented out because I no longer have a working combat system,
+         * however I can't comment out this method because then the entire class doesn't work.
+         */
 //        System.out.println("It is your turn");
 //        System.out.println("Type in the number of the enemy you want to attack");
 //        NPC enemyToAttack=null;

@@ -44,6 +44,7 @@ public class Game {
         makeRoom("room.tenthRoom","Has some cool loot in it",null).north("room.ninthRoom").south("room.twelfthRoom").isLocked=true;
         makeRoom("room.eleventhRoom","Dead end, filled with monsters",null).northEast("room.eighthRoom");
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!",null).north("room.tenthRoom").isEndRoom=true;
+
         makeItem("item.key","room.sixthRoom","you got a rusty key");
         makeItem("item.battleAxe",null,"You received a Shiny Battleaxe with which to smite your foes");
 
@@ -57,6 +58,7 @@ public class Game {
         makeNPC(20,"npc.givesItem","room.fourthRoom","There is a person in here, they give you a battleaxe","The person killed you.","The person","item.battleAxe",false);
         delegator.addActionhandler("move", makeMoveAction());
         delegator.addActionhandler("roll",makeRollAction());
+        delegator.addActionhandler("take",makeItemAction());
 
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
@@ -130,8 +132,6 @@ public class Game {
     public void gameLoop(){
         while (running){
             if (getCurrentRoom().item!=null){
-//                pc.inventory.put(getCurrentRoom().item.name,getCurrentRoom().item);
-//                System.out.println(getCurrentRoom().item.text);
                 getCurrentRoom().item=null;
             }
             if (nodes.get(currentRoom).isEndRoom==true){
@@ -234,6 +234,7 @@ public class Game {
         RollAction rollAction = new RollAction(this);
         return rollAction;
     }
+    public ActionHandler makeItemAction(){return  new ItemAction(this);}
 //    private void pcIsDead(){
 //        String input;
 //        while (pc.isDead&&running){
