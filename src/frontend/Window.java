@@ -2,6 +2,7 @@ package frontend;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * Created by Joseph on 15/06/2016.
@@ -37,7 +38,8 @@ import java.awt.*;
 ////    }
 public class Window{
     public JFrame frame = new JFrame("insert game title here");
-    Label emptyLabel = new Label("some text");
+    JPanel panel;
+    Label textLabel = new Label();
 
     JButton bNorth;
     JButton bNorthEast;
@@ -47,35 +49,54 @@ public class Window{
     JButton bSouthEast;
     JButton bSouthWest;
     JButton bWest;
+    String text;
+    ArrayList<String> textList;
 
     public Window(){
+        textList = new ArrayList<>();
         bEast = new JButton("East");
+        bEast.setBounds(100,200,80,25);
         bNorth = new JButton("North");
+        bNorth.setBounds(200,100,80,25);
         bNorthEast = new JButton("North East");
         bNorthWest = new JButton("North West");
         bSouth = new JButton("South");
+        bSouth.setBounds(200,300,80,25);
         bSouthEast = new JButton("South East");
         bSouthWest = new JButton("South West");
         bWest = new JButton("West");
+        bWest.setBounds(300,200,80,25);
+        panel = new JPanel();
+        panel.setBounds(0,0,600,600);
+        textLabel.setText(text);
+        textLabel.setBounds(300,20,100,200);
 
-        bNorth.setEnabled(true);
-        frame.getRootPane().setDefaultButton(bNorth);
+        panel.setLayout(null);
+        panel.add(bEast);
+        panel.add(bNorth);
+        panel.add(bSouth);
+        panel.add(bWest);
+        panel.add(textLabel,BorderLayout.CENTER);
+        panel.validate();
+
+
+
+        frame.add(panel, BorderLayout.CENTER);
 
         //Sets what happens when the frame closes
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         //Create components and put them into the frame
-        frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
-
-        frame.getContentPane().setBackground(Color.black);
+//        frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
 
         // Size the frame. frame.setSize() HAS to be here otherwise it doesn't work.
         frame.pack();
         frame.setSize(500,500);
 
-
         // Show it.
         frame.setVisible(true);
+    }
+    public void setText(String words){
+        text=words;
     }
 }
 /**
