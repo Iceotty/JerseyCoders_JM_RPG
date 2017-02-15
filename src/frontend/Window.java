@@ -43,32 +43,23 @@ public class Window{
     Label textLabel = new Label();
 
     String text;
-    ArrayList<String> textList;
+    ArrayList<String> directions;
     HashMap<String,JButton> buttons;
 
     public Window(){
-        textList = new ArrayList<>();
         buttons = new HashMap<>();
-        makeButton("north","North");
-        buttons.get("north").setBounds(200,100,80,25);
-        makeButton("south","South");
-        buttons.get("south").setBounds(200,300,80,25);
-        makeButton("west", "West");
-        buttons.get("west").setBounds(100,200,80,25);
-        makeButton("east","East");
-        buttons.get("east").setBounds(300,200,80,25);
-        makeButton("northEast","Northeast");
-        buttons.get("northEast").setBounds(260,150,100,25);
-        makeButton("northWest","Northwest");
-        buttons.get("northWest").setBounds(120,150,100,25);
-        makeButton("southEast","Southeast");
-        buttons.get("southEast").setBounds(260,250,100,25);
-        makeButton("southWest","Southwest");
-        buttons.get("southWest").setBounds(120,250,100,25);
-//        bNorthEast = new JButton("North East");
-//        bNorthWest = new JButton("North West");
-//        bSouthEast = new JButton("South East");
-//        bSouthWest = new JButton("South West");
+        makeButton("north","North",200,100,80,25);
+        makeButton("south","South",200,300,80,25);
+        makeButton("west", "West",100,200,80,25);
+        makeButton("east","East",300,200,80,25);
+        makeButton("northEast","Northeast",260,150,100,25);
+        makeButton("northWest","Northwest",120,150,100,25);
+        makeButton("southEast","Southeast",260,250,100,25);
+        makeButton("southWest","Southwest",120,250,100,25);
+
+        buttons.get("south").setEnabled(true);
+        buttons.get("east").setEnabled(true);
+        buttons.get("southEast").setEnabled(true);
         panel = new JPanel();
         panel.setBounds(0,0,600,600);
         textLabel.setText(text);
@@ -83,6 +74,8 @@ public class Window{
         panel.add(buttons.get("northWest"));
         panel.add(buttons.get("southEast"));
         panel.add(buttons.get("southWest"));
+
+
         panel.add(textLabel,BorderLayout.CENTER);
         panel.validate();
 
@@ -102,11 +95,24 @@ public class Window{
         // Show it.
         frame.setVisible(true);
     }
+    public void update(){
+        if (directions !=null && directions.size()>0){
+            for (String key : directions){
+                if(buttons.get(key)!=null){
+                    buttons.get(key).setEnabled(true);
+                }else{
+                    buttons.get(key).setEnabled(false);
+                }
+            }
+        }
+    }
     public void setText(String words){
         text=words;
     }
-    public void makeButton(String key, String text){
+    public void makeButton(String key, String text,int x, int y, int width, int height){
         buttons.put(key, new JButton(text));
+        buttons.get(key).setEnabled(false);
+        buttons.get(key).setBounds(x,y,width,height);
     }
 }
 /**

@@ -22,7 +22,6 @@ public class Display {
 
     public void display(String input){
         System.out.println(input);
-        window.setText(input);
     }
 
     public String read(){
@@ -47,6 +46,11 @@ public class Display {
             Action action1 = new Action(action, list);
 
             outcomes = delegator.delegate(action1);
+            for (Outcome outcome : outcomes){
+                if (outcome.directions !=null){
+                    window.directions = outcome.directions;
+                }
+            }
             for (Outcome outcome : outcomes){
                 display(outcome.message);
             }

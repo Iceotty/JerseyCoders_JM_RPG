@@ -13,6 +13,7 @@ public class Main {
 //        game.gameLoop();
         while (true){
             display.read();
+            display.window.update();
             if(display.areDead){
                 display.display("You're Ded");
                 return;
