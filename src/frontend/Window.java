@@ -3,6 +3,7 @@ package frontend;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Joseph on 15/06/2016.
@@ -41,41 +42,47 @@ public class Window{
     JPanel panel;
     Label textLabel = new Label();
 
-    JButton bNorth;
-    JButton bNorthEast;
-    JButton bNorthWest;
-    JButton bEast;
-    JButton bSouth;
-    JButton bSouthEast;
-    JButton bSouthWest;
-    JButton bWest;
     String text;
     ArrayList<String> textList;
+    HashMap<String,JButton> buttons;
 
     public Window(){
         textList = new ArrayList<>();
-        bEast = new JButton("East");
-        bEast.setBounds(100,200,80,25);
-        bNorth = new JButton("North");
-        bNorth.setBounds(200,100,80,25);
-        bNorthEast = new JButton("North East");
-        bNorthWest = new JButton("North West");
-        bSouth = new JButton("South");
-        bSouth.setBounds(200,300,80,25);
-        bSouthEast = new JButton("South East");
-        bSouthWest = new JButton("South West");
-        bWest = new JButton("West");
-        bWest.setBounds(300,200,80,25);
+        buttons = new HashMap<>();
+        makeButton("north","North");
+        buttons.get("north").setBounds(200,100,80,25);
+        makeButton("south","South");
+        buttons.get("south").setBounds(200,300,80,25);
+        makeButton("west", "West");
+        buttons.get("west").setBounds(100,200,80,25);
+        makeButton("east","East");
+        buttons.get("east").setBounds(300,200,80,25);
+        makeButton("northEast","Northeast");
+        buttons.get("northEast").setBounds(260,150,100,25);
+        makeButton("northWest","Northwest");
+        buttons.get("northWest").setBounds(120,150,100,25);
+        makeButton("southEast","Southeast");
+        buttons.get("southEast").setBounds(260,250,100,25);
+        makeButton("southWest","Southwest");
+        buttons.get("southWest").setBounds(120,250,100,25);
+//        bNorthEast = new JButton("North East");
+//        bNorthWest = new JButton("North West");
+//        bSouthEast = new JButton("South East");
+//        bSouthWest = new JButton("South West");
         panel = new JPanel();
         panel.setBounds(0,0,600,600);
         textLabel.setText(text);
         textLabel.setBounds(300,20,100,200);
 
         panel.setLayout(null);
-        panel.add(bEast);
-        panel.add(bNorth);
-        panel.add(bSouth);
-        panel.add(bWest);
+        panel.add(buttons.get("east"));
+        panel.add(buttons.get("north"));
+        panel.add(buttons.get("south"));
+        panel.add(buttons.get("west"));
+        panel.add(buttons.get("northEast"));
+        panel.add(buttons.get("northWest"));
+        panel.add(buttons.get("southEast"));
+        panel.add(buttons.get("southWest"));
         panel.add(textLabel,BorderLayout.CENTER);
         panel.validate();
 
@@ -97,6 +104,9 @@ public class Window{
     }
     public void setText(String words){
         text=words;
+    }
+    public void makeButton(String key, String text){
+        buttons.put(key, new JButton(text));
     }
 }
 /**
