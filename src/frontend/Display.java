@@ -22,6 +22,7 @@ public class Display {
 
     public void display(String input){
         System.out.println(input);
+        window.setText(input);
     }
 
     public String read(){

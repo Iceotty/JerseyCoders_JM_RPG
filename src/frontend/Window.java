@@ -2,6 +2,8 @@ package frontend;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -41,27 +43,27 @@ public class Window{
     public JFrame frame = new JFrame("insert game title here");
     JPanel panel;
     Label textLabel = new Label();
-
-    String text;
     ArrayList<String> directions;
+    ArrayList<JButton> buttonList;
     HashMap<String,JButton> buttons;
 
     public Window(){
         buttons = new HashMap<>();
+        buttonList = new ArrayList<>();
         makeButton("north","North",200,100,80,25);
         makeButton("south","South",200,300,80,25);
         makeButton("west", "West",100,200,80,25);
         makeButton("east","East",300,200,80,25);
-        makeButton("northEast","Northeast",260,150,100,25);
-        makeButton("northWest","Northwest",120,150,100,25);
-        makeButton("southEast","Southeast",260,250,100,25);
-        makeButton("southWest","Southwest",120,250,100,25);
+        makeButton("northeast","Northeast",260,150,100,25);
+        makeButton("northwest","Northwest",120,150,100,25);
+        makeButton("southeast","Southeast",260,250,100,25);
+        makeButton("southwest","Southwest",120,250,100,25);
 
         buttons.get("south").setEnabled(true);
         buttons.get("east").setEnabled(true);
-        buttons.get("southEast").setEnabled(true);
+        buttons.get("southeast").setEnabled(true);
         panel = new JPanel();
-        panel.setBounds(0,0,600,600);
+        panel.setBounds(0,0,500,500);
         textLabel.setText(text);
         textLabel.setBounds(300,20,100,200);
 
@@ -70,16 +72,13 @@ public class Window{
         panel.add(buttons.get("north"));
         panel.add(buttons.get("south"));
         panel.add(buttons.get("west"));
-        panel.add(buttons.get("northEast"));
-        panel.add(buttons.get("northWest"));
-        panel.add(buttons.get("southEast"));
-        panel.add(buttons.get("southWest"));
-
+        panel.add(buttons.get("northeast"));
+        panel.add(buttons.get("northwest"));
+        panel.add(buttons.get("southeast"));
+        panel.add(buttons.get("southwest"));
 
         panel.add(textLabel,BorderLayout.CENTER);
         panel.validate();
-
-
 
         frame.add(panel, BorderLayout.CENTER);
 
@@ -97,20 +96,31 @@ public class Window{
     }
     public void update(){
         if (directions !=null && directions.size()>0){
+            for (JButton button:buttonList){
+                button.setEnabled(false);
+            }
             for (String key : directions){
                 if(buttons.get(key)!=null){
                     buttons.get(key).setEnabled(true);
-                }else{
-                    buttons.get(key).setEnabled(false);
                 }
             }
         }
     }
     public void setText(String words){
+        String text;
         text=words;
+        textLabel.setText(text);
+        AffineTransform affinetransform = new AffineTransform();
+        FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
+        Font font = new Font("Tahoma", Font.PLAIN, 12);
+        int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
+        int textheight = (int)(font.getStringBounds(text, frc).getHeight());
+        textLabel.setBounds(250-textwidth/2,20,textwidth+15,25);
+        panel.add(textLabel,BorderLayout.CENTER);
     }
     public void makeButton(String key, String text,int x, int y, int width, int height){
         buttons.put(key, new JButton(text));
+        buttonList.add(buttons.get(key));
         buttons.get(key).setEnabled(false);
         buttons.get(key).setBounds(x,y,width,height);
     }
