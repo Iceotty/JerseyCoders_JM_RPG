@@ -20,9 +20,13 @@ public class Display {
         setDelegator(delegator);
     }
 
-    public void display(String input){
+    public void display(ArrayList<Outcome> outcomes){
+        ArrayList<String> input = new ArrayList<>();
+        for (Outcome outcome : outcomes){
+            input.add(outcome.message);
+        }
         System.out.println(input);
-        window.setText(input);
+        window.textList=input;
     }
 
     public String read(){
@@ -32,8 +36,8 @@ public class Display {
         if(input.toLowerCase().equals("roll")){
             Action action2 = new Action("roll",null);
             outcomes.addAll(delegator.delegate(action2));
+            display(outcomes);
             for (Outcome outcome : outcomes){
-                display(outcome.message);
                 if (!outcome.successful) {
                     areDead = true;
                 }
@@ -52,9 +56,10 @@ public class Display {
                     window.directions = outcome.directions;
                 }
             }
-            for (Outcome outcome : outcomes){
-                display(outcome.message);
-            }
+//            for (Outcome outcome : outcomes){
+//                display(outcome.message);
+//            }
+        display(outcomes);
         return input;
     }
 

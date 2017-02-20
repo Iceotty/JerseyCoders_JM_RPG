@@ -42,12 +42,15 @@ import java.util.HashMap;
 public class Window{
     public JFrame frame = new JFrame("insert game title here");
     JPanel panel;
-    Label textLabel = new Label();
+    Label textLabel1 = new Label();
+    Label textLabel2 = new Label();
+    Label textLabel3 = new Label();
     ArrayList<String> directions;
     ArrayList<JButton> buttonList;
     HashMap<String,JButton> buttons;
-
+    ArrayList<String> textList;
     public Window(){
+        textList = new ArrayList<>();
         buttons = new HashMap<>();
         buttonList = new ArrayList<>();
         makeButton("north","North",200,100,80,25);
@@ -64,8 +67,7 @@ public class Window{
         buttons.get("southeast").setEnabled(true);
         panel = new JPanel();
         panel.setBounds(0,0,500,500);
-        textLabel.setText(text);
-        textLabel.setBounds(300,20,100,200);
+        textLabel1.setBounds(300,20,100,200);
 
         panel.setLayout(null);
         panel.add(buttons.get("east"));
@@ -77,7 +79,7 @@ public class Window{
         panel.add(buttons.get("southeast"));
         panel.add(buttons.get("southwest"));
 
-        panel.add(textLabel,BorderLayout.CENTER);
+        panel.add(textLabel1,BorderLayout.CENTER);
         panel.validate();
 
         frame.add(panel, BorderLayout.CENTER);
@@ -95,6 +97,13 @@ public class Window{
         frame.setVisible(true);
     }
     public void update(){
+        if (textList!=null){
+            int y =0;
+            for (String text:textList){
+                setText(text,y,new Label());
+                y+=26;
+            }
+        }
         if (directions !=null && directions.size()>0){
             for (JButton button:buttonList){
                 button.setEnabled(false);
@@ -106,7 +115,7 @@ public class Window{
             }
         }
     }
-    public void setText(String words){
+    public void setText(String words,int y,Label textLabel){
         String text;
         text=words;
         textLabel.setText(text);
@@ -115,7 +124,7 @@ public class Window{
         Font font = new Font("Tahoma", Font.PLAIN, 12);
         int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
         int textheight = (int)(font.getStringBounds(text, frc).getHeight());
-        textLabel.setBounds(250-textwidth/2,20,textwidth+15,25);
+        textLabel.setBounds(250-textwidth/2,20+y,textwidth+15,25);
         panel.add(textLabel,BorderLayout.CENTER);
     }
     public void makeButton(String key, String text,int x, int y, int width, int height){

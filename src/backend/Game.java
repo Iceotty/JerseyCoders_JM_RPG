@@ -40,7 +40,7 @@ public class Game {
         makeRoom("room.sixthRoom","Dank. Really really dank",null).northWest("room.secondRoom");
         makeRoom("room.seventhRoom","Has a warm pit of lava",null).northEast("room.fifthRoom").northWest("room.fourthRoom");
         makeRoom("room.eighthRoom","Has octarine sparkles on the floor",null).north("room.fourthRoom").southWest("room.eleventhRoom").east("room.ninthRoom");
-        makeRoom("room.ninthRoom","Infested with demons",null).north("room.fifthRoom").west("room.eighthRoom").south("room.tenthRoom");
+        makeRoom("room.ninthRoom","3dank5me",null).north("room.fifthRoom").west("room.eighthRoom").south("room.tenthRoom");
         makeRoom("room.tenthRoom","Has some cool loot in it",null).north("room.ninthRoom").south("room.twelfthRoom").isLocked=true;
         makeRoom("room.eleventhRoom","Dead end, filled with monsters",null).northEast("room.eighthRoom");
         makeRoom("room.twelfthRoom","Yay! You found the lift to the next floor of the dungeon!",null).north("room.tenthRoom").isEndRoom=true;
