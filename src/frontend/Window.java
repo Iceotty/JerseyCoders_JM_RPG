@@ -1,7 +1,11 @@
 package frontend;
 
+import backend.Delegator;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
@@ -39,7 +43,7 @@ import java.util.HashMap;
 ////        scenes.put(name,scene);
 ////        vBoxLayouts.put(name,layout);
 ////    }
-public class Window{
+public class Window implements ActionListener{
     public JFrame frame = new JFrame("insert game title here");
     JPanel panel;
     Label textLabel1 = new Label();
@@ -49,7 +53,9 @@ public class Window{
     ArrayList<JButton> buttonList;
     HashMap<String,JButton> buttons;
     ArrayList<String> textList;
+    Delegator delegator;
     public Window(){
+        delegator = new Delegator();
         textList = new ArrayList<>();
         buttons = new HashMap<>();
         buttonList = new ArrayList<>();
@@ -131,7 +137,20 @@ public class Window{
         buttons.put(key, new JButton(text));
         buttonList.add(buttons.get(key));
         buttons.get(key).setEnabled(false);
+        buttons.get(key).setActionCommand(key);
+        buttons.get(key).addActionListener(this);
         buttons.get(key).setBounds(x,y,width,height);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+//        if ("north".equals(e.getActionCommand())) {
+//                delegator.delegate(new Action("north",null));
+//        }
+        String direction = e.getActionCommand();
+        ArrayList<String> parameters = new ArrayList<String>();
+        parameters.add(direction);
+        delegator.delegate(new Action("move",parameters));
     }
 }
 /**
