@@ -37,6 +37,7 @@ public class MoveAction extends ActionHandler {
                 if (!nextRoomRoom.isLocked) {
                     outcome.directions.addAll(nextRoomRoom.paths.keySet());
                     if (game.getCurrentRoom().hasTrap) {
+                        outcome.isTrap = true;
                         if (!game.getCurrentRoom().trap.hasSprung) {
                             outcome.message = "you can't leave the room before the trap is resolved";
                             outcomes.add(outcome);

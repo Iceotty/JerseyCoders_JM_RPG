@@ -9,4 +9,5 @@ public class Outcome {
     public Boolean successful;
     public String message;
     public ArrayList<String> directions = new ArrayList<>();
+    public Boolean isTrap =false;
 }

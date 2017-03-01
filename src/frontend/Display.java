@@ -44,6 +44,7 @@ public class Display implements ActionListener {
         makeButton("northwest","Northwest",120,150,100,25);
         makeButton("southeast","Southeast",260,250,100,25);
         makeButton("southwest","Southwest",120,250,100,25);
+        makeButton("trap","Roll",200,400,80,25);
 
 
         buttons.get("south").setEnabled(true);
@@ -62,6 +63,7 @@ public class Display implements ActionListener {
         panel.add(buttons.get("northwest"));
         panel.add(buttons.get("southeast"));
         panel.add(buttons.get("southwest"));
+        panel.add(buttons.get("trap"));
 
         panel.add(textLabel1,BorderLayout.CENTER);
         panel.validate();
@@ -181,13 +183,27 @@ public class Display implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if ("north".equals(e.getActionCommand())) {
-//                delegator.delegate(new Action("north",null));
-//        }
+        ArrayList<Outcome> outcomes =  new ArrayList<>();
+        if ("trap".equals(e.getActionCommand())) {
+                delegator.delegate(new Action("roll",null));
+                return;
+        }
         String direction = e.getActionCommand();
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(direction);
-        delegator.delegate(new Action("move",parameters));
+        outcomes = delegator.delegate(new Action("move",parameters));
+        for (Outcome outcome:outcomes){
+            if (outcome.isTrap){
+                buttons.get("trap").setEnabled(true);
+            }else{
+                buttons.get("trap").setEnabled(false);
+            }
+            if (outcome.directions!=null){
+                directions = outcome.directions;
+            }
+        }
+        update();
+        display(outcomes);
     }
 }
 
