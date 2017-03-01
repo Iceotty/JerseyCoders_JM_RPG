@@ -52,7 +52,6 @@ public class Display implements ActionListener {
         buttons.get("southeast").setEnabled(true);
         panel = new JPanel();
         panel.setBounds(0,0,500,500);
-        textLabel1.setBounds(300,20,100,200);
 
         panel.setLayout(null);
         panel.add(buttons.get("east"));
@@ -188,6 +187,7 @@ public class Display implements ActionListener {
                 delegator.delegate(new Action("roll",null));
                 return;
         }
+
         String direction = e.getActionCommand();
         ArrayList<String> parameters = new ArrayList<>();
         parameters.add(direction);
@@ -195,8 +195,9 @@ public class Display implements ActionListener {
         for (Outcome outcome:outcomes){
             if (outcome.isTrap){
                 buttons.get("trap").setEnabled(true);
-            }else{
-                buttons.get("trap").setEnabled(false);
+            }
+            if (!outcome.isRoomLeaveable){
+                return;
             }
             if (outcome.directions!=null){
                 directions = outcome.directions;
