@@ -36,15 +36,15 @@ public class Display implements ActionListener {
         setDelegator(delegator);textList = new ArrayList<>();
         buttons = new HashMap<>();
         buttonList = new ArrayList<>();
-        makeButton("north","North",200,100,80,25);
-        makeButton("south","South",200,300,80,25);
-        makeButton("west", "West",100,200,80,25);
-        makeButton("east","East",300,200,80,25);
-        makeButton("northeast","Northeast",260,150,100,25);
-        makeButton("northwest","Northwest",120,150,100,25);
-        makeButton("southeast","Southeast",260,250,100,25);
-        makeButton("southwest","Southwest",120,250,100,25);
-        makeButton("trap","Roll",200,400,80,25);
+        makeButton("north","North",200,100,80,25,true);
+        makeButton("south","South",200,300,80,25,true);
+        makeButton("west", "West",100,200,80,25,true);
+        makeButton("east","East",300,200,80,25,true);
+        makeButton("northeast","Northeast",260,150,100,25,true);
+        makeButton("northwest","Northwest",120,150,100,25,true);
+        makeButton("southeast","Southeast",260,250,100,25,true);
+        makeButton("southwest","Southwest",120,250,100,25,true);
+        makeButton("roll","Roll",200,400,80,25,false);
 
 
         buttons.get("south").setEnabled(true);
@@ -62,7 +62,7 @@ public class Display implements ActionListener {
         panel.add(buttons.get("northwest"));
         panel.add(buttons.get("southeast"));
         panel.add(buttons.get("southwest"));
-        panel.add(buttons.get("trap"));
+        panel.add(buttons.get("roll"));
 
         panel.add(textLabel1,BorderLayout.CENTER);
         panel.validate();
@@ -171,9 +171,11 @@ public class Display implements ActionListener {
         textLabel.setBounds(250-textwidth/2,20+y,textwidth+15,25);
         panel.add(textLabel,BorderLayout.CENTER);
     }
-    public void makeButton(String key, String text,int x, int y, int width, int height){
+    public void makeButton(String key, String text,int x, int y, int width, int height,boolean addToList){
         buttons.put(key, new JButton(text));
-        buttonList.add(buttons.get(key));
+        if (addToList) {
+            buttonList.add(buttons.get(key));
+        }
         buttons.get(key).setEnabled(false);
         buttons.get(key).setActionCommand(key);
         buttons.get(key).addActionListener(this);
@@ -182,9 +184,10 @@ public class Display implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrayList<Outcome> outcomes =  new ArrayList<>();
-        if ("trap".equals(e.getActionCommand())) {
-                delegator.delegate(new Action("roll",null));
+        ArrayList<Outcome> outcomes = new ArrayList<>();
+        ArrayList<Outcome> rollList = new ArrayList<>();
+        if ("roll".equals(e.getActionCommand())) {
+                rollList = delegator.delegate(new Action("roll",null));
                 return;
         }
 
@@ -194,7 +197,7 @@ public class Display implements ActionListener {
         outcomes = delegator.delegate(new Action("move",parameters));
         for (Outcome outcome:outcomes){
             if (outcome.isTrap){
-                buttons.get("trap").setEnabled(true);
+                buttons.get("roll").setEnabled(true);
             }
             if (!outcome.isRoomLeaveable){
                 return;
