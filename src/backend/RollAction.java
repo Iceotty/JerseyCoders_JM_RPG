@@ -47,6 +47,9 @@ public class RollAction extends ActionHandler {
     }
 }
 /**
+ * IGNORE ALL THIS:
+ *
+ *
  * when I get input that says roll, I call a RollAction, which makes a true/false roll
  * I then need to output a message, depending if the roll was successful or not.
  * Could give the RollAction the trap that triggered it, but then RollAction would still need to get the success text and call printKillTrap().

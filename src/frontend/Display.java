@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class Display implements ActionListener {
     private Delegator delegator;
     private InputManager inputManager = new InputManager();
-    public boolean areDead;
+    public boolean isDead;
 //    public Window window;
     public JFrame frame = new JFrame("insert game title here");
     JPanel panel;
@@ -91,6 +91,18 @@ public class Display implements ActionListener {
         textList=input;
     }
     public void update(){
+        panel.removeAll();
+        panel.add(buttons.get("roll"));
+        for (JButton button: buttonList){
+            panel.add(button);
+        }
+        if (isDead){
+            System.out.println("Yo ded");
+            for (JButton button:buttonList){
+                button.setEnabled(false);
+            }
+            return;
+        }
         if (textList!=null){
             int y =0;
             for (String text:textList){
@@ -120,7 +132,8 @@ public class Display implements ActionListener {
             display(outcomes);
             for (Outcome outcome : outcomes){
                 if (!outcome.successful) {
-                    areDead = true;
+                    isDead = true;
+                    update();
                 }
             }
             return input;
@@ -184,10 +197,16 @@ public class Display implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrayList<Outcome> outcomes = new ArrayList<>();
-        ArrayList<Outcome> rollList = new ArrayList<>();
+        ArrayList<Outcome> outcomes;
+        ArrayList<Outcome> rollList;
         if ("roll".equals(e.getActionCommand())) {
                 rollList = delegator.delegate(new Action("roll",null));
+                for (Outcome outcome: rollList){
+                    if (!outcome.successful){
+                        isDead=true;
+                        return;
+                    }
+                }
                 return;
         }
 

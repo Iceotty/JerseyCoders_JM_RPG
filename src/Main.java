@@ -2,6 +2,8 @@ import backend.Delegator;
 import backend.Game;
 import frontend.Display;
 
+import java.awt.*;
+
 /**
  * Created by Joseph on 21/09/2016.
  */
@@ -14,9 +16,9 @@ public class Main {
         while (true){
             display.read();
             display.update();
-            if(display.areDead){
+            if(display.isDead){
 //                display.display("You're Ded");
-//                display.window.setText("You're Dead",0,new Label());
+                display.setText("You're Dead",0,new Label());
                 return;
             }
         }
