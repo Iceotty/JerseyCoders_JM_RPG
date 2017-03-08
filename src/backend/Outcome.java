@@ -11,4 +11,5 @@ public class Outcome {
     public ArrayList<String> directions = new ArrayList<>();
     public Boolean isTrap =false;
     public Boolean isRoomLeaveable = true;
+    public Boolean isItem = false;
 }

@@ -23,6 +23,7 @@ public class Display implements ActionListener {
     public JFrame frame = new JFrame("insert game title here");
     JPanel panel;
     Label textLabel1 = new Label();
+    ArrayList<Label> labels;
     ArrayList<String> directions;
     ArrayList<JButton> buttonList;
     HashMap<String,JButton> buttons;
@@ -31,6 +32,7 @@ public class Display implements ActionListener {
     public Display(Delegator delegator){
 //        window = new Window();
         setDelegator(delegator);textList = new ArrayList<>();
+        labels = new ArrayList<>();
         buttons = new HashMap<>();
         buttonList = new ArrayList<>();
         makeButton("north","North",200,100,80,25,true);
@@ -96,10 +98,8 @@ public class Display implements ActionListener {
         }
     }
     public void update(){
-        panel.removeAll();
-        panel.add(buttons.get("roll"));
-        for (JButton button: buttonList){
-            panel.add(button);
+        for (Label label:labels){
+            panel.remove(label);
         }
 
         if (isDead){
@@ -182,6 +182,7 @@ public class Display implements ActionListener {
         int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
         textLabel.setBounds(250-textwidth/2,20+y,textwidth+15,25);
         panel.add(textLabel,BorderLayout.CENTER);
+        labels.add(textLabel);
     }
     public void makeButton(String key, String text,int x, int y, int width, int height,boolean addToList){
         buttons.put(key, new JButton(text));
@@ -199,9 +200,7 @@ public class Display implements ActionListener {
         ArrayList<Outcome> outcomes;
         if ("take".equals(e.getActionCommand())){
             outcomes = delegator.delegate(new Action("take",null));
-            for (Outcome outcome: outcomes){
-                //DO STUFF
-            }
+            display(outcomes);
         }
         if ("roll".equals(e.getActionCommand())) {
             outcomes = delegator.delegate(new Action("roll",null));
@@ -219,18 +218,17 @@ public class Display implements ActionListener {
         parameters.add(direction);
         outcomes = delegator.delegate(new Action("move",parameters));
         for (Outcome outcome:outcomes){
-            if (outcome.isTrap){
-                buttons.get("roll").setEnabled(true);
+            buttons.get("take").setEnabled(outcome.isItem);
+            buttons.get("roll").setEnabled(outcome.isTrap);
+            if (outcome.directions!=null){
+                directions = outcome.directions;
+                update();
             }
             if (!outcome.isRoomLeaveable){
                 return;
-            }
-            if (outcome.directions!=null){
-                directions = outcome.directions;
             }
         }
         update();
         display(outcomes);
     }
 }
-

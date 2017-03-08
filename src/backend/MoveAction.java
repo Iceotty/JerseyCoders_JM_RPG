@@ -35,13 +35,17 @@ public class MoveAction extends ActionHandler {
                 outcome.message = "You can't go that way";
             } else {
                 if (!nextRoomRoom.isLocked) {
+                    if (nextRoomRoom.item!=null){
+                        outcome.isItem=true;
+                    }
                     if (nextRoomRoom.hasTrap){
+                        //&&!nextRoomRoom.trap.hasSprung
+                        outcome.isRoomLeaveable = false;
                         outcome.isTrap = true;
                     }
                     outcome.directions.addAll(nextRoomRoom.paths.keySet());
                     if (game.getCurrentRoom().hasTrap) {
                         if (!game.getCurrentRoom().trap.hasSprung) {
-                            outcome.isRoomLeaveable = false;
                             outcome.message = "you can't leave the room before the trap is resolved";
                             outcomes.add(outcome);
                             return outcomes;
