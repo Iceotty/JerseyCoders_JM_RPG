@@ -50,11 +50,11 @@ public class MoveAction extends ActionHandler {
                     }
                     game.currentRoom = nextRoom;
                     outcome.successful = true;
-                    String formattedString = game.nodes.get(nextRoom).paths.keySet().toString()
-                            .replace("[", "")  //remove the right bracket
-                            .replace("]", "")  //remove the left bracket
-                            .trim();
-                    outcome.message = game.nodes.get(nextRoom).text + ". You can go: " + formattedString + ".";
+//                    String formattedString = game.nodes.get(nextRoom).paths.keySet().toString()
+//                            .replace("[", "")  //remove the right bracket
+//                            .replace("]", "")  //remove the left bracket
+//                            .trim();
+                    outcome.message = game.nodes.get(nextRoom).text; // + ". You can go: " + formattedString + ".";
                     if (nextRoomRoom.whenEntered() != null) {
                         outcomes.addAll(nextRoomRoom.whenEntered());
                     }

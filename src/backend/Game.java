@@ -47,7 +47,7 @@ public class Game {
 
         makeItem("item.key","room.sixthRoom","you got a rusty key","You found a key");
         makeItem("item.battleAxe",null,"You received a Shiny Battleaxe with which to smite your foes","you found a battleaxe");
-        makeItem("item.gloop","room.firstRoom","you picked up some lovely gloop off the floor","there is some gloop on the floor");
+//        makeItem("item.gloop","room.firstRoom","you picked up some lovely gloop off the floor","there is some gloop on the floor");
 
         makeTrap("trap.arrowTrap", "room.fifthRoom","An arrow trap fires at you","An arrow trap shoots you in the balls");
         makeTrap("trap.chainsawTrap","room.thirdRoom","A chainsaw blade swings towards you from a wall","You get sliced in half by a chainsaw blade");

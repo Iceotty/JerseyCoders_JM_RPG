@@ -20,12 +20,9 @@ public class Display implements ActionListener {
     private Delegator delegator;
     private InputManager inputManager = new InputManager();
     public boolean isDead;
-//    public Window window;
     public JFrame frame = new JFrame("insert game title here");
     JPanel panel;
     Label textLabel1 = new Label();
-    Label textLabel2 = new Label();
-    Label textLabel3 = new Label();
     ArrayList<String> directions;
     ArrayList<JButton> buttonList;
     HashMap<String,JButton> buttons;
@@ -44,8 +41,8 @@ public class Display implements ActionListener {
         makeButton("northwest","Northwest",120,150,100,25,true);
         makeButton("southeast","Southeast",260,250,100,25,true);
         makeButton("southwest","Southwest",120,250,100,25,true);
-        makeButton("roll","Roll",200,400,80,25,false);
-
+        makeButton("roll","Roll",300,400,80,25,false);
+        makeButton("take","Take Item",80,400,100,25,false);
 
         buttons.get("south").setEnabled(true);
         buttons.get("east").setEnabled(true);
@@ -63,8 +60,10 @@ public class Display implements ActionListener {
         panel.add(buttons.get("southeast"));
         panel.add(buttons.get("southwest"));
         panel.add(buttons.get("roll"));
+        panel.add(buttons.get("take"));
 
         panel.add(textLabel1,BorderLayout.CENTER);
+        setText("You're stuck in a really awful dungeon",0,textLabel1);
         panel.validate();
 
         frame.add(panel, BorderLayout.CENTER);
@@ -88,7 +87,13 @@ public class Display implements ActionListener {
             input.add(outcome.message);
         }
         System.out.println(input);
-        textList=input;
+        if (input!=null){
+            int y =0;
+            for (String text:input){
+                setText(text,y,new Label());
+                y+=26;
+            }
+        }
     }
     public void update(){
         panel.removeAll();
@@ -96,19 +101,13 @@ public class Display implements ActionListener {
         for (JButton button: buttonList){
             panel.add(button);
         }
+
         if (isDead){
             System.out.println("Yo ded");
             for (JButton button:buttonList){
                 button.setEnabled(false);
             }
             return;
-        }
-        if (textList!=null){
-            int y =0;
-            for (String text:textList){
-                setText(text,y,new Label());
-                y+=26;
-            }
         }
         if (directions !=null && directions.size()>0){
             for (JButton button:buttonList){
@@ -198,16 +197,21 @@ public class Display implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ArrayList<Outcome> outcomes;
-        ArrayList<Outcome> rollList;
+        if ("take".equals(e.getActionCommand())){
+            outcomes = delegator.delegate(new Action("take",null));
+            for (Outcome outcome: outcomes){
+                //DO STUFF
+            }
+        }
         if ("roll".equals(e.getActionCommand())) {
-                rollList = delegator.delegate(new Action("roll",null));
-                for (Outcome outcome: rollList){
-                    if (!outcome.successful){
-                        isDead=true;
-                        return;
-                    }
+            outcomes = delegator.delegate(new Action("roll",null));
+            for (Outcome outcome: outcomes){
+                if (!outcome.successful){
+                    isDead=true;
+                    return;
                 }
-                return;
+            }
+            return;
         }
 
         String direction = e.getActionCommand();
