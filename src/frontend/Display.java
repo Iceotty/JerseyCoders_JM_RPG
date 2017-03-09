@@ -198,11 +198,12 @@ public class Display implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ArrayList<Outcome> outcomes;
+
         if ("take".equals(e.getActionCommand())){
             outcomes = delegator.delegate(new Action("take",null));
             display(outcomes);
         }
-        if ("roll".equals(e.getActionCommand())) {
+        if ("roll".equals(e.getActionCommand())){
             outcomes = delegator.delegate(new Action("roll",null));
             for (Outcome outcome: outcomes){
                 if (!outcome.successful){
@@ -218,15 +219,21 @@ public class Display implements ActionListener {
         parameters.add(direction);
         outcomes = delegator.delegate(new Action("move",parameters));
         for (Outcome outcome:outcomes){
+            if (!outcome.isRoomLeaveable){
+                return;
+            }
             buttons.get("take").setEnabled(outcome.isItem);
+            if(outcome.isTrap){
+                for (JButton button:buttonList){
+                    button.setEnabled(false);
+                }
+            }
             buttons.get("roll").setEnabled(outcome.isTrap);
             if (outcome.directions!=null){
                 directions = outcome.directions;
                 update();
             }
-            if (!outcome.isRoomLeaveable){
-                return;
-            }
+
         }
         update();
         display(outcomes);
