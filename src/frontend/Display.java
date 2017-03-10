@@ -233,7 +233,6 @@ public class Display implements ActionListener {
                 directions = outcome.directions;
                 update();
             }
-
         }
         update();
         display(outcomes);
