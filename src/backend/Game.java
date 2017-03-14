@@ -1,6 +1,7 @@
 package backend;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -142,61 +143,62 @@ public class Game {
             }
         }
     }
-//    private void combat(List<NPC> npcs) {
-//
-//        List<Initiative> turnOrder = new ArrayList<>();
-//        turnOrder.add(new Initiative(pc, rng.rollInt(20, 0, null)));
-//        for (NPC npc : npcs){
-//            turnOrder.add(new Initiative(npc, rng.rollInt(20, 0, null)));
-//            if (npc == null || npc.isDead){
-//                return;
-//            }
-//        }
-//        Collections.sort(turnOrder);
-//        if (pc.isDead || getCurrentRoom().enemies == null || getCurrentRoom().enemies.isEmpty()) {
-//            return;
-//        }
-//        CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
-//        System.out.println("Combat Starts!");
-//        while (combat) {
-//            Character character;
-//            Initiative init = turnOrder.remove(0);
-//            character = init.character;
-//            turnOrder.add(init);
-//            if (character.equals(pc)) {
-//                character.combat(combatState);
-//            }
-//            for (NPC npc:npcs) {
-//                if (npc.isDead){
-//                    deadNPCs.add(npc);
-//                }else {
-//                    if (character.equals(npc)) {
-//                        System.out.println(npc.name + " attacks you");
-//                        if (rng.rollBoolean(20, pc.armor, npc.name)) {
-//                            pc.health=pc.health- rng.rollInt(20,0,npc.name);
-//                            if (pc.health<=0) {
-//                                npc.printKillText();
-//                                pc.isDead = true;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//            if (pc.isDead){
-//                combat = false;
-//                aBoolean = true;
-//                System.out.println("Combat Ends");
+    private void combat(List<NPC> npcs) {
+        RandomNumberGenerator rng = new RandomNumberGenerator();
+
+        List<Initiative> turnOrder = new ArrayList<>();
+        turnOrder.add(new Initiative(pc, rng.rollInt(20, 0, null)));
+        for (NPC npc : npcs){
+            turnOrder.add(new Initiative(npc, rng.rollInt(20, 0, null)));
+            if (npc == null || npc.isDead){
+                return;
+            }
+        }
+        Collections.sort(turnOrder);
+        if (pc.isDead || getCurrentRoom().enemies == null || getCurrentRoom().enemies.isEmpty()) {
+            return;
+        }
+        CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
+        System.out.println("Combat Starts!");
+        while (combat) {
+            Character character;
+            Initiative init = turnOrder.remove(0);
+            character = init.character;
+            turnOrder.add(init);
+            if (character.equals(pc)) {
+                character.combat(combatState);
+            }
+            for (NPC npc:npcs) {
+                if (npc.isDead){
+                    deadNPCs.add(npc);
+                }else {
+                    if (character.equals(npc)) {
+                        System.out.println(npc.name + " attacks you");
+                        if (rng.rollBoolean(20, pc.armor, npc.name)) {
+                            pc.health=pc.health- rng.rollInt(20,0,npc.name);
+                            if (pc.health<=0) {
+                                npc.printKillText();
+                                pc.isDead = true;
+                            }
+                        }
+                    }
+                }
+            }
+            if (pc.isDead){
+                combat = false;
+                aBoolean = true;
+                System.out.println("Combat Ends");
 //                pcIsDead();
-//                return;
-//            }
-//            npcs.removeAll(deadNPCs);
-//            if (npcs.isEmpty()) {
-//                combat = false;
-//                System.out.println("Combat Ends");
-//            }
-//
-//        }
-//    }
+                return;
+            }
+            npcs.removeAll(deadNPCs);
+            if (npcs.isEmpty()) {
+                combat = false;
+                System.out.println("Combat Ends");
+            }
+
+        }
+    }
 
     public Room getCurrentRoom(){return getRoom(currentRoom);}
 

@@ -201,7 +201,7 @@ public class Display implements ActionListener {
 
         if ("take".equals(e.getActionCommand())){
             outcomes = delegator.delegate(new Action("take",null));
-            display(outcomes);
+            display(outcomes); //text isn't displayed, dunno why
         }
         if ("roll".equals(e.getActionCommand())){
             outcomes = delegator.delegate(new Action("roll",null));
