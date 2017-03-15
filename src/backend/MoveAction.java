@@ -34,6 +34,11 @@ public class MoveAction extends ActionHandler {
                 outcome.successful = false;
                 outcome.message = "You can't go that way";
             } else {
+            if (!game.getCurrentRoom().enemies.isEmpty()){
+                outcome.isRoomLeaveable = false;
+            }if (!nextRoomRoom.enemies.isEmpty()){
+                outcomes.addAll(game.combat(nextRoomRoom.enemies));
+            }
                 if (game.getCurrentRoom().hasTrap&&!game.getCurrentRoom().trap.hasSprung){
                     outcome.isRoomLeaveable = false;
                 }
