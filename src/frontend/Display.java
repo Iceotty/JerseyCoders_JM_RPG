@@ -22,6 +22,7 @@ public class Display implements ActionListener {
     public boolean isDead;
     public JFrame frame = new JFrame("insert game title here");
     JPanel panel;
+    JPanel combatPanel;
     Label textLabel1 = new Label();
     ArrayList<Label> labels;
     ArrayList<String> directions;
@@ -46,29 +47,14 @@ public class Display implements ActionListener {
         makeButton("roll","Roll",300,400,80,25,false);
         makeButton("take","Take Item",80,400,100,25,false);
 
+        makeButton("attack", "Attack",200,100,80,25,true);
+        makeButton("flee","Run Away",200,300,80,25,true);
+
         buttons.get("south").setEnabled(true);
         buttons.get("east").setEnabled(true);
         buttons.get("southeast").setEnabled(true);
-        panel = new JPanel();
-        panel.setBounds(0,0,500,500);
-
-        panel.setLayout(null);
-        panel.add(buttons.get("east"));
-        panel.add(buttons.get("north"));
-        panel.add(buttons.get("south"));
-        panel.add(buttons.get("west"));
-        panel.add(buttons.get("northeast"));
-        panel.add(buttons.get("northwest"));
-        panel.add(buttons.get("southeast"));
-        panel.add(buttons.get("southwest"));
-        panel.add(buttons.get("roll"));
-        panel.add(buttons.get("take"));
-
-        panel.add(textLabel1,BorderLayout.CENTER);
+        makeMovePanel();
         setText("You're stuck in a really awful dungeon",0,textLabel1);
-        panel.validate();
-
-        frame.add(panel, BorderLayout.CENTER);
 
         //Sets what happens when the frame closes
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -236,5 +222,39 @@ public class Display implements ActionListener {
         }
         update();
         display(outcomes);
+    }
+    public void makeMovePanel(){
+        panel = new JPanel();
+        panel.setBounds(0,0,500,500);
+
+        panel.setLayout(null);
+        panel.add(buttons.get("east"));
+        panel.add(buttons.get("north"));
+        panel.add(buttons.get("south"));
+        panel.add(buttons.get("west"));
+        panel.add(buttons.get("northeast"));
+        panel.add(buttons.get("northwest"));
+        panel.add(buttons.get("southeast"));
+        panel.add(buttons.get("southwest"));
+        panel.add(buttons.get("roll"));
+        panel.add(buttons.get("take"));
+
+        panel.add(textLabel1,BorderLayout.CENTER);
+        panel.validate();
+
+        frame.add(panel, BorderLayout.CENTER);
+    }
+
+    public void makeCombatPanel(){
+        combatPanel = new JPanel();
+        combatPanel.setBounds(0,0,500,500);
+
+        combatPanel.setLayout(null);
+        combatPanel.add(buttons.get("attack"));
+        combatPanel.add(buttons.get("flee"));
+
+        combatPanel.add(textLabel1, BorderLayout.CENTER);
+        combatPanel.validate();
+        frame.add(panel, BorderLayout.CENTER);
     }
 }

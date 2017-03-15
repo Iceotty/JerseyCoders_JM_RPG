@@ -12,4 +12,5 @@ public class Outcome {
     public Boolean isTrap =false;
     public Boolean isRoomLeaveable = true;
     public Boolean isItem = false;
+    public Boolean combat = false;
 }

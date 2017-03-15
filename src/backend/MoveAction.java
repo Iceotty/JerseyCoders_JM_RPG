@@ -75,8 +75,6 @@ public class MoveAction extends ActionHandler {
             outcomes.add(outcome);
             }
             return outcomes;
-
-
     }
 
 }
