@@ -21,8 +21,11 @@ public class Display implements ActionListener {
     private InputManager inputManager = new InputManager();
     public boolean isDead;
     public JFrame frame = new JFrame("insert game title here");
-    JPanel panel;
+    JPanel textPanel;
     JPanel combatPanel;
+    JPanel cards;
+    final static String TEXTPANEL = "Text";
+    final static String COMBATPANEL= "Combat";
     Label textLabel1 = new Label();
     ArrayList<Label> labels;
     ArrayList<String> directions;
@@ -32,7 +35,9 @@ public class Display implements ActionListener {
 
     public Display(Delegator delegator){
 //        window = new Window();
+        Container pane = new Container();
         setDelegator(delegator);textList = new ArrayList<>();
+        cards = new JPanel(new CardLayout());
         labels = new ArrayList<>();
         buttons = new HashMap<>();
         buttonList = new ArrayList<>();
@@ -54,9 +59,31 @@ public class Display implements ActionListener {
         buttons.get("east").setEnabled(true);
         buttons.get("southeast").setEnabled(true);
         makeMovePanel();
+        makeCombatPanel();
+        cards.add(textPanel, TEXTPANEL);
+        cards.add(combatPanel, COMBATPANEL);
+
+        /**
+         * CardLayout Stuff
+         * Commented out cb.addItemListener(this); because this class isn't an ItemListener.
+         * In the example pane is given to the class when it is initialised, so that might not work either.
+         */
+
+        JPanel comboBoxPane = new JPanel(); //use FlowLayout
+        String comboBoxItems[] = { COMBATPANEL, TEXTPANEL };
+        JComboBox cb = new JComboBox(comboBoxItems);
+        cb.setEditable(false);
+//        cb.addItemListener(this);
+        comboBoxPane.add(cb);
+        pane.add(comboBoxPane, BorderLayout.PAGE_START);
+        pane.add(cards, BorderLayout.CENTER);
+
+        CardLayout cl = (CardLayout)(cards.getLayout());
+        cl.show(cards,TEXTPANEL);
         setText("You're stuck in a really awful dungeon",0,textLabel1);
 
         //Sets what happens when the frame closes
+        frame.add(cards);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //Create components and put them into the frame
 //        frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
@@ -85,7 +112,7 @@ public class Display implements ActionListener {
     }
     public void update(){
         for (Label label:labels){
-            panel.remove(label);
+            textPanel.remove(label);
         }
 
         if (isDead){
@@ -125,19 +152,19 @@ public class Display implements ActionListener {
         }
 
         String[] words = input.split(" ");
-            ArrayList<String> list = new ArrayList<>(Arrays.asList(words));
-            String action = list.remove(0);
-            Action action1 = new Action(action, list);
+        ArrayList<String> list = new ArrayList<>(Arrays.asList(words));
+        String action = list.remove(0);
+        Action action1 = new Action(action, list);
 
-            outcomes = delegator.delegate(action1);
-            for (Outcome outcome : outcomes){
-                if (outcome.directions !=null){
-                    directions = outcome.directions;
-                }
+        outcomes = delegator.delegate(action1);
+        for (Outcome outcome : outcomes){
+            if (outcome.directions !=null){
+                directions = outcome.directions;
             }
-//            for (Outcome outcome : outcomes){
-//                display(outcome.message);
-//            }
+        }
+//        for (Outcome outcome : outcomes){
+//            display(outcome.message);
+//        }
         display(outcomes);
         return input;
     }
@@ -167,7 +194,7 @@ public class Display implements ActionListener {
         Font font = new Font("Tahoma", Font.PLAIN, 12);
         int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
         textLabel.setBounds(250-textwidth/2,20+y,textwidth+15,25);
-        panel.add(textLabel,BorderLayout.CENTER);
+        textPanel.add(textLabel,BorderLayout.CENTER);
         labels.add(textLabel);
     }
     public void makeButton(String key, String text,int x, int y, int width, int height,boolean addToList){
@@ -208,6 +235,9 @@ public class Display implements ActionListener {
             if (!outcome.isRoomLeaveable){
                 return;
             }
+            if (outcome.combat){
+                makeCombatPanel();
+            }
             buttons.get("take").setEnabled(outcome.isItem);
             if(outcome.isTrap){
                 for (JButton button:buttonList){
@@ -224,25 +254,26 @@ public class Display implements ActionListener {
         display(outcomes);
     }
     public void makeMovePanel(){
-        panel = new JPanel();
-        panel.setBounds(0,0,500,500);
+        textPanel = new JPanel();
+        textPanel.setBounds(0,0,500,500);
 
-        panel.setLayout(null);
-        panel.add(buttons.get("east"));
-        panel.add(buttons.get("north"));
-        panel.add(buttons.get("south"));
-        panel.add(buttons.get("west"));
-        panel.add(buttons.get("northeast"));
-        panel.add(buttons.get("northwest"));
-        panel.add(buttons.get("southeast"));
-        panel.add(buttons.get("southwest"));
-        panel.add(buttons.get("roll"));
-        panel.add(buttons.get("take"));
+        textPanel.setLayout(null);
+        textPanel.add(buttons.get("east"));
+        textPanel.add(buttons.get("north"));
+        textPanel.add(buttons.get("south"));
+        textPanel.add(buttons.get("west"));
+        textPanel.add(buttons.get("northeast"));
+        textPanel.add(buttons.get("northwest"));
+        textPanel.add(buttons.get("southeast"));
+        textPanel.add(buttons.get("southwest"));
+        textPanel.add(buttons.get("roll"));
+        textPanel.add(buttons.get("take"));
 
-        panel.add(textLabel1,BorderLayout.CENTER);
-        panel.validate();
-
-        frame.add(panel, BorderLayout.CENTER);
+        textPanel.add(textLabel1,BorderLayout.CENTER);
+        textPanel.validate();
+        CardLayout cl = (CardLayout)(cards.getLayout());
+        cl.show(cards,TEXTPANEL);
+//        frame.add(textPanel, BorderLayout.CENTER);
     }
 
     public void makeCombatPanel(){
@@ -255,6 +286,8 @@ public class Display implements ActionListener {
 
         combatPanel.add(textLabel1, BorderLayout.CENTER);
         combatPanel.validate();
-        frame.add(panel, BorderLayout.CENTER);
+        CardLayout cl = (CardLayout)(cards.getLayout());
+        cl.show(cards,COMBATPANEL);
+//        frame.add(combatPanel, BorderLayout.CENTER);
     }
 }

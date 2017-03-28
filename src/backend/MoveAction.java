@@ -38,6 +38,7 @@ public class MoveAction extends ActionHandler {
                 outcome.isRoomLeaveable = false;
             }if (!nextRoomRoom.enemies.isEmpty()){
                 outcomes.addAll(game.combat(nextRoomRoom.enemies));
+                outcome.combat = true;
             }
                 if (game.getCurrentRoom().hasTrap&&!game.getCurrentRoom().trap.hasSprung){
                     outcome.isRoomLeaveable = false;
