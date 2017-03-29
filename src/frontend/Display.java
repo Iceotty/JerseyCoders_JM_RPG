@@ -20,6 +20,7 @@ public class Display implements ActionListener {
     private Delegator delegator;
     private InputManager inputManager = new InputManager();
     public boolean isDead;
+    boolean combat=false;
     public JFrame frame = new JFrame("insert game title here");
     JPanel textPanel;
     JPanel combatPanel;
@@ -52,12 +53,15 @@ public class Display implements ActionListener {
         makeButton("roll","Roll",300,400,80,25,false);
         makeButton("take","Take Item",80,400,100,25,false);
 
-        makeButton("attack", "Attack",200,100,80,25,true);
-        makeButton("flee","Run Away",200,300,80,25,true);
+        makeButton("attack", "Attack",200,100,80,25,false);
+        makeButton("flee","Flee",200,300,80,25,false);
 
         buttons.get("south").setEnabled(true);
         buttons.get("east").setEnabled(true);
         buttons.get("southeast").setEnabled(true);
+
+        buttons.get("attack").setEnabled(true);
+        buttons.get("flee").setEnabled(true);
         makeMovePanel();
         makeCombatPanel();
         cards.add(textPanel, TEXTPANEL);
@@ -111,7 +115,7 @@ public class Display implements ActionListener {
         }
     }
     public void update(){
-        for (Label label:labels){
+        for (Label label : labels) {
             textPanel.remove(label);
         }
 
@@ -194,7 +198,11 @@ public class Display implements ActionListener {
         Font font = new Font("Tahoma", Font.PLAIN, 12);
         int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
         textLabel.setBounds(250-textwidth/2,20+y,textwidth+15,25);
-        textPanel.add(textLabel,BorderLayout.CENTER);
+        if (combat){
+            combatPanel.add(textLabel,BorderLayout.CENTER);
+        }else {
+            textPanel.add(textLabel, BorderLayout.CENTER);
+        }
         labels.add(textLabel);
     }
     public void makeButton(String key, String text,int x, int y, int width, int height,boolean addToList){
@@ -211,7 +219,9 @@ public class Display implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ArrayList<Outcome> outcomes;
-
+        if ("attack".equals(e.getActionCommand())){
+            update();
+        }
         if ("take".equals(e.getActionCommand())){
             outcomes = delegator.delegate(new Action("take",null));
             display(outcomes); //text isn't displayed, dunno why
@@ -236,6 +246,7 @@ public class Display implements ActionListener {
                 return;
             }
             if (outcome.combat){
+                combat = true; //Is never made False except in initiation
                 buttons.get("roll").setEnabled(true);
                 buttons.get("flee").setEnabled(true);
                 CardLayout cl = (CardLayout)(cards.getLayout());
