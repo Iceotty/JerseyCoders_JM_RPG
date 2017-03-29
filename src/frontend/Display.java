@@ -236,7 +236,11 @@ public class Display implements ActionListener {
                 return;
             }
             if (outcome.combat){
-                makeCombatPanel();
+                buttons.get("roll").setEnabled(true);
+                buttons.get("flee").setEnabled(true);
+                CardLayout cl = (CardLayout)(cards.getLayout());
+                cl.show(cards,COMBATPANEL);
+//                makeCombatPanel();
             }
             buttons.get("take").setEnabled(outcome.isItem);
             if(outcome.isTrap){
@@ -283,11 +287,10 @@ public class Display implements ActionListener {
         combatPanel.setLayout(null);
         combatPanel.add(buttons.get("attack"));
         combatPanel.add(buttons.get("flee"));
-
         combatPanel.add(textLabel1, BorderLayout.CENTER);
         combatPanel.validate();
-        CardLayout cl = (CardLayout)(cards.getLayout());
-        cl.show(cards,COMBATPANEL);
+//        CardLayout cl = (CardLayout)(cards.getLayout());
+//        cl.show(cards,COMBATPANEL);
 //        frame.add(combatPanel, BorderLayout.CENTER);
     }
 }
