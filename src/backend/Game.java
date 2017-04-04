@@ -62,6 +62,7 @@ public class Game {
         delegator.addActionhandler("move", makeMoveAction());
         delegator.addActionhandler("roll", makeRollAction());
         delegator.addActionhandler("take", makeItemAction());
+        delegator.addActionhandler("combat",makeCombatAction());
 
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
@@ -160,6 +161,8 @@ public class Game {
         }
         Collections.sort(turnOrder);
         if (pc.isDead || getCurrentRoom().enemies == null || getCurrentRoom().enemies.isEmpty()) {
+            outcome.message = "Either the PC is dead, or the enemies are dead";
+            outcomes.add(outcome);
             return outcomes;
         }
         CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
@@ -201,7 +204,6 @@ public class Game {
                 combat = false;
                 outcome.message = "Combat Ends";
             }
-
         }
         outcomes.add(outcome);
         return outcomes;
@@ -245,6 +247,7 @@ public class Game {
         return rollAction;
     }
     public ActionHandler makeItemAction(){return  new ItemAction(this);}
+    public ActionHandler makeCombatAction(){return  new CombatAction(this);}
 //    private void pcIsDead(){
 //        String input;
 //        while (pc.isDead&&running){

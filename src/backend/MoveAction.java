@@ -34,16 +34,19 @@ public class MoveAction extends ActionHandler {
                 outcome.successful = false;
                 outcome.message = "You can't go that way";
             } else {
-            if (!game.getCurrentRoom().enemies.isEmpty()){
-                outcome.isRoomLeaveable = false;
-            }if (!nextRoomRoom.enemies.isEmpty()){
-                outcomes.addAll(game.combat(nextRoomRoom.enemies));
-                outcome.combat = true;
-            }
+
                 if (game.getCurrentRoom().hasTrap&&!game.getCurrentRoom().trap.hasSprung){
                     outcome.isRoomLeaveable = false;
                 }
                 if (!nextRoomRoom.isLocked) {
+                    /**Combat/Enemy checks*/
+                    if (!game.getCurrentRoom().enemies.isEmpty()){
+                        outcome.isRoomLeaveable = false;
+                    }
+                    if (!nextRoomRoom.enemies.isEmpty()){
+                        outcome.combat = true;
+                    }
+
                     if (nextRoomRoom.item!=null){
                         outcome.isItem=true;
                     }

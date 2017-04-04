@@ -33,7 +33,7 @@ public class Display implements ActionListener {
     ArrayList<JButton> buttonList;
     HashMap<String,JButton> buttons;
     ArrayList<String> textList;
-
+    ArrayList<Outcome> outcomes;
     public Display(Delegator delegator){
 //        window = new Window();
         Container pane = new Container();
@@ -115,10 +115,12 @@ public class Display implements ActionListener {
         }
     }
     public void update(){
+        if(combat){
+           outcomes = delegator.delegate(new Action("combat",null));
+        }
         for (Label label : labels) {
             textPanel.remove(label);
         }
-
         if (isDead){
             System.out.println("Yo ded");
             for (JButton button:buttonList){
@@ -218,7 +220,6 @@ public class Display implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrayList<Outcome> outcomes;
         if ("attack".equals(e.getActionCommand())){
             update();
         }
