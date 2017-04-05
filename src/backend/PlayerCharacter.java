@@ -2,6 +2,8 @@ package backend;
 
 import frontend.InputManager;
 
+import javax.sql.rowset.spi.SyncResolver;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -9,6 +11,8 @@ import java.util.HashMap;
  */
 public class PlayerCharacter extends Character {
     int level;
+    boolean attackFoo;
+    SyncResolver foo;
     RandomNumberGenerator rng;
     InputManager inputManager=new InputManager();
     public PlayerCharacter(){
@@ -20,18 +24,23 @@ public class PlayerCharacter extends Character {
     }
 
     @Override
-    public void combat(CombatState combatState) {
-        /**
-         * This is currently commented out because I no longer have a working combat system,
-         * however I can't comment out this method because then the entire class doesn't work.
-         */
-//        System.out.println("It is your turn");
-//        System.out.println("Type in the number of the enemy you want to attack");
-//        NPC enemyToAttack=null;
-//        String input;
-//        for (NPC npc : combatState.currentRoom.enemies){
-//                System.out.println(combatState.currentRoom.enemies.indexOf(npc)+". "+npc.name);
-//        }
+    public ArrayList<Outcome> combat(CombatState combatState) {
+        ArrayList<Outcome> outcomes = new ArrayList<>();
+        Outcome outcome1 = new Outcome();
+        outcome1.message = "It is your turn";
+        outcomes.add(outcome1);
+
+        Outcome outcome2 = new Outcome();
+        outcome2.message = "What do you want to do?";
+        outcomes.add(outcome2);
+
+        Outcome outcome = new Outcome();
+
+        NPC enemyToAttack = null;
+        String input;
+        for (NPC npc : combatState.currentRoom.enemies) {
+            System.out.println(combatState.currentRoom.enemies.indexOf(npc) + ". " + npc.name);
+        }
 //        while(enemyToAttack==null){
 //            input=inputManager.read();
 //            if (input!=null&&isInteger(input)) {
@@ -45,18 +54,27 @@ public class PlayerCharacter extends Character {
 //            }
 //        }
 //        if (enemyToAttack!=null) {
-//            if (rng.rollBoolean(20, 11, "You")) {
-//                System.out.println("You hit the " + enemyToAttack.name);
-//                enemyToAttack.health = enemyToAttack.health - rng.rollInt(6, 0, "You");
-//                if (enemyToAttack.health <= 0) {
-//                    enemyToAttack.isDead = true;
-//                    System.out.println("You killed " + enemyToAttack.name);
-//                }
-//            } else {
-//                System.out.println("You completely missed " + enemyToAttack.name);
-//            }
-//        }
+        try {
+            synchronized (foo) {
+                while (!attackFoo) {
+                    foo.wait();
+                }
+                if (rng.rollBoolean(20, 11, "You")) {
+                    outcome.message = "You hit the " + enemyToAttack.name;
+                    enemyToAttack.health = enemyToAttack.health - rng.rollInt(6, 0, "You");
+                    if (enemyToAttack.health <= 0) {
+                        enemyToAttack.isDead = true;
+                        outcome.message = "You killed " + enemyToAttack.name;
+                    }
+                } else {
+                    outcome.message = "You completely missed " + enemyToAttack.name;
+                }
+            }
 
+        } catch (InterruptedException e) {
+            return outcomes;
+        }
+        return outcomes;
     }
     public static boolean isInteger(String s) {
         try {

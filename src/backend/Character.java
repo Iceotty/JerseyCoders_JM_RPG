@@ -1,5 +1,6 @@
 package backend;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,5 +18,5 @@ public abstract class Character {
     boolean isTurn;
     HashMap<String, Item> inventory;
 
-    public abstract void combat(CombatState combatState);
+    public abstract ArrayList<Outcome> combat(CombatState combatState);
 }

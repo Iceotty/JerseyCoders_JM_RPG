@@ -1,6 +1,7 @@
 package backend;
 
 import java.lang.*;
+import java.util.ArrayList;
 
 /**
  * Created by Joseph on 11/05/2016.
@@ -23,7 +24,7 @@ public class NPC extends Character {
     public void printKillText(){System.out.println(killText);}
 
     @Override
-    public void combat(CombatState combatState) {
-
+    public ArrayList<Outcome> combat(CombatState combatState) {
+        return null;
     }
 }
