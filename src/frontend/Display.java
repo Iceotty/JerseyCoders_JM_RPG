@@ -221,6 +221,7 @@ public class Display implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("attack".equals(e.getActionCommand())){
+            delegator.delegate(new Action("combatButton",null));
             update();
         }
         if ("take".equals(e.getActionCommand())){
@@ -237,11 +238,14 @@ public class Display implements ActionListener {
             }
             return;
         }
-
-        String direction = e.getActionCommand();
-        ArrayList<String> parameters = new ArrayList<>();
-        parameters.add(direction);
-        outcomes = delegator.delegate(new Action("move",parameters));
+        for (String key : buttons.keySet()){
+            if (key.equals(e.getActionCommand())){
+                String direction = e.getActionCommand();
+                ArrayList<String> parameters = new ArrayList<>();
+                parameters.add(direction);
+                outcomes = delegator.delegate(new Action("move",parameters));
+            }
+        }
         for (Outcome outcome:outcomes){
             if (!outcome.isRoomLeaveable){
                 return;

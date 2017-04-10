@@ -2,7 +2,6 @@ package backend;
 
 import frontend.InputManager;
 
-import javax.sql.rowset.spi.SyncResolver;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +11,7 @@ import java.util.HashMap;
 public class PlayerCharacter extends Character {
     int level;
     boolean attackFoo;
-    SyncResolver foo;
+    Object foo=new Object();
     RandomNumberGenerator rng;
     InputManager inputManager=new InputManager();
     public PlayerCharacter(){

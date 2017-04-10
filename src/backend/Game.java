@@ -63,6 +63,7 @@ public class Game {
         delegator.addActionhandler("roll", makeRollAction());
         delegator.addActionhandler("take", makeItemAction());
         delegator.addActionhandler("combat",makeCombatAction());
+        delegator.addActionhandler("combatButton",makeCombatButtonAction());
 
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
@@ -173,7 +174,7 @@ public class Game {
             character = init.character;
             turnOrder.add(init);
             if (character.equals(pc)) {
-                character.combat(combatState);
+                outcomes.addAll(character.combat(combatState));
             }
             for (NPC npc : npcs) {
                 if (npc.isDead) {
@@ -248,6 +249,7 @@ public class Game {
     }
     public ActionHandler makeItemAction(){return  new ItemAction(this);}
     public ActionHandler makeCombatAction(){return  new CombatAction(this);}
+    public ActionHandler makeCombatButtonAction(){return new CombatButtonAction(this);}
 //    private void pcIsDead(){
 //        String input;
 //        while (pc.isDead&&running){
