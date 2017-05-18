@@ -62,8 +62,8 @@ public class Game {
         delegator.addActionhandler("move", makeMoveAction());
         delegator.addActionhandler("roll", makeRollAction());
         delegator.addActionhandler("take", makeItemAction());
-        delegator.addActionhandler("combat",makeCombatAction());
-        delegator.addActionhandler("combatButton",makeCombatButtonAction());
+        delegator.addActionhandler("combat",makeBeginCombatAction());
+        delegator.addActionhandler("attack",makeAttackAction());
 
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
@@ -168,44 +168,44 @@ public class Game {
         }
         CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
         outcome.message = "Combat Starts!";
-        while (combat) {
-            Character character;
-            Initiative init = turnOrder.remove(0);
-            character = init.character;
-            turnOrder.add(init);
-            if (character.equals(pc)) {
-                outcomes.addAll(character.combat(combatState));
-            }
-            for (NPC npc : npcs) {
-                if (npc.isDead) {
-                    deadNPCs.add(npc);
-                } else {
-                    if (character.equals(npc)) {
-                        outcome.message = (npc.name + " attacks you");
-                        if (rng.rollBoolean(20, pc.armor, npc.name)) {
-                            pc.health = pc.health - rng.rollInt(20, 0, npc.name);
-                            if (pc.health <= 0) {
-                                npc.printKillText();
-                                pc.isDead = true;
-                            }
-                        }
-                    }
-                }
-            }
-            if (pc.isDead) {
-                combat = false;
-                aBoolean = true;
-                outcome.message = "Combat Ends";
-                outcomes.add(outcome);
-//                pcIsDead();
-                return outcomes;
-            }
-            npcs.removeAll(deadNPCs);
-            if (npcs.isEmpty()) {
-                combat = false;
-                outcome.message = "Combat Ends";
-            }
-        }
+//        while (combat) {
+//            Character character;
+//            Initiative init = turnOrder.remove(0);
+//            character = init.character;
+//            turnOrder.add(init);
+//            if (character.equals(pc)) {
+//                outcomes.addAll(character.combat(combatState));
+//            }
+//            for (NPC npc : npcs) {
+//                if (npc.isDead) {
+//                    deadNPCs.add(npc);
+//                } else {
+//                    if (character.equals(npc)) {
+//                        outcome.message = (npc.name + " attacks you");
+//                        if (rng.rollBoolean(20, pc.armor, npc.name)) {
+//                            pc.health = pc.health - rng.rollInt(20, 0, npc.name);
+//                            if (pc.health <= 0) {
+//                                npc.printKillText();
+//                                pc.isDead = true;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            if (pc.isDead) {
+//                combat = false;
+//                aBoolean = true;
+//                outcome.message = "Combat Ends";
+//                outcomes.add(outcome);
+////                pcIsDead();
+//                return outcomes;
+//            }
+//            npcs.removeAll(deadNPCs);
+//            if (npcs.isEmpty()) {
+//                combat = false;
+//                outcome.message = "Combat Ends";
+//            }
+//        }
         outcomes.add(outcome);
         return outcomes;
     }
@@ -240,16 +240,20 @@ public class Game {
             nodes.get(room).friendlies.add(NPCs.get(key));
         }
     }
-    public ActionHandler makeMoveAction(){
+    ActionHandler makeMoveAction(){
         return new MoveAction(this);
     }
-    public ActionHandler makeRollAction(){
+    ActionHandler makeRollAction(){
         RollAction rollAction = new RollAction(this);
         return rollAction;
     }
-    public ActionHandler makeItemAction(){return  new ItemAction(this);}
-    public ActionHandler makeCombatAction(){return  new CombatAction(this);}
-    public ActionHandler makeCombatButtonAction(){return new CombatButtonAction(this);}
+    ActionHandler makeItemAction(){return  new ItemAction(this);}
+    ActionHandler makeBeginCombatAction(){return  new BeginCombatAction(this);}
+//    ActionHandler makeAttackAction(){return new AttackAction(this);}
+
+
+//    public ActionHandler makeCombatButtonAction(){return new CombatButtonAction(this);}
+
 //    private void pcIsDead(){
 //        String input;
 //        while (pc.isDead&&running){

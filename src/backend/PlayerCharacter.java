@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class PlayerCharacter extends Character {
     int level;
-    boolean attackFoo;
+    boolean attack=false;
     Object foo=new Object();
     RandomNumberGenerator rng;
     InputManager inputManager=new InputManager();
@@ -20,6 +20,7 @@ public class PlayerCharacter extends Character {
         armor=13;
         inventory = new HashMap<>();
         rng = new RandomNumberGenerator();
+        name="You";
     }
 
     @Override
@@ -53,37 +54,44 @@ public class PlayerCharacter extends Character {
 //            }
 //        }
 //        if (enemyToAttack!=null) {
-        try {
-            synchronized (foo) {
-                while (!attackFoo) {
-                    foo.wait();
+//        try {
+//            synchronized (foo) {
+//                while (!attackFoo) {
+//                    foo.wait();
+//                }
+        if (attack) {
+            if (rng.rollBoolean(20, 11, "You")) {
+                outcome.message = "You hit the " + enemyToAttack.name;
+                enemyToAttack.health = enemyToAttack.health - rng.rollInt(6, 0, "You");
+                if (enemyToAttack.health <= 0) {
+                    enemyToAttack.isDead = true;
+                    outcome.message = "You killed " + enemyToAttack.name;
                 }
-                if (rng.rollBoolean(20, 11, "You")) {
-                    outcome.message = "You hit the " + enemyToAttack.name;
-                    enemyToAttack.health = enemyToAttack.health - rng.rollInt(6, 0, "You");
-                    if (enemyToAttack.health <= 0) {
-                        enemyToAttack.isDead = true;
-                        outcome.message = "You killed " + enemyToAttack.name;
-                    }
-                } else {
-                    outcome.message = "You completely missed " + enemyToAttack.name;
-                }
+            } else {
+                outcome.message = "You completely missed " + enemyToAttack.name;
             }
-
-        } catch (InterruptedException e) {
-            return outcomes;
         }
         return outcomes;
+
     }
-    public static boolean isInteger(String s) {
-        try {
-            Integer.parseInt(s);
-        } catch(NumberFormatException e) {
-            return false;
-        } catch(NullPointerException e) {
-            return false;
-        }
-        // only got here if we didn't return false
-        return true;
-    }
+
+//        } catch (InterruptedException e) {
+//            return outcomes;
+//        }
+//        return outcomes;
+//    }
+//    public static boolean isInteger(String s) {
+//        try {
+//            Integer.parseInt(s);
+//        } catch(NumberFormatException e) {
+//            return false;
+//        } catch(NullPointerException e) {
+//            return false;
+//        }
+//        // only got here if we didn't return false
+//        return true;
+//    }
+//    public void attack(){
+//        foo.notify();
+//    }
 }

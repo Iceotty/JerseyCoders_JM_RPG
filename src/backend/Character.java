@@ -16,6 +16,7 @@ public abstract class Character {
     int magic;
     boolean isDead;
     boolean isTurn;
+    String name;
     HashMap<String, Item> inventory;
 
     public abstract ArrayList<Outcome> combat(CombatState combatState);

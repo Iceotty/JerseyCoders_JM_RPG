@@ -7,10 +7,14 @@ import java.util.ArrayList;
 /**
  * Created by Joseph on 04/04/2017.
  */
-public class CombatAction extends ActionHandler {
+public class BeginCombatAction extends ActionHandler {
+    /**
+     * This class is used to initiate combat,
+     * for example this should be called when the player enters a room full of enemies, or attacks a previously friendly NPC.
+     */
     Game game;
     ArrayList<Outcome> outcomes;
-    public CombatAction(Game game){
+    public BeginCombatAction(Game game){
         this.game = game;
     }
     @Override

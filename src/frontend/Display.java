@@ -221,7 +221,7 @@ public class Display implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("attack".equals(e.getActionCommand())){
-            delegator.delegate(new Action("combatButton",null));
+            delegator.delegate(new Action("attack",null));
             update();
         }
         if ("take".equals(e.getActionCommand())){

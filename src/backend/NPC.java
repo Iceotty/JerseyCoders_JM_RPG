@@ -10,7 +10,6 @@ public class NPC extends Character {
     Room room;
     String text;
     String killText;
-    String name;
     Item item;
     public NPC(int health,Room room,String text,String killText,String name,Item item){
         this.room = room;
