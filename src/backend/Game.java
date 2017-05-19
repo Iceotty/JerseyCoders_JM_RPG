@@ -62,8 +62,7 @@ public class Game {
         delegator.addActionhandler("move", makeMoveAction());
         delegator.addActionhandler("roll", makeRollAction());
         delegator.addActionhandler("take", makeItemAction());
-        delegator.addActionhandler("combat",makeBeginCombatAction());
-        delegator.addActionhandler("attack",makeAttackAction());
+//        delegator.addActionhandler("combat",makeBeginCombatAction());
 
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
@@ -168,6 +167,19 @@ public class Game {
         }
         CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
         outcome.message = "Combat Starts!";
+        if (turnOrder.get(0).character.equals(NPC.class)){
+            makeDoCombatAction(turnOrder.get(0).character,pc);
+            Initiative init = turnOrder.remove(0);
+            turnOrder.add(init);
+        }else if (turnOrder.get(0).character.equals(PlayerCharacter.class)){
+            Character character=null;
+            for (Initiative initiative : turnOrder) {
+                if (initiative.character.equals(NPC.class)){
+                    character = initiative.character;
+                }
+            }
+            makeDoCombatAction(turnOrder.get(0).character,character);
+        }
 //        while (combat) {
 //            Character character;
 //            Initiative init = turnOrder.remove(0);
@@ -248,9 +260,9 @@ public class Game {
         return rollAction;
     }
     ActionHandler makeItemAction(){return  new ItemAction(this);}
-    ActionHandler makeBeginCombatAction(){return  new BeginCombatAction(this);}
-//    ActionHandler makeAttackAction(){return new AttackAction(this);}
+    ActionHandler makeDoCombatAction(Character character,Character character1){return  new DoCombatAction(character,character1);}
 
+//    ActionHandler makeBeginCombatAction(){return  new BeginCombatAction(this);}
 
 //    public ActionHandler makeCombatButtonAction(){return new CombatButtonAction(this);}
 

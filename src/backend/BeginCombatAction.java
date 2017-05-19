@@ -23,4 +23,5 @@ public class BeginCombatAction extends ActionHandler {
         outcomes.addAll(game.combat(game.getCurrentRoom().enemies));
         return outcomes;
     }
+
 }
