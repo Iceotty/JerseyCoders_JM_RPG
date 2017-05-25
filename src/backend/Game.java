@@ -168,6 +168,7 @@ public class Game {
         CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
         outcome.message = "Combat Starts!";
         if (turnOrder.get(0).character.equals(NPC.class)){
+            //Not sure if this will work as i probably need to delegate?
             makeDoCombatAction(turnOrder.get(0).character,pc);
             Initiative init = turnOrder.remove(0);
             turnOrder.add(init);
