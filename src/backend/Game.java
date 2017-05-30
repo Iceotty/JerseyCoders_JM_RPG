@@ -24,6 +24,7 @@ public class Game {
     boolean roll;
     boolean combat;
     boolean aBoolean = false;
+    DoCombatAction doCombatAction;
 
     public Game(Delegator delegator) {
         this.delegator = delegator;
@@ -169,7 +170,7 @@ public class Game {
         outcome.message = "Combat Starts!";
         if (turnOrder.get(0).character.equals(NPC.class)){
             //Not sure if this will work as i probably need to delegate?
-            makeDoCombatAction(turnOrder.get(0).character,pc);
+            makeDoCombatAction(delegator,turnOrder.get(0).character,pc);
             Initiative init = turnOrder.remove(0);
             turnOrder.add(init);
         }else if (turnOrder.get(0).character.equals(PlayerCharacter.class)){
@@ -179,7 +180,7 @@ public class Game {
                     character = initiative.character;
                 }
             }
-            makeDoCombatAction(turnOrder.get(0).character,character);
+            doCombatAction=makeDoCombatAction(delegator,turnOrder.get(0).character,character);
         }
 //        while (combat) {
 //            Character character;
@@ -261,7 +262,7 @@ public class Game {
         return rollAction;
     }
     ActionHandler makeItemAction(){return  new ItemAction(this);}
-    ActionHandler makeDoCombatAction(Character character,Character character1){return  new DoCombatAction(character,character1);}
+    DoCombatAction makeDoCombatAction(Delegator delegator,Character character,Character character1){return  new DoCombatAction(delegator,character,character1);}
 
 //    ActionHandler makeBeginCombatAction(){return  new BeginCombatAction(this);}
 
