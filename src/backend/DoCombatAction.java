@@ -16,6 +16,7 @@ public class DoCombatAction extends ActionHandler {
     Delegator delegator;
     Game game;
     String actionType;
+    boolean x=true;
     public DoCombatAction(Delegator delegator,Character character, Character character1){
         this.character = character;
         this.character1 = character1;
@@ -27,9 +28,14 @@ public class DoCombatAction extends ActionHandler {
         if (character.equals(NPC.class)){
             //Attack PC
             return delegator.delegate(new Action("attack",null));
-        }else if (character.equals(PlayerCharacter.class)&&(actionType!=null)){
+        }else if (character.equals(PlayerCharacter.class)){
             //Take input from Display, and then either call an AttackAction, or a FleeAction
-            delegator.delegate(new Action(actionType,null));//This likely wont work, as Im pretty sure the player wont have pressed a button at this point. might have to have a loop
+            while (x){
+                if (actionType!=null) {//this is probs bad but i cant think of anything else I can do
+                    delegator.delegate(new Action(actionType, null));
+                    x=false;
+                }
+            }
         }
         return null;
     }
