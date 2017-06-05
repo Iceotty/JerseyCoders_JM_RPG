@@ -22,6 +22,7 @@ public class DoCombatAction extends ActionHandler {
         this.character1 = character1;
         this.delegator = delegator;
         delegator.addActionhandler("attack",makeAttackAction(character,character1));
+        delegator.addActionhandler("flee",makeFleeAction());
     }
     @Override
     public ArrayList<Outcome> execute(Action action) {
@@ -40,5 +41,6 @@ public class DoCombatAction extends ActionHandler {
         return null;
     }
         ActionHandler makeAttackAction(Character char2, Character char1){return new AttackAction(char2, char1);}
+        ActionHandler makeFleeAction(){return new FleeAction();}
 
 }

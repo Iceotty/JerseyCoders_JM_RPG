@@ -247,10 +247,10 @@ public class Display implements ActionListener {
             }
         }
         for (Outcome outcome:outcomes){
-            if (!outcome.isRoomLeaveable){
+            if (outcome.variable.equals("RoomNotLeaveable")){
                 return;
             }
-            if (outcome.combat){
+            if (outcome.variable.equals("combat")){
                 combat = true; //Is never made False except in initiation
                 buttons.get("roll").setEnabled(true);
                 buttons.get("flee").setEnabled(true);
@@ -258,13 +258,13 @@ public class Display implements ActionListener {
                 cl.show(cards,COMBATPANEL);
 //                makeCombatPanel();
             }
-            buttons.get("take").setEnabled(outcome.isItem);
-            if(outcome.isTrap){
+            buttons.get("take").setEnabled(outcome.variable.equals("isItem"));
+            if(outcome.variable.equals("isTrap")){
                 for (JButton button:buttonList){
                     button.setEnabled(false);
                 }
             }
-            buttons.get("roll").setEnabled(outcome.isTrap);
+            buttons.get("roll").setEnabled(outcome.variable.equals("isTrap"));
             if (outcome.directions!=null){
                 directions = outcome.directions;
                 update();

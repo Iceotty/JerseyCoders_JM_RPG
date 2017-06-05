@@ -9,8 +9,5 @@ public class Outcome {
     public Boolean successful;
     public String message;
     public ArrayList<String> directions = new ArrayList<>();
-    public Boolean isTrap =false;
-    public Boolean isRoomLeaveable = true;
-    public Boolean isItem = false;
-    public Boolean combat = false;
+    public String variable;
 }

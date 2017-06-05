@@ -13,7 +13,8 @@ public class FleeAction extends ActionHandler {
     public ArrayList<Outcome> execute(Action action) {
         Outcome outcome = new Outcome();
         if(rng.rollBoolean(20,8,"You")){
-            outcome.message = "You run away, what a wuss";
+            outcome.message = "You run away, what a pu55y";
+            outcome.variable = "leaveRoom";
         }
         ArrayList<Outcome>outcomes=new ArrayList<>();
         outcomes.add(outcome);
