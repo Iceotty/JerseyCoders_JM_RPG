@@ -247,27 +247,29 @@ public class Display implements ActionListener {
             }
         }
         for (Outcome outcome:outcomes){
-            if (outcome.variable.equals("RoomNotLeaveable")){
-                return;
-            }
-            if (outcome.variable.equals("combat")){
-                combat = true; //Is never made False except in initiation
-                buttons.get("roll").setEnabled(true);
-                buttons.get("flee").setEnabled(true);
-                CardLayout cl = (CardLayout)(cards.getLayout());
-                cl.show(cards,COMBATPANEL);
-//                makeCombatPanel();
-            }
-            buttons.get("take").setEnabled(outcome.variable.equals("isItem"));
-            if(outcome.variable.equals("isTrap")){
-                for (JButton button:buttonList){
-                    button.setEnabled(false);
+            for (String variable : outcome.variables) {
+                if (variable.equals("RoomNotLeaveable")) {
+                    return;
                 }
-            }
-            buttons.get("roll").setEnabled(outcome.variable.equals("isTrap"));
-            if (outcome.directions!=null){
-                directions = outcome.directions;
-                update();
+                if (variable.equals("combat")) {
+                    combat = true; //Is never made False except in initiation
+                    buttons.get("roll").setEnabled(true);
+                    buttons.get("flee").setEnabled(true);
+                    CardLayout cl = (CardLayout) (cards.getLayout());
+                    cl.show(cards, COMBATPANEL);
+//                makeCombatPanel();
+                }
+                buttons.get("take").setEnabled(variable.equals("isItem"));
+                if (variable.equals("isTrap")) {
+                    for (JButton button : buttonList) {
+                        button.setEnabled(false);
+                    }
+                }
+                buttons.get("roll").setEnabled(variable.equals("isTrap"));
+                if (outcome.directions != null) {
+                    directions = outcome.directions;
+                    update();
+                }
             }
         }
         update();

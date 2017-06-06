@@ -9,5 +9,5 @@ public class Outcome {
     public Boolean successful;
     public String message;
     public ArrayList<String> directions = new ArrayList<>();
-    public String variable;
+    public ArrayList<String> variables = new ArrayList<>();
 }

@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="876803b0-a203-417c-9462-f6e76829f3fe" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/DoCombatAction.java" afterPath="$PROJECT_DIR$/src/backend/DoCombatAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/AttackAction.java" afterPath="$PROJECT_DIR$/src/backend/AttackAction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/FleeAction.java" afterPath="$PROJECT_DIR$/src/backend/FleeAction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/MoveAction.java" afterPath="$PROJECT_DIR$/src/backend/MoveAction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/Outcome.java" afterPath="$PROJECT_DIR$/src/backend/Outcome.java" />
@@ -30,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Display.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Display.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/frontend/Display.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="889">
-              <caret line="266" column="43" lean-forward="false" selection-start-line="266" selection-start-column="43" selection-end-line="266" selection-end-column="43" />
+            <state relative-caret-position="634">
+              <caret line="267" column="47" lean-forward="false" selection-start-line="267" selection-start-column="47" selection-end-line="267" selection-end-column="47" />
               <folding>
                 <element signature="method#Display#0;class#Display#0" expanded="false" />
                 <element signature="e#3402#3449#0" expanded="false" />
@@ -50,6 +51,28 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="MoveAction.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/backend/MoveAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="50" column="55" lean-forward="false" selection-start-line="50" selection-start-column="55" selection-end-line="50" selection-end-column="55" />
+              <folding>
+                <element signature="e#2554#2651#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Outcome.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/backend/Outcome.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" column="59" lean-forward="false" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="PlayerAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/PlayerAction.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -60,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DoCombatAction.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="DoCombatAction.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/backend/DoCombatAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="413">
-              <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
+            <state relative-caret-position="583">
+              <caret line="35" column="20" lean-forward="false" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -75,7 +98,7 @@
       <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1097">
+            <state relative-caret-position="391">
               <caret line="26" column="18" lean-forward="false" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
               <folding>
                 <element signature="e#4467#4538#0" expanded="false" />
@@ -97,11 +120,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="340">
               <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#446#447#0" expanded="false" />
-                <element signature="e#478#479#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -109,8 +128,8 @@
       <file leaf-file-name="AttackAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/AttackAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="27" column="24" lean-forward="false" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
+            <state relative-caret-position="408">
+              <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -119,8 +138,8 @@
       <file leaf-file-name="FleeAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/FleeAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+            <state relative-caret-position="340">
+              <caret line="20" column="37" lean-forward="false" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -199,16 +218,16 @@
         <option value="$PROJECT_DIR$/src/backend/Character.java" />
         <option value="$PROJECT_DIR$/src/backend/NPC.java" />
         <option value="$PROJECT_DIR$/src/backend/PlayerCharacter.java" />
-        <option value="$PROJECT_DIR$/src/backend/AttackAction.java" />
         <option value="$PROJECT_DIR$/src/backend/Delegator.java" />
         <option value="$PROJECT_DIR$/src/backend/Game.java" />
         <option value="$PROJECT_DIR$/src/backend/PlayerAction.java" />
         <option value="$PROJECT_DIR$/src/backend/BeginCombatAction.java" />
+        <option value="$PROJECT_DIR$/src/backend/DoCombatAction.java" />
+        <option value="$PROJECT_DIR$/src/backend/Outcome.java" />
         <option value="$PROJECT_DIR$/src/backend/MoveAction.java" />
         <option value="$PROJECT_DIR$/src/frontend/Display.java" />
         <option value="$PROJECT_DIR$/src/backend/FleeAction.java" />
-        <option value="$PROJECT_DIR$/src/backend/Outcome.java" />
-        <option value="$PROJECT_DIR$/src/backend/DoCombatAction.java" />
+        <option value="$PROJECT_DIR$/src/backend/AttackAction.java" />
       </list>
     </option>
   </component>
@@ -252,9 +271,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -319,6 +335,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -675,7 +694,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26226014" sideWeight="0.48754063" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26492536" sideWeight="0.48754063" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1097,14 +1116,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/PlayerAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/frontend/Action.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -1120,18 +1131,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/BeginCombatAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#446#447#0" expanded="false" />
-            <element signature="e#478#479#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/RandomNumberGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -1140,55 +1139,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/AttackAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="27" column="24" lean-forward="false" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/MoveAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="311">
-          <caret line="54" column="50" lean-forward="false" selection-start-line="54" selection-start-column="50" selection-end-line="54" selection-end-column="50" />
-          <folding>
-            <element signature="e#2534#2631#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/Outcome.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="60" lean-forward="false" selection-start-line="10" selection-start-column="60" selection-end-line="10" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/FleeAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="23" column="0" lean-forward="true" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/DoCombatAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="413">
-          <caret line="25" column="5" lean-forward="true" selection-start-line="25" selection-start-column="5" selection-end-line="25" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1097">
+        <state relative-caret-position="391">
           <caret line="26" column="18" lean-forward="false" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
           <folding>
             <element signature="e#4467#4538#0" expanded="false" />
@@ -1204,10 +1157,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/MoveAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="50" column="55" lean-forward="false" selection-start-line="50" selection-start-column="55" selection-end-line="50" selection-end-column="55" />
+          <folding>
+            <element signature="e#2554#2651#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/frontend/Display.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="889">
-          <caret line="266" column="43" lean-forward="false" selection-start-line="266" selection-start-column="43" selection-end-line="266" selection-end-column="43" />
+        <state relative-caret-position="634">
+          <caret line="267" column="47" lean-forward="false" selection-start-line="267" selection-start-column="47" selection-end-line="267" selection-end-column="47" />
           <folding>
             <element signature="method#Display#0;class#Display#0" expanded="false" />
             <element signature="e#3402#3449#0" expanded="false" />
@@ -1218,6 +1181,58 @@
             <element signature="method#makeButton#0;class#Display#0" expanded="false" />
             <element signature="method#makeMovePanel#0;class#Display#0" expanded="false" />
             <element signature="method#makeCombatPanel#0;class#Display#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/PlayerAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/Outcome.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="59" lean-forward="false" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/FleeAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="37" lean-forward="false" selection-start-line="20" selection-start-column="37" selection-end-line="20" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/AttackAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/BeginCombatAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/DoCombatAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="583">
+          <caret line="35" column="20" lean-forward="false" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

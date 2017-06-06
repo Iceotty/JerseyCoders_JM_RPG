@@ -36,23 +36,23 @@ public class MoveAction extends ActionHandler {
             } else {
 
                 if (game.getCurrentRoom().hasTrap&&!game.getCurrentRoom().trap.hasSprung){
-                    outcome.variable = "RoomNotLeaveable";
+                    outcome.variables.add("RoomNotLeaveable");
                 }
                 if (!nextRoomRoom.isLocked) {
                     /**Combat/Enemy checks*/
                     if (!game.getCurrentRoom().enemies.isEmpty()){
-                        outcome.variable = "RoomNotLeaveable";
+                        outcome.variables.add("RoomNotLeaveable");
                     }
                     if (!nextRoomRoom.enemies.isEmpty()){
-                        outcome.variable = "combat";
+                        outcome.variables.add("combat");
                     }
 
                     if (nextRoomRoom.item!=null){
-                        outcome.variable = "isItem";
+                        outcome.variables.add("isItem");
                     }
                     if (nextRoomRoom.hasTrap){
                         //&&!nextRoomRoom.trap.hasSprung
-                        outcome.variable = "isTrap";
+                        outcome.variables.add("isTrap");
                     }
                     outcome.directions.addAll(nextRoomRoom.paths.keySet());
                     if (game.getCurrentRoom().hasTrap) {

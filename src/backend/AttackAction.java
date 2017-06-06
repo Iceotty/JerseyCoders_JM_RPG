@@ -22,6 +22,9 @@ public class AttackAction extends ActionHandler {
                 outcome.message = attacker.name+" killed "+target.name;
                 target.isDead = true;
             }
+            outcome.successful=true;
+        }else{
+            outcome.successful=false;
         }
         ArrayList<Outcome>outcomes=new ArrayList<>();
         outcomes.add(outcome);
