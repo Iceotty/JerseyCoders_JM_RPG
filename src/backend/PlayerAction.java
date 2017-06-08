@@ -9,8 +9,7 @@ import java.util.ArrayList;
  */
 public class PlayerAction extends ActionHandler {
     String actionType;
-    public PlayerAction(String actionType, Game game){
-        this.actionType = actionType;
+    public PlayerAction(Game game){
     }
 
     @Override

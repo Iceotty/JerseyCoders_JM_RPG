@@ -4,9 +4,9 @@
     <list default="true" id="876803b0-a203-417c-9462-f6e76829f3fe" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/AttackAction.java" afterPath="$PROJECT_DIR$/src/backend/AttackAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/FleeAction.java" afterPath="$PROJECT_DIR$/src/backend/FleeAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/MoveAction.java" afterPath="$PROJECT_DIR$/src/backend/MoveAction.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/Outcome.java" afterPath="$PROJECT_DIR$/src/backend/Outcome.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/DoCombatAction.java" afterPath="$PROJECT_DIR$/src/backend/DoCombatAction.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/Game.java" afterPath="$PROJECT_DIR$/src/backend/Game.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/backend/PlayerAction.java" afterPath="$PROJECT_DIR$/src/backend/PlayerAction.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/frontend/Display.java" afterPath="$PROJECT_DIR$/src/frontend/Display.java" />
     </list>
     <ignored path="RPG game.iws" />
@@ -31,14 +31,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Display.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Display.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/frontend/Display.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="634">
-              <caret line="267" column="47" lean-forward="false" selection-start-line="267" selection-start-column="47" selection-end-line="267" selection-end-column="47" />
+            <state relative-caret-position="484">
+              <caret line="225" column="50" lean-forward="true" selection-start-line="225" selection-start-column="50" selection-end-line="225" selection-end-column="50" />
               <folding>
-                <element signature="method#Display#0;class#Display#0" expanded="false" />
-                <element signature="e#3402#3449#0" expanded="false" />
+                <element signature="e#3403#3450#0" expanded="false" />
                 <element signature="method#display#0;class#Display#0" expanded="false" />
                 <element signature="method#update#0;class#Display#0" expanded="false" />
                 <element signature="method#read#0;class#Display#0" expanded="false" />
@@ -54,7 +53,7 @@
       <file leaf-file-name="MoveAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/MoveAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
+            <state relative-caret-position="782">
               <caret line="50" column="55" lean-forward="false" selection-start-line="50" selection-start-column="55" selection-end-line="50" selection-end-column="55" />
               <folding>
                 <element signature="e#2554#2651#0" expanded="false" />
@@ -76,18 +75,21 @@
       <file leaf-file-name="PlayerAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/PlayerAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="153">
+              <caret line="11" column="35" lean-forward="false" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+              <folding>
+                <element signature="e#223#224#0" expanded="true" />
+                <element signature="e#229#230#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DoCombatAction.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DoCombatAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/DoCombatAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="583">
-              <caret line="35" column="20" lean-forward="false" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+            <state relative-caret-position="107">
+              <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -98,18 +100,18 @@
       <file leaf-file-name="Game.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="26" column="18" lean-forward="false" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
+            <state relative-caret-position="399">
+              <caret line="67" column="68" lean-forward="false" selection-start-line="67" selection-start-column="68" selection-end-line="67" selection-end-column="68" />
               <folding>
-                <element signature="e#4467#4538#0" expanded="false" />
+                <element signature="e#4564#4635#0" expanded="false" />
                 <element signature="method#gameLoop#0;class#Game#0" expanded="false" />
-                <element signature="e#9021#9047#0" expanded="false" />
+                <element signature="e#9833#9859#0" expanded="false" />
                 <element signature="method#makeRoom#0;class#Game#0" expanded="false" />
                 <element signature="method#makeTrap#0;class#Game#0" expanded="false" />
                 <element signature="method#makeItem#0;class#Game#0" expanded="false" />
                 <element signature="method#makeNPC#0;class#Game#0" expanded="false" />
                 <element signature="method#makeRollAction#0;class#Game#0" expanded="false" />
-                <element signature="e#12292#12373#0" expanded="false" />
+                <element signature="e#13174#13255#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -128,8 +130,8 @@
       <file leaf-file-name="AttackAction.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/backend/AttackAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
+            <state relative-caret-position="340">
+              <caret line="22" column="54" lean-forward="false" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -219,15 +221,15 @@
         <option value="$PROJECT_DIR$/src/backend/NPC.java" />
         <option value="$PROJECT_DIR$/src/backend/PlayerCharacter.java" />
         <option value="$PROJECT_DIR$/src/backend/Delegator.java" />
-        <option value="$PROJECT_DIR$/src/backend/Game.java" />
-        <option value="$PROJECT_DIR$/src/backend/PlayerAction.java" />
         <option value="$PROJECT_DIR$/src/backend/BeginCombatAction.java" />
-        <option value="$PROJECT_DIR$/src/backend/DoCombatAction.java" />
         <option value="$PROJECT_DIR$/src/backend/Outcome.java" />
         <option value="$PROJECT_DIR$/src/backend/MoveAction.java" />
-        <option value="$PROJECT_DIR$/src/frontend/Display.java" />
         <option value="$PROJECT_DIR$/src/backend/FleeAction.java" />
         <option value="$PROJECT_DIR$/src/backend/AttackAction.java" />
+        <option value="$PROJECT_DIR$/src/backend/DoCombatAction.java" />
+        <option value="$PROJECT_DIR$/src/backend/PlayerAction.java" />
+        <option value="$PROJECT_DIR$/src/backend/Game.java" />
+        <option value="$PROJECT_DIR$/src/frontend/Display.java" />
       </list>
     </option>
   </component>
@@ -694,7 +696,8 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26492536" sideWeight="0.48754063" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27292112" sideWeight="0.48754063" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -708,7 +711,6 @@
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32995737" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -724,7 +726,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="113" />
+      <option name="time" value="114" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -757,15 +759,15 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4467#4538#0" expanded="false" />
+            <element signature="e#4564#4635#0" expanded="false" />
             <element signature="method#gameLoop#0;class#Game#0" expanded="false" />
-            <element signature="e#9021#9047#0" expanded="false" />
+            <element signature="e#9833#9859#0" expanded="false" />
             <element signature="method#makeRoom#0;class#Game#0" expanded="false" />
             <element signature="method#makeTrap#0;class#Game#0" expanded="false" />
             <element signature="method#makeItem#0;class#Game#0" expanded="false" />
             <element signature="method#makeNPC#0;class#Game#0" expanded="false" />
             <element signature="method#makeRollAction#0;class#Game#0" expanded="false" />
-            <element signature="e#12292#12373#0" expanded="false" />
+            <element signature="e#13174#13255#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -789,15 +791,15 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4467#4538#0" expanded="false" />
+            <element signature="e#4564#4635#0" expanded="false" />
             <element signature="method#gameLoop#0;class#Game#0" expanded="false" />
-            <element signature="e#9021#9047#0" expanded="false" />
+            <element signature="e#9833#9859#0" expanded="false" />
             <element signature="method#makeRoom#0;class#Game#0" expanded="false" />
             <element signature="method#makeTrap#0;class#Game#0" expanded="false" />
             <element signature="method#makeItem#0;class#Game#0" expanded="false" />
             <element signature="method#makeNPC#0;class#Game#0" expanded="false" />
             <element signature="method#makeRollAction#0;class#Game#0" expanded="false" />
-            <element signature="e#12292#12373#0" expanded="false" />
+            <element signature="e#13174#13255#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -821,15 +823,15 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4467#4538#0" expanded="false" />
+            <element signature="e#4564#4635#0" expanded="false" />
             <element signature="method#gameLoop#0;class#Game#0" expanded="false" />
-            <element signature="e#9021#9047#0" expanded="false" />
+            <element signature="e#9833#9859#0" expanded="false" />
             <element signature="method#makeRoom#0;class#Game#0" expanded="false" />
             <element signature="method#makeTrap#0;class#Game#0" expanded="false" />
             <element signature="method#makeItem#0;class#Game#0" expanded="false" />
             <element signature="method#makeNPC#0;class#Game#0" expanded="false" />
             <element signature="method#makeRollAction#0;class#Game#0" expanded="false" />
-            <element signature="e#12292#12373#0" expanded="false" />
+            <element signature="e#13174#13255#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -853,15 +855,15 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4467#4538#0" expanded="false" />
+            <element signature="e#4564#4635#0" expanded="false" />
             <element signature="method#gameLoop#0;class#Game#0" expanded="false" />
-            <element signature="e#9021#9047#0" expanded="false" />
+            <element signature="e#9833#9859#0" expanded="false" />
             <element signature="method#makeRoom#0;class#Game#0" expanded="false" />
             <element signature="method#makeTrap#0;class#Game#0" expanded="false" />
             <element signature="method#makeItem#0;class#Game#0" expanded="false" />
             <element signature="method#makeNPC#0;class#Game#0" expanded="false" />
             <element signature="method#makeRollAction#0;class#Game#0" expanded="false" />
-            <element signature="e#12292#12373#0" expanded="false" />
+            <element signature="e#13174#13255#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -885,15 +887,15 @@
         <state relative-caret-position="0">
           <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
           <folding>
-            <element signature="e#4467#4538#0" expanded="false" />
+            <element signature="e#4564#4635#0" expanded="false" />
             <element signature="method#gameLoop#0;class#Game#0" expanded="false" />
-            <element signature="e#9021#9047#0" expanded="false" />
+            <element signature="e#9833#9859#0" expanded="false" />
             <element signature="method#makeRoom#0;class#Game#0" expanded="false" />
             <element signature="method#makeTrap#0;class#Game#0" expanded="false" />
             <element signature="method#makeItem#0;class#Game#0" expanded="false" />
             <element signature="method#makeNPC#0;class#Game#0" expanded="false" />
             <element signature="method#makeRollAction#0;class#Game#0" expanded="false" />
-            <element signature="e#12292#12373#0" expanded="false" />
+            <element signature="e#13174#13255#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -917,15 +919,15 @@
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#4467#4538#0" expanded="false" />
+            <element signature="e#4564#4635#0" expanded="false" />
             <element signature="method#gameLoop#0;class#Game#0" expanded="false" />
-            <element signature="e#9021#9047#0" expanded="false" />
+            <element signature="e#9833#9859#0" expanded="false" />
             <element signature="method#makeRoom#0;class#Game#0" expanded="false" />
             <element signature="method#makeTrap#0;class#Game#0" expanded="false" />
             <element signature="method#makeItem#0;class#Game#0" expanded="false" />
             <element signature="method#makeNPC#0;class#Game#0" expanded="false" />
             <element signature="method#makeRollAction#0;class#Game#0" expanded="false" />
-            <element signature="e#12292#12373#0" expanded="false" />
+            <element signature="e#13174#13255#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1135,68 +1137,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/Game.java">
+    <entry file="file://$PROJECT_DIR$/src/backend/BeginCombatAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="26" column="18" lean-forward="false" selection-start-line="26" selection-start-column="18" selection-end-line="26" selection-end-column="18" />
-          <folding>
-            <element signature="e#4467#4538#0" expanded="false" />
-            <element signature="method#gameLoop#0;class#Game#0" expanded="false" />
-            <element signature="e#9021#9047#0" expanded="false" />
-            <element signature="method#makeRoom#0;class#Game#0" expanded="false" />
-            <element signature="method#makeTrap#0;class#Game#0" expanded="false" />
-            <element signature="method#makeItem#0;class#Game#0" expanded="false" />
-            <element signature="method#makeNPC#0;class#Game#0" expanded="false" />
-            <element signature="method#makeRollAction#0;class#Game#0" expanded="false" />
-            <element signature="e#12292#12373#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/MoveAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="50" column="55" lean-forward="false" selection-start-line="50" selection-start-column="55" selection-end-line="50" selection-end-column="55" />
-          <folding>
-            <element signature="e#2554#2651#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/frontend/Display.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="634">
-          <caret line="267" column="47" lean-forward="false" selection-start-line="267" selection-start-column="47" selection-end-line="267" selection-end-column="47" />
-          <folding>
-            <element signature="method#Display#0;class#Display#0" expanded="false" />
-            <element signature="e#3402#3449#0" expanded="false" />
-            <element signature="method#display#0;class#Display#0" expanded="false" />
-            <element signature="method#update#0;class#Display#0" expanded="false" />
-            <element signature="method#read#0;class#Display#0" expanded="false" />
-            <element signature="method#setText#0;class#Display#0" expanded="false" />
-            <element signature="method#makeButton#0;class#Display#0" expanded="false" />
-            <element signature="method#makeMovePanel#0;class#Display#0" expanded="false" />
-            <element signature="method#makeCombatPanel#0;class#Display#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/PlayerAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/Outcome.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="59" lean-forward="false" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
+        <state relative-caret-position="340">
+          <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
           <folding />
         </state>
       </provider>
@@ -1213,26 +1160,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/AttackAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="26" column="37" lean-forward="false" selection-start-line="26" selection-start-column="37" selection-end-line="26" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/backend/BeginCombatAction.java">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
-          <caret line="24" column="5" lean-forward="false" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+          <caret line="22" column="54" lean-forward="false" selection-start-line="22" selection-start-column="54" selection-end-line="22" selection-end-column="54" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/backend/DoCombatAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="583">
-          <caret line="35" column="20" lean-forward="false" selection-start-line="35" selection-start-column="20" selection-end-line="35" selection-end-column="20" />
+        <state relative-caret-position="107">
+          <caret line="17" column="16" lean-forward="true" selection-start-line="17" selection-start-column="16" selection-end-line="17" selection-end-column="16" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/PlayerAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="11" column="35" lean-forward="false" selection-start-line="11" selection-start-column="35" selection-end-line="11" selection-end-column="35" />
+          <folding>
+            <element signature="e#223#224#0" expanded="true" />
+            <element signature="e#229#230#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/Outcome.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="59" lean-forward="false" selection-start-line="11" selection-start-column="59" selection-end-line="11" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/MoveAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="782">
+          <caret line="50" column="55" lean-forward="false" selection-start-line="50" selection-start-column="55" selection-end-line="50" selection-end-column="55" />
+          <folding>
+            <element signature="e#2554#2651#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/backend/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="67" column="68" lean-forward="false" selection-start-line="67" selection-start-column="68" selection-end-line="67" selection-end-column="68" />
+          <folding>
+            <element signature="e#4564#4635#0" expanded="false" />
+            <element signature="method#gameLoop#0;class#Game#0" expanded="false" />
+            <element signature="e#9833#9859#0" expanded="false" />
+            <element signature="method#makeRoom#0;class#Game#0" expanded="false" />
+            <element signature="method#makeTrap#0;class#Game#0" expanded="false" />
+            <element signature="method#makeItem#0;class#Game#0" expanded="false" />
+            <element signature="method#makeNPC#0;class#Game#0" expanded="false" />
+            <element signature="method#makeRollAction#0;class#Game#0" expanded="false" />
+            <element signature="e#13174#13255#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/frontend/Display.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="225" column="50" lean-forward="true" selection-start-line="225" selection-start-column="50" selection-end-line="225" selection-end-column="50" />
+          <folding>
+            <element signature="e#3403#3450#0" expanded="false" />
+            <element signature="method#display#0;class#Display#0" expanded="false" />
+            <element signature="method#update#0;class#Display#0" expanded="false" />
+            <element signature="method#read#0;class#Display#0" expanded="false" />
+            <element signature="method#setText#0;class#Display#0" expanded="false" />
+            <element signature="method#makeButton#0;class#Display#0" expanded="false" />
+            <element signature="method#makeMovePanel#0;class#Display#0" expanded="false" />
+            <element signature="method#makeCombatPanel#0;class#Display#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -26,6 +26,8 @@ public class DoCombatAction extends ActionHandler {
     }
     @Override
     public ArrayList<Outcome> execute(Action action) {
+        ArrayList<Outcome> outcomes=new ArrayList<>();
+        Outcome outcome=new Outcome();
         if (character.equals(NPC.class)){
             //Attack PC
             return delegator.delegate(new Action("attack",null));
@@ -33,12 +35,20 @@ public class DoCombatAction extends ActionHandler {
             //Take input from Display, and then either call an AttackAction, or a FleeAction
             while (x){
                 if (actionType!=null) {//this is probs bad but i cant think of anything else I can do
-                    delegator.delegate(new Action(actionType, null));
+                    if (actionType.equals("attack")){
+                        outcome = delegator.delegate(new Action(actionType, null)).get(0);
+                        outcomes.add(outcome);
+                    }
+                    if (actionType.equals("flee")){
+                        outcome =delegator.delegate(new Action(actionType,null)).get(0);
+                        outcomes.add(outcome);
+                    }
                     x=false;
                 }
             }
         }
-        return null;
+        outcome.variables.add(actionType);
+        return outcomes;
     }
         ActionHandler makeAttackAction(Character char2, Character char1){return new AttackAction(char2, char1);}
         ActionHandler makeFleeAction(){return new FleeAction();}

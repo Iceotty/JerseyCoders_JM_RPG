@@ -20,6 +20,7 @@ public class AttackAction extends ActionHandler {
             target.health = target.health - rng.rollInt(20, 0, attacker.name);
             if (target.health <= 0) {
                 outcome.message = attacker.name+" killed "+target.name;
+                outcome.variables.add("targetIsDead");
                 target.isDead = true;
             }
             outcome.successful=true;

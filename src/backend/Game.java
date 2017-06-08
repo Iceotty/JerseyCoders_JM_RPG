@@ -1,5 +1,7 @@
 package backend;
 
+import frontend.Action;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -63,6 +65,7 @@ public class Game {
         delegator.addActionhandler("move", makeMoveAction());
         delegator.addActionhandler("roll", makeRollAction());
         delegator.addActionhandler("take", makeItemAction());
+        delegator.addActionhandler("playerAction", makePlayerAction());
 //        delegator.addActionhandler("combat",makeBeginCombatAction());
 
         currentRoom = nodes.get("room.firstRoom").name;
@@ -169,7 +172,6 @@ public class Game {
         CombatState combatState = new CombatState(NPCs.values(), turnOrder, getCurrentRoom());
         outcome.message = "Combat Starts!";
         if (turnOrder.get(0).character.equals(NPC.class)){
-            //Not sure if this will work as i probably need to delegate?
             makeDoCombatAction(delegator,turnOrder.get(0).character,pc);
             Initiative init = turnOrder.remove(0);
             turnOrder.add(init);
@@ -180,7 +182,19 @@ public class Game {
                     character = initiative.character;
                 }
             }
-            doCombatAction=makeDoCombatAction(delegator,turnOrder.get(0).character,character);
+            delegator.addActionhandler("doCombat",makeDoCombatAction(delegator,turnOrder.get(0).character,character));
+            /**
+             * This is where I need to get and use the information from DoCombat, for attackAction, I need to check if the target is dead, or how much hp it lost,
+             * and then apply that to the NPC in the list or move it to the deadNPCs list.
+             * For FleeAction, if it was successful then I need to call a MoveAction to move the PC back to the last room they were in.
+             *
+             * Wait no where does this get called?
+             */
+//            doCombatAction=makeDoCombatAction(delegator,turnOrder.get(0).character,character);
+            Outcome outcomeX = delegator.delegate(new Action("doCombat",null)).get(0);
+            if (outcomeX.successful&&outcomeX.variables.contains("attack")){
+            }
+
         }
 //        while (combat) {
 //            Character character;
@@ -263,6 +277,8 @@ public class Game {
     }
     ActionHandler makeItemAction(){return  new ItemAction(this);}
     DoCombatAction makeDoCombatAction(Delegator delegator,Character character,Character character1){return  new DoCombatAction(delegator,character,character1);}
+    ActionHandler makePlayerAction(){return new PlayerAction(this);}
+
 
 //    ActionHandler makeBeginCombatAction(){return  new BeginCombatAction(this);}
 

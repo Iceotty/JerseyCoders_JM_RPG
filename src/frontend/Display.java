@@ -56,6 +56,7 @@ public class Display implements ActionListener {
         makeButton("attack", "Attack",200,100,80,25,false);
         makeButton("flee","Flee",200,300,80,25,false);
 
+
         buttons.get("south").setEnabled(true);
         buttons.get("east").setEnabled(true);
         buttons.get("southeast").setEnabled(true);
@@ -221,7 +222,8 @@ public class Display implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("attack".equals(e.getActionCommand())){
-            delegator.delegate(new Action("attack",null));
+//            delegator.delegate(new Action("attack",null));
+            delegator.delegate("playerAction",null);
             update();
         }
         if ("take".equals(e.getActionCommand())){
@@ -311,5 +313,4 @@ public class Display implements ActionListener {
 //        cl.show(cards,COMBATPANEL);
 //        frame.add(combatPanel, BorderLayout.CENTER);
     }
-
 }
