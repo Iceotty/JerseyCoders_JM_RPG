@@ -222,8 +222,15 @@ public class Display implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("attack".equals(e.getActionCommand())){
-//            delegator.delegate(new Action("attack",null));
-            delegator.delegate("playerAction",null);
+            ArrayList<String> parameters = new ArrayList<>();
+            parameters.add("attack");
+            delegator.delegate(new Action("playerAction",parameters));
+            update();
+        }
+        if ("flee".equals(e.getActionCommand())){
+            ArrayList<String> parameters = new ArrayList<>();
+            parameters.add("flee");
+            delegator.delegate(new Action("playerAction",parameters));
             update();
         }
         if ("take".equals(e.getActionCommand())){
