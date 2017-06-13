@@ -17,12 +17,13 @@ public class DoCombatAction extends ActionHandler {
     Game game;
     String actionType;
     boolean x=true;
-    public DoCombatAction(Delegator delegator,Character character, Character character1){
+    public DoCombatAction(Delegator delegator,Character character, Character character1, Game game){
         this.character = character;
         this.character1 = character1;
         this.delegator = delegator;
         delegator.addActionhandler("attack",makeAttackAction(character,character1));
         delegator.addActionhandler("flee",makeFleeAction());
+        this.game = game;
     }
     @Override
     public ArrayList<Outcome> execute(Action action) {
@@ -41,6 +42,11 @@ public class DoCombatAction extends ActionHandler {
                     }
                     if (actionType.equals("flee")){
                         outcome =delegator.delegate(new Action(actionType,null)).get(0);
+                        if (outcome.successful){
+                            ArrayList<String> parameters =new ArrayList<>();
+                            parameters.add("back");
+                            delegator.delegate(new Action("move",parameters));
+                        }
                         outcomes.add(outcome);
                     }
                     x=false;

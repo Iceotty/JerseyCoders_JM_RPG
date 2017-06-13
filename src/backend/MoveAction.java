@@ -22,13 +22,17 @@ public class MoveAction extends ActionHandler {
             outcomes.add(outcome);
             return outcomes;
         }
-            String direction = action.getParameters().get(0);
-            Room room;
-            String nextRoom;
+        String direction = action.getParameters().get(0);
+        Room room;
+        String nextRoom;
+        if (direction.equals("back")){
+            nextRoom = game.previousRoom;
+        }else {
             game.previousRoom = game.currentRoom;
             room = game.getCurrentRoom();
             nextRoom = room.decide(direction);
-            Room nextRoomRoom = game.nodes.get(nextRoom);
+        }
+        Room nextRoomRoom = game.nodes.get(nextRoom);
 
         if (nextRoom == null) {
                 outcome.successful = false;
