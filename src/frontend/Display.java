@@ -26,7 +26,7 @@ public class Display implements ActionListener {
     JPanel combatPanel;
     JPanel cards;
     final static String TEXTPANEL = "Text";
-    final static String COMBATPANEL= "Combat";
+    final static String COMBATPANEL = "Combat";
     Label textLabel1 = new Label();
     ArrayList<Label> labels;
     ArrayList<String> directions;

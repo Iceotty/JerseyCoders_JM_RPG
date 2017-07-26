@@ -189,10 +189,17 @@ public class Game {
              * For FleeAction, if it was successful then I need to call a MoveAction to move the PC back to the last room they were in.
              *
              * Wait no where does this get called?
+             *
+             * This doesn't make any sense to me, Combat starts when player enters a "combat room" with hostile creatures
+             * then on player's turn they pick either fight or flight. Display then sends this information to this function, which then decides what to do with it.
+             * Having a "doCombat" does make sense, but why is it being called immediately? It should be called in response to something.
+             *
+             * Surely PlayerAction should know what action the player has taken, and then delegate that itself? Although we still then have the problem of communicating with this function.
+             * I might not even need this function. Something does need to do the turn order though.
              */
 //            doCombatAction=makeDoCombatAction(delegator,turnOrder.get(0).character,character);
             Outcome outcomeX = delegator.delegate(new Action("doCombat",null)).get(0);
-            if (outcomeX.successful&&outcomeX.variables.contains("attack")){
+            if (outcomeX.successful && outcomeX.variables.contains("attack")){
             }
 
         }
@@ -276,7 +283,7 @@ public class Game {
         return rollAction;
     }
     ActionHandler makeItemAction(){return  new ItemAction(this);}
-    DoCombatAction makeDoCombatAction(Delegator delegator,Character character,Character character1){return  new DoCombatAction(delegator,character,character1);}
+    DoCombatAction makeDoCombatAction(Delegator delegator,Character character,Character character1){return  new DoCombatAction(delegator,character,character1,this);}
     ActionHandler makePlayerAction(){return new PlayerAction(this);}
 
 

@@ -39,6 +39,13 @@ public class DoCombatAction extends ActionHandler {
                     if (actionType.equals("attack")){
                         outcome = delegator.delegate(new Action(actionType, null)).get(0);
                         outcomes.add(outcome);
+                        /**
+                         * attackAction gives outcome:
+                         * if a character died, gives a message
+                         * gives whether the attack was successful or not
+                         * if the target dies, sets target.isDead=true
+                         * also adds "targetIsDead" to outcome.variables
+                         */
                     }
                     if (actionType.equals("flee")){
                         outcome =delegator.delegate(new Action(actionType,null)).get(0);

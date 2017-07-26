@@ -50,7 +50,6 @@ public class MoveAction extends ActionHandler {
                     if (!nextRoomRoom.enemies.isEmpty()){
                         outcome.variables.add("combat");
                     }
-
                     if (nextRoomRoom.item!=null){
                         outcome.variables.add("isItem");
                     }
