@@ -177,12 +177,12 @@ public class Game {
             turnOrder.add(init);
         }else if (turnOrder.get(0).character.equals(PlayerCharacter.class)){
             Character character=null;
+            delegator.addActionhandler("doCombat",makeDoCombatAction(delegator,turnOrder.get(0).character,character));
             for (Initiative initiative : turnOrder) {
                 if (initiative.character.equals(NPC.class)){
                     character = initiative.character;
                 }
             }
-            delegator.addActionhandler("doCombat",makeDoCombatAction(delegator,turnOrder.get(0).character,character));
             /**
              * This is where I need to get and use the information from DoCombat, for attackAction, I need to check if the target is dead, or how much hp it lost,
              * and then apply that to the NPC in the list or move it to the deadNPCs list.
@@ -195,13 +195,14 @@ public class Game {
              * Having a "doCombat" does make sense, but why is it being called immediately? It should be called in response to something.
              *
              * Surely PlayerAction should know what action the player has taken, and then delegate that itself? Although we still then have the problem of communicating with this function.
-             * I might not even need this function. Something does need to do the turn order though.
+             * I might not even need this function. Something does need to do the turn order though. Ok I do need this function, but I don't need to delegate anything in here, I think.
+             *
+             * even if I did I'd want to delegate /if/ something happens, not just delegate immediately
              */
 //            doCombatAction=makeDoCombatAction(delegator,turnOrder.get(0).character,character);
             Outcome outcomeX = delegator.delegate(new Action("doCombat",null)).get(0);
             if (outcomeX.successful && outcomeX.variables.contains("attack")){
             }
-
         }
 //        while (combat) {
 //            Character character;
