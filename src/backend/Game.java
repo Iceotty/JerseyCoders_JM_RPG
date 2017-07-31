@@ -66,7 +66,7 @@ public class Game {
         delegator.addActionhandler("roll", makeRollAction());
         delegator.addActionhandler("take", makeItemAction());
         delegator.addActionhandler("playerAction", makePlayerAction());
-//        delegator.addActionhandler("combat",makeBeginCombatAction());
+        delegator.addActionhandler("beginCombat",makeBeginCombatAction());
 
         currentRoom = nodes.get("room.firstRoom").name;
         pc = new PlayerCharacter();
@@ -163,6 +163,7 @@ public class Game {
                 return outcomes;
             }
         }
+
         Collections.sort(turnOrder);
         if (pc.isDead || getCurrentRoom().enemies == null || getCurrentRoom().enemies.isEmpty()) {
             outcome.message = "Either the PC is dead, or the enemies are dead";
@@ -284,6 +285,7 @@ public class Game {
         return rollAction;
     }
     ActionHandler makeItemAction(){return  new ItemAction(this);}
+    ActionHandler makeBeginCombatAction(){return new BeginCombatAction(this);}
     DoCombatAction makeDoCombatAction(Delegator delegator,Character character,Character character1){return  new DoCombatAction(delegator,character,character1,this);}
     ActionHandler makePlayerAction(){return new PlayerAction(this);}
 

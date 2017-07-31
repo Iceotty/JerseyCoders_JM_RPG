@@ -8,8 +8,10 @@ import java.util.ArrayList;
  * Created by Joseph on 21/09/2016.
  */
 public class MoveAction extends ActionHandler {
-    public MoveAction(Game game){
+    Delegator delegator;
+    public MoveAction(Game game, Delegator delegator){
         this.game = game;
+        this.delegator = delegator;
     }
     @Override
 
@@ -66,6 +68,10 @@ public class MoveAction extends ActionHandler {
                             //prevents the player from leaving the room before the trap has been resolved/sprung
                         }
                     }
+
+                    if (game.getRoom(nextRoom).enemies!=null){
+                        delegator.delegate(new Action("beginCombat",null));
+                    }
                     game.currentRoom = nextRoom;
                     outcome.successful = true;
 //                    String formattedString = game.nodes.get(nextRoom).paths.keySet().toString()
@@ -83,5 +89,4 @@ public class MoveAction extends ActionHandler {
             }
             return outcomes;
     }
-
 }
